@@ -6,9 +6,6 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDate;
 
-//TODO
-//alarm settings
-//autobreak bool, topics, short long break, interval
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -33,6 +30,16 @@ public class Person {
 	@CreationTimestamp
 	@Column(updatable = false)
 	private LocalDate createdAt;
+
+	private boolean autoBreak;
+	private int shortBreak;
+	private int longBreak;
+	private Integer interval;
+
+	//TODO relations
+	private String dailyFocusSummaries;
+	private String topics;
+	private String alarmSettings;
 
 	@Override
 	public boolean equals(Object o) {
