@@ -9,9 +9,6 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@ToString
-@Getter
-@Setter
 @Entity
 @Table(name = "person")
 public class Person {
@@ -42,6 +39,14 @@ public class Person {
 	private String alarmSettings;
 
 	@Override
+	public String toString() {
+		return "Person{" +
+			"id=" + id +
+			", login='" + login + '\'' +
+			'}';
+	}
+
+	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
 		if (!(o instanceof Person person)) return false;
@@ -52,5 +57,109 @@ public class Person {
 	@Override
 	public int hashCode() {
 		return getId() != null ? getId().hashCode() : 0;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public Integer getVersion() {
+		return version;
+	}
+
+	public void setVersion(Integer version) {
+		this.version = version;
+	}
+
+	public String getLogin() {
+		return login;
+	}
+
+	public void setLogin(String login) {
+		this.login = login;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public LocalDate getCreatedAt() {
+		return createdAt;
+	}
+
+	public void setCreatedAt(LocalDate createdAt) {
+		this.createdAt = createdAt;
+	}
+
+	public boolean isAutoBreak() {
+		return autoBreak;
+	}
+
+	public void setAutoBreak(boolean autoBreak) {
+		this.autoBreak = autoBreak;
+	}
+
+	public int getShortBreak() {
+		return shortBreak;
+	}
+
+	public void setShortBreak(int shortBreak) {
+		this.shortBreak = shortBreak;
+	}
+
+	public int getLongBreak() {
+		return longBreak;
+	}
+
+	public void setLongBreak(int longBreak) {
+		this.longBreak = longBreak;
+	}
+
+	public Integer getInterval() {
+		return interval;
+	}
+
+	public void setInterval(Integer interval) {
+		this.interval = interval;
+	}
+
+	public String getDailyFocusSummaries() {
+		return dailyFocusSummaries;
+	}
+
+	public void setDailyFocusSummaries(String dailyFocusSummaries) {
+		this.dailyFocusSummaries = dailyFocusSummaries;
+	}
+
+	public String getTopics() {
+		return topics;
+	}
+
+	public void setTopics(String topics) {
+		this.topics = topics;
+	}
+
+	public String getAlarmSettings() {
+		return alarmSettings;
+	}
+
+	public void setAlarmSettings(String alarmSettings) {
+		this.alarmSettings = alarmSettings;
 	}
 }
