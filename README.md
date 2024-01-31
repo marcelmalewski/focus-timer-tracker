@@ -24,6 +24,3 @@ htmx + spring
 
 ## Links
 ...
-
-## Launch Instructions
-...
