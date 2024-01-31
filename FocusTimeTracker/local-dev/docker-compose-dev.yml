@@ -1,0 +1,34 @@
+version: '3.1'
+
+services:
+  postgres:
+    container_name: postgres
+    image: postgres:14.5-alpine
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    volumes:
+      - ./volumes/dev/postgres:/var/lib/postgresql/data
+#    healthcheck:
+#      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+#      interval: 5s
+#      timeout: 5s
+#      retries: 10
+    expose:
+      - "5432"
+    ports:
+      - "5432:5432"
+    restart: unless-stopped
+    networks:
+      - focus-timer-tracker
+  proxy:
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    build: ../dev-proxy
+    ports:
+      - "80:80"
+
+networks:
+  focus-timer-tracker:
+    driver: bridge
