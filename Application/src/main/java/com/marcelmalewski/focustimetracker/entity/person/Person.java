@@ -28,7 +28,8 @@ public class Person {
 	@Column(updatable = false)
 	private LocalDate createdAt;
 
-	private boolean autoBreak;
+	private boolean timerAutoBreak;
+	private boolean stopWatchAutoBreak;
 	private int shortBreak;
 	private int longBreak;
 	private Integer interval;
@@ -107,12 +108,20 @@ public class Person {
 		this.createdAt = createdAt;
 	}
 
-	public boolean isAutoBreak() {
-		return autoBreak;
+	public boolean isTimerAutoBreak() {
+		return timerAutoBreak;
 	}
 
-	public void setAutoBreak(boolean autoBreak) {
-		this.autoBreak = autoBreak;
+	public void setTimerAutoBreak(boolean timerAutoBreak) {
+		this.timerAutoBreak = timerAutoBreak;
+	}
+
+	public boolean isStopWatchAutoBreak() {
+		return stopWatchAutoBreak;
+	}
+
+	public void setStopWatchAutoBreak(boolean stopWatchAutoBreak) {
+		this.stopWatchAutoBreak = stopWatchAutoBreak;
 	}
 
 	public int getShortBreak() {
