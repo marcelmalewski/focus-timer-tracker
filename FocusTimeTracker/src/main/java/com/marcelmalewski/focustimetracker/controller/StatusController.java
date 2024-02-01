@@ -1,13 +1,17 @@
 package com.marcelmalewski.focustimetracker.controller;
 
 import com.marcelmalewski.focustimetracker.model.Status;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@Controller
+@RestController
+@Tag(name = "mers v1", description = "Gamers API v1")
 public class StatusController {
 	public static final int PAGE_LENGHT = 10;
 	private static final List<Status> statuses = List.of(
@@ -53,6 +57,7 @@ public class StatusController {
 		new Status(40, "@comedylover", "Comedy Lover", "Laughter is the best medicine. Enjoying a comedy show tonight. 😂🤣 #Comedy")
 	);
 
+	@Operation(summary = "Fiall gamers public info")
 	@GetMapping("/feed")
 	public String getFeed(Model model) {
 		model.addAttribute("statuses", statuses.subList(0, PAGE_LENGHT));

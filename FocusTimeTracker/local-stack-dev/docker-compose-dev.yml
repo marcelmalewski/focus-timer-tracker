@@ -25,7 +25,7 @@ services:
   proxy:
     extra_hosts:
       - "host.docker.internal:host-gateway"
-    build: ../dev-proxy
+    build: ../local-proxy
     ports:
       - "80:80"
 
