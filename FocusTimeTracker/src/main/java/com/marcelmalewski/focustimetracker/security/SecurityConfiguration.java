@@ -42,7 +42,8 @@ public class SecurityConfiguration {
 				.permitAll()
 
 				.requestMatchers(
-					"/error"
+					"/error",
+					"/feed"
 				)
 				.permitAll()
 

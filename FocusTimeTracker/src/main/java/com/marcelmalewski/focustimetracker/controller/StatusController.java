@@ -6,11 +6,10 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@RestController
+@Controller
 @Tag(name = "mers v1", description = "Gamers API v1")
 public class StatusController {
 	public static final int PAGE_LENGHT = 10;
