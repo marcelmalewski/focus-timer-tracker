@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import java.util.List;
 
 @Controller
-@Tag(name = "mers v1", description = "Gamers API v1")
+@Tag(name = "Status", description = "Controller for tests")
 public class StatusController {
 	public static final int PAGE_LENGHT = 10;
 	private static final List<Status> statuses = List.of(
