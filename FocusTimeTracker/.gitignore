@@ -37,4 +37,4 @@ out/
 
 ### tailwind ###
 node_modules
-./src/main/resources/static/output.css
+src/main/resources/static/output.css
