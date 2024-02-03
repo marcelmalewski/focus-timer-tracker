@@ -25,3 +25,6 @@ To start the application, execute `application bootRun` from the Gradle panel, u
 
 ### Running the Backend with images
 ...
+
+## Tailwind
+npx tailwind -i ./src/main/resources/static/main.css -o ./src/main/resources/static/output.css --watch
