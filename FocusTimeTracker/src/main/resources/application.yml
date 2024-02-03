@@ -22,6 +22,8 @@ spring:
       ddl-auto: create-drop # When flyway is used, change to "validate"
     #    open-in-view: # false, commented temporary
     database: postgresql
+    mvc:
+      static-path-pattern: /**
 
 springdoc:
   swagger-ui:
@@ -29,3 +31,4 @@ springdoc:
     tagsSorter: alpha
     operations-sorter: alpha
     path: /docs
+

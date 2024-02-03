@@ -18,6 +18,7 @@ The Docker setup will launch:
 2. Development Proxy
 
 ## Before coding
+1. Set prettier. In Intellij you can just set "Automatic Prettier configuration".
 
 ### Running the Local Backend with IntelliJ
 To start the application, execute `application bootRun` from the Gradle panel, using the variables specified in the `.env` file.
