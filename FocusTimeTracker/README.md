@@ -28,3 +28,5 @@ To start the application, execute `application bootRun` from the Gradle panel, u
 
 ## Tailwind
 npx tailwind -i ./src/main/resources/static/main.css -o ./src/main/resources/static/output.css --watch
+
+`<link href="../static/output.css" rel="stylesheet" />`
