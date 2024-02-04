@@ -30,6 +30,7 @@ public class SecurityConfiguration {
 		http
 			.csrf(AbstractHttpConfigurer::disable)
 			.authorizeHttpRequests(authorize -> authorize
+				//Documentation
 				.requestMatchers(
 					HttpMethod.GET,
 					"/docs",
@@ -40,11 +41,19 @@ public class SecurityConfiguration {
 					"/swagger-ui.html",
 					"/output.css"
 				)
+
+				//Views
+				.permitAll()
+				.requestMatchers(
+					HttpMethod.GET,
+					"/output.css",
+					"/login",
+					"/register"
+				)
 				.permitAll()
 
 				.requestMatchers(
-					"/error",
-					"/feed"
+					"/error"
 				)
 				.permitAll()
 
