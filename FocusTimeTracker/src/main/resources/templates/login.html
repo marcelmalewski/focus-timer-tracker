@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
   <head>
     <title>Login page</title>
     <script th:href="@{/htmx.min.js}"></script>
-    <!--    <link th:href="@{/output.css}" rel="stylesheet" />-->
-    <link href="../static/output.css" rel="stylesheet" />
+    <link th:href="@{/output.css}" rel="stylesheet" />
+    <!--    <link href="../static/output.css" rel="stylesheet" />-->
   </head>
   <body>
     <div
@@ -17,30 +17,29 @@
       </div>
 
       <form
-        th:action="@{/greeting}"
-        th:object="${loginModel}"
+        method="post"
+        role="form"
+        th:action="@{/login}"
         class="bg-form-bg border-form-border flex flex-col items-center justify-between gap-3 rounded-lg p-10"
       >
         <div class="w-full">
-          <p class="mb-0.5 ml-2 text-xs">Login / Email</p>
-          <label>
-            <input
-              class="border-form-border bg-form-bg placeholder-placeholder block w-full rounded-lg border p-1 text-sm focus:outline-none"
-              type="text"
-              th:field="*{loginOrEmail()}"
-            />
-          </label>
+          <label class="mb-0.5 ml-2 text-xs">Login / Email</label>
+          <input
+            class="border-form-border bg-form-bg placeholder-placeholder block w-full rounded-lg border p-1 text-sm focus:outline-none"
+            type="text"
+            id="loginOrEmail"
+            name="loginOrEmail"
+          />
         </div>
 
         <div class="w-full">
-          <p class="mb-0.5 ml-2 text-xs">Password</p>
-          <label>
-            <input
-              class="border-form-border bg-form-bg placeholder-placeholder block w-full rounded-lg border p-1 text-sm focus:outline-none"
-              type="password"
-              th:field="*{password()}"
-            />
-          </label>
+          <label class="mb-0.5 ml-2 text-xs">Password</label>
+          <input
+            class="border-form-border bg-form-bg placeholder-placeholder block w-full rounded-lg border p-1 text-sm focus:outline-none"
+            type="password"
+            id="password"
+            name="password"
+          />
         </div>
 
         <button

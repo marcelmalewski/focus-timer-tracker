@@ -1,4 +1,11 @@
 package com.marcelmalewski.focustimetracker.frontend.auth;
 
-public record LoginModel(String loginOrEmail, String password) {
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
+public class LoginModel {
+	private String loginOrEmail;
+	private String password;
 }
