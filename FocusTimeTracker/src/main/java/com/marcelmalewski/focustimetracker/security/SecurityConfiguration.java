@@ -24,6 +24,8 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @EnableMethodSecurity
 public class SecurityConfiguration {
 	//TODO dodac specjalna permisje dostepu do swaggera
+	//TODO dodać wcześniejszą walidacje czy login albo hasło jest puste. Jakiś custom AuthenticationProvider chyba
+
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		http
@@ -61,7 +63,7 @@ public class SecurityConfiguration {
 
 			.formLogin(formLogin -> formLogin
 				.loginPage("/login")
-				.loginProcessingUrl("/login")
+				.loginProcessingUrl("/login-perform")
 				.usernameParameter("loginOrEmail")
 				.defaultSuccessUrl("/home")
 				.permitAll()
@@ -71,6 +73,8 @@ public class SecurityConfiguration {
 				.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
 				.permitAll()
 			);
+
+//			.authenticationProvider()
 
 			//TODO dodać może error page? teraz przenosi na login
 //			.exceptionHandling(exceptionHandling -> exceptionHandling
