@@ -4,14 +4,13 @@
     <title>Login page</title>
     <script th:href="@{/htmx.min.js}"></script>
     <link th:href="@{/output.css}" rel="stylesheet" />
-    <!--    <link href="../static/output.css" rel="stylesheet" />-->
   </head>
   <body>
     <div
       class="bg-base-bg text-base-text flex h-screen w-screen flex-col items-center justify-center gap-4"
     >
       <div
-        class="after:bg-base-line absolute left-0 top-0 w-fit cursor-pointer p-3 after:block after:h-0.5 after:w-0 after:duration-200 hover:after:w-full"
+        class="after:bg-base-line absolute left-0 top-0 w-fit cursor-pointer p-3 text-2xl after:block after:h-0.5 after:w-0 after:duration-200 hover:after:w-full"
       >
         <p>Welcome page</p>
       </div>
@@ -20,12 +19,12 @@
         method="post"
         role="form"
         th:action="@{/login}"
-        class="bg-form-bg border-form-border flex flex-col items-center justify-between gap-3 rounded-lg p-10"
+        class="bg-form-bg flex flex-col items-center justify-between gap-3 rounded-lg p-12"
       >
         <div class="w-full">
-          <label class="mb-0.5 ml-2 text-xs">Login / Email</label>
+          <label class="mb-0.5 ml-2 text-lg">Login / Email</label>
           <input
-            class="border-form-border bg-form-bg placeholder-placeholder block w-full rounded-lg border p-1 text-sm focus:outline-none"
+            class="border-form-border bg-form-bg placeholder-placeholder block w-full rounded-lg border p-2 focus:outline-none"
             type="text"
             id="loginOrEmail"
             name="loginOrEmail"
@@ -33,9 +32,9 @@
         </div>
 
         <div class="w-full">
-          <label class="mb-0.5 ml-2 text-xs">Password</label>
+          <label class="mb-0.5 ml-2 text-lg">Password</label>
           <input
-            class="border-form-border bg-form-bg placeholder-placeholder block w-full rounded-lg border p-1 text-sm focus:outline-none"
+            class="border-form-border bg-form-bg placeholder-placeholder block w-full rounded-lg border p-2 focus:outline-none"
             type="password"
             id="password"
             name="password"
@@ -44,14 +43,14 @@
 
         <button
           type="submit"
-          class="bg-base-button hover:bg-base-button-hov mt-6 rounded-md px-5 duration-200"
+          class="bg-base-button hover:bg-base-button-hov mt-6 rounded-md px-4 py-2 text-xl duration-200"
         >
           Login
         </button>
       </form>
 
       <div
-        class="after:bg-base-line cursor-pointer after:block after:h-0.5 after:w-0 after:duration-200 hover:after:w-full"
+        class="after:bg-base-line cursor-pointer text-xl after:block after:h-0.5 after:w-0 after:duration-200 hover:after:w-full"
       >
         Or create account
       </div>
