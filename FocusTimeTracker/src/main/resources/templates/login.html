@@ -3,7 +3,8 @@
   <head>
     <title>Login page</title>
     <script th:href="@{/htmx.min.js}"></script>
-    <link th:href="@{/output.css}" rel="stylesheet" />
+    <!--    <link th:href="@{/output.css}" rel="stylesheet" />-->
+    <link href="../static/output.css" rel="stylesheet" />
   </head>
   <body>
     <div
@@ -15,11 +16,15 @@
         <p>Welcome page</p>
       </div>
 
+      <div th:if="${param.logout}">
+        <div class="text-xl">You have been logged out</div>
+      </div>
+
       <form
         method="post"
         role="form"
         th:action="@{/login}"
-        class="bg-form-bg flex flex-col items-center justify-between gap-3 rounded-lg p-12"
+        class="bg-form-bg flex w-96 flex-col items-center justify-between gap-3 rounded-lg p-12"
       >
         <div class="w-full">
           <label class="mb-0.5 ml-2 text-lg">Login / Email</label>
@@ -29,6 +34,9 @@
             id="loginOrEmail"
             name="loginOrEmail"
           />
+          <div th:if="${param.error}">
+            <div class="text-error text-sm">Invalid login or email</div>
+          </div>
         </div>
 
         <div class="w-full">
@@ -39,6 +47,11 @@
             id="password"
             name="password"
           />
+          <div th:if="${param.error}">
+            <div class="text-error text-sm">
+              Login, e-mail, or password is incorrect
+            </div>
+          </div>
         </div>
 
         <button
