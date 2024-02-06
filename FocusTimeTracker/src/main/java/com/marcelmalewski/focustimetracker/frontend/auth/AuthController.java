@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class AuthController {
 	@Operation(summary = "Login view")
 	@GetMapping("/login")
-	public String getFeed() {
+	public String getLoginView() {
 		return "login";
 	}
 
