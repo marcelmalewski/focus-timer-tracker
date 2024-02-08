@@ -37,8 +37,7 @@ public class SecurityConfiguration {
 					"/v3/api-docs/**",
 					"/swagger-resources/**",
 					"/swagger-ui/**",
-					"/swagger-ui.html",
-					"/output.css"
+					"/swagger-ui.html"
 				)
 
 				//Views
@@ -69,6 +68,7 @@ public class SecurityConfiguration {
 
 			.logout(logout -> logout
 				.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+				.logoutSuccessUrl("/login")
 				.permitAll()
 			);
 
