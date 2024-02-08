@@ -2,12 +2,16 @@ package com.marcelmalewski.focustimetracker.entity.alarmsettings;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.Objects;
 
 @AllArgsConstructor
 @NoArgsConstructor
+@Getter
+@Setter
 @Entity
 @Table(name = "alarmsettings")
 public class AlarmSettings {
@@ -35,43 +39,11 @@ public class AlarmSettings {
 		if (this == o) return true;
 		if (!(o instanceof AlarmSettings that)) return false;
 
-		return Objects.equals(id, that.id);
+		return getId() != null ? getId().equals(that.getId()) : that.getId() == null;
 	}
 
 	@Override
 	public int hashCode() {
-		return id != null ? id.hashCode() : 0;
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public Integer getVersion() {
-		return version;
-	}
-
-	public void setVersion(Integer version) {
-		this.version = version;
-	}
-
-	public int getVolume() {
-		return volume;
-	}
-
-	public void setVolume(int volume) {
-		this.volume = volume;
-	}
-
-	public String getOwner() {
-		return owner;
-	}
-
-	public void setOwner(String owner) {
-		this.owner = owner;
+		return getId() != null ? getId().hashCode() : 0;
 	}
 }

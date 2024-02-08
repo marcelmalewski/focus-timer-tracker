@@ -7,6 +7,8 @@ import java.util.Objects;
 
 @AllArgsConstructor
 @NoArgsConstructor
+@Getter
+@Setter
 @Entity
 @Table(name = "focussession")
 public class FocusSession {
@@ -36,59 +38,11 @@ public class FocusSession {
 		if (this == o) return true;
 		if (!(o instanceof FocusSession that)) return false;
 
-		return Objects.equals(id, that.id);
+		return getId() != null ? getId().equals(that.getId()) : that.getId() == null;
 	}
 
 	@Override
 	public int hashCode() {
-		return id != null ? id.hashCode() : 0;
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public Integer getVersion() {
-		return version;
-	}
-
-	public void setVersion(Integer version) {
-		this.version = version;
-	}
-
-	public String getSessionType() {
-		return sessionType;
-	}
-
-	public void setSessionType(String sessionType) {
-		this.sessionType = sessionType;
-	}
-
-	public Boolean getFinished() {
-		return finished;
-	}
-
-	public void setFinished(Boolean finished) {
-		this.finished = finished;
-	}
-
-	public String getTopic() {
-		return topic;
-	}
-
-	public void setTopic(String topic) {
-		this.topic = topic;
-	}
-
-	public String getDailyFocusSummary() {
-		return dailyFocusSummary;
-	}
-
-	public void setDailyFocusSummary(String dailyFocusSummary) {
-		this.dailyFocusSummary = dailyFocusSummary;
+		return getId() != null ? getId().hashCode() : 0;
 	}
 }
