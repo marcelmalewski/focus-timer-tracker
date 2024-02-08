@@ -30,3 +30,7 @@ To start the application, execute `application bootRun` from the Gradle panel, u
 npx tailwind -i ./src/main/resources/static/main.css -o ./src/main/resources/static/output.css --watch
 
 `<link href="../static/output.css" rel="stylesheet" />`
+`<script th:href="@{/htmx.min.js}"></script>`
+`<script src="https://unpkg.com/htmx.org@1.9.10" integrity="sha384-D1Kt99CQMDuVetoL1lrYwg5t+9QdHe7NLX/SoJYkXDFfX37iInKRy5xLSi8nO7UC" crossorigin="anonymous"></script>`
+
+
