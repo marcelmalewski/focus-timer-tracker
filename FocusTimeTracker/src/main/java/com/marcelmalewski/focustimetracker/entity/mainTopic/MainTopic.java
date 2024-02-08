@@ -1,4 +1,4 @@
-package com.marcelmalewski.focustimetracker.entity.topic;
+package com.marcelmalewski.focustimetracker.entity.mainTopic;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -12,11 +12,11 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "topic")
-public class Topic {
+@Table(name = "maintopic")
+public class MainTopic {
 	@Id
-	@SequenceGenerator(name = "topic_sequence", sequenceName = "topic_sequence", allocationSize = 1)
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "topic_sequence")
+	@SequenceGenerator(name = "maintopic_sequence", sequenceName = "maintopic_sequence", allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "maintopic_sequence")
 	private Long id;
 	@Version
 	private Integer version;
@@ -29,7 +29,7 @@ public class Topic {
 
 	@Override
 	public String toString() {
-		return "Topic{" +
+		return "MainTopic{" +
 			"id=" + id +
 			'}';
 	}
@@ -37,9 +37,9 @@ public class Topic {
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
-		if (!(o instanceof Topic topic)) return false;
+		if (!(o instanceof MainTopic mainTopic)) return false;
 
-		return getId() != null ? getId().equals(topic.getId()) : topic.getId() == null;
+		return getId() != null ? getId().equals(mainTopic.getId()) : mainTopic.getId() == null;
 	}
 
 	@Override
