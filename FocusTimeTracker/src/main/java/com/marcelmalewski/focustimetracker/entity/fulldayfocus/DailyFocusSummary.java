@@ -1,11 +1,15 @@
 package com.marcelmalewski.focustimetracker.entity.fulldayfocus;
 
+import com.marcelmalewski.focustimetracker.entity.person.Person;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Getter
+@Setter
 @Table(name = "dailyfocussummary")
 public class DailyFocusSummary {
 	@Id
@@ -18,8 +22,10 @@ public class DailyFocusSummary {
 	private int summedUpFocusTime;
 	private int numberOfFinishedFocusSessions;
 
-	//TODO relations
-	private String owner;
+	@ManyToOne
+	@JoinColumn(name = "person_id")
+	@NotNull
+	private Person owner;
 	private String focusSessions;
 
 	@Override
@@ -40,53 +46,5 @@ public class DailyFocusSummary {
 	@Override
 	public int hashCode() {
 		return getId() != null ? getId().hashCode() : 0;
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public Integer getVersion() {
-		return version;
-	}
-
-	public void setVersion(Integer version) {
-		this.version = version;
-	}
-
-	public int getSummedUpFocusTime() {
-		return summedUpFocusTime;
-	}
-
-	public void setSummedUpFocusTime(int summedUpFocusTime) {
-		this.summedUpFocusTime = summedUpFocusTime;
-	}
-
-	public int getNumberOfFinishedFocusSessions() {
-		return numberOfFinishedFocusSessions;
-	}
-
-	public void setNumberOfFinishedFocusSessions(int numberOfFinishedFocusSessions) {
-		this.numberOfFinishedFocusSessions = numberOfFinishedFocusSessions;
-	}
-
-	public String getOwner() {
-		return owner;
-	}
-
-	public void setOwner(String owner) {
-		this.owner = owner;
-	}
-
-	public String getFocusSessions() {
-		return focusSessions;
-	}
-
-	public void setFocusSessions(String focusSessions) {
-		this.focusSessions = focusSessions;
 	}
 }

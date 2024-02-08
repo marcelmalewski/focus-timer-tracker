@@ -1,18 +1,24 @@
 package com.marcelmalewski.focustimetracker.entity.person;
 
+import com.marcelmalewski.focustimetracker.entity.fulldayfocus.DailyFocusSummary;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@Setter
+@Getter
 @Entity
 @Table(name = "person")
 public class Person  implements UserDetails {
@@ -38,8 +44,12 @@ public class Person  implements UserDetails {
 	private int longBreak;
 	private Integer interval;
 
-	//TODO relations
-	private String dailyFocusSummaries;
+	@OneToMany(mappedBy = "owner")
+	@ToString.Exclude
+	@Builder.Default
+	@NotNull
+	private List<DailyFocusSummary> dailyFocusSummaries = new ArrayList<>();
+
 	private String topics;
 	private String alarmSettings;
 
@@ -94,115 +104,4 @@ public class Person  implements UserDetails {
 		return true;
 	}
 
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public Integer getVersion() {
-		return version;
-	}
-
-	public void setVersion(Integer version) {
-		this.version = version;
-	}
-
-	public String getLogin() {
-		return login;
-	}
-
-	public void setLogin(String login) {
-		this.login = login;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public LocalDate getCreatedAt() {
-		return createdAt;
-	}
-
-	public void setCreatedAt(LocalDate createdAt) {
-		this.createdAt = createdAt;
-	}
-
-	public boolean isTimerAutoBreak() {
-		return timerAutoBreak;
-	}
-
-	public void setTimerAutoBreak(boolean timerAutoBreak) {
-		this.timerAutoBreak = timerAutoBreak;
-	}
-
-	public boolean isStopWatchAutoBreak() {
-		return stopWatchAutoBreak;
-	}
-
-	public void setStopWatchAutoBreak(boolean stopWatchAutoBreak) {
-		this.stopWatchAutoBreak = stopWatchAutoBreak;
-	}
-
-	public int getShortBreak() {
-		return shortBreak;
-	}
-
-	public void setShortBreak(int shortBreak) {
-		this.shortBreak = shortBreak;
-	}
-
-	public int getLongBreak() {
-		return longBreak;
-	}
-
-	public void setLongBreak(int longBreak) {
-		this.longBreak = longBreak;
-	}
-
-	public Integer getInterval() {
-		return interval;
-	}
-
-	public void setInterval(Integer interval) {
-		this.interval = interval;
-	}
-
-	public String getDailyFocusSummaries() {
-		return dailyFocusSummaries;
-	}
-
-	public void setDailyFocusSummaries(String dailyFocusSummaries) {
-		this.dailyFocusSummaries = dailyFocusSummaries;
-	}
-
-	public String getTopics() {
-		return topics;
-	}
-
-	public void setTopics(String topics) {
-		this.topics = topics;
-	}
-
-	public String getAlarmSettings() {
-		return alarmSettings;
-	}
-
-	public void setAlarmSettings(String alarmSettings) {
-		this.alarmSettings = alarmSettings;
-	}
 }
