@@ -1,10 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
   <head>
     <meta charset="UTF-8" />
-    <title>Title</title>
+    <title>Login page</title>
+    <script th:href="@{/htmx.min.js}"></script>
+    <link th:href="@{/output.css}" rel="stylesheet" />
   </head>
   <body>
     Home
+
+    <a href="/logout" class="ml-2 mt-6 border-2 border-black"> Log out </a>
   </body>
 </html>
