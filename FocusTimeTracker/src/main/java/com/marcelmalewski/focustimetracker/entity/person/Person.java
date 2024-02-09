@@ -50,6 +50,10 @@ public class Person  implements UserDetails {
 	@NotNull
 	private List<DailyFocusSummary> dailyFocusSummaries = new ArrayList<>();
 
+	@OneToMany(mappedBy = "owner")
+	@ToString.Exclude
+	@Builder.Default
+	@NotNull
 	private String topics;
 	private String alarmSettings;
 
