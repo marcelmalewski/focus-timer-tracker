@@ -1,5 +1,6 @@
 package com.marcelmalewski.focustimetracker.entity.mainTopic;
 
+import com.marcelmalewski.focustimetracker.entity.Topic;
 import com.marcelmalewski.focustimetracker.entity.person.Person;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -15,7 +16,7 @@ import lombok.Setter;
 @Setter
 @Entity
 @Table(name = "maintopic")
-public class MainTopic {
+public class MainTopic implements Topic {
 	@Id
 	@SequenceGenerator(name = "maintopic_sequence", sequenceName = "maintopic_sequence", allocationSize = 1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "maintopic_sequence")
