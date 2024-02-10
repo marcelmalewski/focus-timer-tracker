@@ -1,6 +1,7 @@
 package com.marcelmalewski.focustimetracker.entity.person;
 
 import com.marcelmalewski.focustimetracker.entity.fulldayfocus.DailyFocusSummary;
+import com.marcelmalewski.focustimetracker.entity.mainTopic.MainTopic;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
@@ -54,7 +55,7 @@ public class Person  implements UserDetails {
 	@ToString.Exclude
 	@Builder.Default
 	@NotNull
-	private String topics;
+	private List<MainTopic> mainTopics = new ArrayList<>();
 	private String alarmSettings;
 
 	@Override

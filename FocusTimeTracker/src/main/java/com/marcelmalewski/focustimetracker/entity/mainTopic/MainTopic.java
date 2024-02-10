@@ -1,6 +1,8 @@
 package com.marcelmalewski.focustimetracker.entity.mainTopic;
 
+import com.marcelmalewski.focustimetracker.entity.person.Person;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,7 +26,10 @@ public class MainTopic {
 	private String name;
 
 	//TODO relations
-	private String owner;
+	@ManyToOne
+	@JoinColumn(name = "person_id")
+	@NotNull
+	private Person owner;
 	private String subTopics;
 
 	@Override
