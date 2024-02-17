@@ -2,14 +2,13 @@ package com.marcelmalewski.focustimetracker.entity.mainTopic;
 
 import com.marcelmalewski.focustimetracker.entity.Topic;
 import com.marcelmalewski.focustimetracker.entity.person.Person;
+import com.marcelmalewski.focustimetracker.entity.subTopic.SubTopic;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
-//TODO you can add subtopicsj
+import java.util.List;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -26,12 +25,13 @@ public class MainTopic implements Topic {
 
 	private String name;
 
-	//TODO relations
 	@ManyToOne
 	@JoinColumn(name = "person_id")
 	@NotNull
 	private Person owner;
-	private String subTopics;
+	@OneToMany(mappedBy = "mainTopic")
+	@NotNull
+	private List<SubTopic> subTopics;
 
 	@Override
 	public String toString() {
