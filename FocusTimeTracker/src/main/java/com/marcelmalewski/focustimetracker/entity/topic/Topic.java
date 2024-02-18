@@ -1,4 +1,4 @@
-package com.marcelmalewski.focustimetracker.entity;
+package com.marcelmalewski.focustimetracker.entity.topic;
 
 public interface Topic {
 	String getName();

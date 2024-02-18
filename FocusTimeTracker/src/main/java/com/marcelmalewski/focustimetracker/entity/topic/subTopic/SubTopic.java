@@ -1,7 +1,7 @@
-package com.marcelmalewski.focustimetracker.entity.subTopic;
+package com.marcelmalewski.focustimetracker.entity.topic.subTopic;
 
-import com.marcelmalewski.focustimetracker.entity.Topic;
-import com.marcelmalewski.focustimetracker.entity.mainTopic.MainTopic;
+import com.marcelmalewski.focustimetracker.entity.topic.Topic;
+import com.marcelmalewski.focustimetracker.entity.topic.mainTopic.MainTopic;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
