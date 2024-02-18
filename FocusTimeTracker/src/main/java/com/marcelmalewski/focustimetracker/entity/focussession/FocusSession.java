@@ -1,13 +1,12 @@
 package com.marcelmalewski.focustimetracker.entity.focussession;
 
-import com.marcelmalewski.focustimetracker.entity.fulldayfocus.DailyFocusSummary;
+import com.marcelmalewski.focustimetracker.entity.dailyfocusSummary.DailyFocusSummary;
 import com.marcelmalewski.focustimetracker.entity.topic.mainTopic.MainTopic;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.util.List;
-import java.util.Objects;
 
 @AllArgsConstructor
 @NoArgsConstructor

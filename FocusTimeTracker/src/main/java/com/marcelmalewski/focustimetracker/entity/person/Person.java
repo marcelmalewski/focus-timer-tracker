@@ -1,7 +1,7 @@
 package com.marcelmalewski.focustimetracker.entity.person;
 
 import com.marcelmalewski.focustimetracker.entity.alarmsettings.AlarmSettings;
-import com.marcelmalewski.focustimetracker.entity.fulldayfocus.DailyFocusSummary;
+import com.marcelmalewski.focustimetracker.entity.dailyfocusSummary.DailyFocusSummary;
 import com.marcelmalewski.focustimetracker.entity.topic.mainTopic.MainTopic;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;

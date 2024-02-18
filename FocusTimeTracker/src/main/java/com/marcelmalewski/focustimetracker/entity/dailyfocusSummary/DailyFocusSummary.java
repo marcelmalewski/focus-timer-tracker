@@ -1,5 +1,6 @@
-package com.marcelmalewski.focustimetracker.entity.fulldayfocus;
+package com.marcelmalewski.focustimetracker.entity.dailyfocusSummary;
 
+import com.marcelmalewski.focustimetracker.entity.focussession.FocusSession;
 import com.marcelmalewski.focustimetracker.entity.person.Person;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -31,7 +32,7 @@ public class DailyFocusSummary {
 	@OneToMany(mappedBy = "dailyFocusSummary")
 	@ToString.Exclude
 	@NotNull
-	private List<DailyFocusSummary> focusSessions;
+	private List<FocusSession> focusSessions;
 
 	@Override
 	public String toString() {
