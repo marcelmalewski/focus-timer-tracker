@@ -44,7 +44,8 @@ public class SecurityConfiguration {
 				.requestMatchers(
 					HttpMethod.GET,
 					"/output.css",
-					"/register"
+					"/register",
+					"/welcome"
 				)
 				.permitAll()
 
