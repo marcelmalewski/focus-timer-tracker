@@ -1,4 +1,4 @@
-package com.marcelmalewski.focustimetracker.frontend;
+package com.marcelmalewski.focustimetracker.view;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
