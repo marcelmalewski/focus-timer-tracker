@@ -57,6 +57,7 @@ public class Person  implements UserDetails {
 	@Builder.Default
 	@NotNull
 	private List<MainTopic> mainTopics = new ArrayList<>();
+
 	@OneToOne
 	@JoinColumn(name = "alarmsettings_id")
 	private AlarmSettings alarmSettings;
