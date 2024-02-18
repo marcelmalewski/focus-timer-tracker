@@ -1,13 +1,13 @@
 package com.marcelmalewski.focustimetracker.entity.alarmsettings;
 
+import com.marcelmalewski.focustimetracker.entity.person.Person;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.Objects;
-
+//TODO custom sound?
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -24,8 +24,8 @@ public class AlarmSettings {
 
 	private int volume;
 
-	//TODO relations
-	private String owner;
+	@OneToOne(mappedBy = "alarmSettings")
+	private Person owner;
 
 	@Override
 	public String toString() {

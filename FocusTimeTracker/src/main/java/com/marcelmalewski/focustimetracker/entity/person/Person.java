@@ -1,5 +1,6 @@
 package com.marcelmalewski.focustimetracker.entity.person;
 
+import com.marcelmalewski.focustimetracker.entity.alarmsettings.AlarmSettings;
 import com.marcelmalewski.focustimetracker.entity.fulldayfocus.DailyFocusSummary;
 import com.marcelmalewski.focustimetracker.entity.mainTopic.MainTopic;
 import jakarta.persistence.*;
@@ -56,7 +57,9 @@ public class Person  implements UserDetails {
 	@Builder.Default
 	@NotNull
 	private List<MainTopic> mainTopics = new ArrayList<>();
-	private String alarmSettings;
+	@OneToOne
+	@JoinColumn(name = "alarmsettings_id")
+	private AlarmSettings alarmSettings;
 
 	@Override
 	public String toString() {
