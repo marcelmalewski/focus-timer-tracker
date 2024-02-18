@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
+import java.util.List;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -26,7 +28,10 @@ public class DailyFocusSummary {
 	@JoinColumn(name = "person_id")
 	@NotNull
 	private Person owner;
-	private String focusSessions;
+	@OneToMany(mappedBy = "dailyFocusSummary")
+	@ToString.Exclude
+	@NotNull
+	private List<DailyFocusSummary> focusSessions;
 
 	@Override
 	public String toString() {

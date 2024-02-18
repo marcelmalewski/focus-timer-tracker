@@ -1,5 +1,6 @@
 package com.marcelmalewski.focustimetracker.entity.focussession;
 
+import com.marcelmalewski.focustimetracker.entity.fulldayfocus.DailyFocusSummary;
 import com.marcelmalewski.focustimetracker.entity.topic.mainTopic.MainTopic;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -25,12 +26,14 @@ public class FocusSession {
 	private String sessionType; //timer || stopwatch
 	private Boolean finished;
 
-	//TODO relations
 	@OneToMany(mappedBy = "focusSession")
 	@ToString.Exclude
 	@NotNull
 	private List<MainTopic> mainTopic;
-	private String dailyFocusSummary;
+	@ManyToOne
+	@JoinColumn(name = "dailyfocussummary_id")
+	@NotNull
+	private DailyFocusSummary dailyFocusSummary;
 
 	@Override
 	public String toString() {
