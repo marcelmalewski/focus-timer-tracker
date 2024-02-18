@@ -2,19 +2,71 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
   <head>
     <meta charset="UTF-8" />
-    <title>Title</title>
+    <title>Register</title>
+    <!--    <link th:href="@{/output.css}" rel="stylesheet" />-->
+    <link href="../static/output.css" rel="stylesheet" />
   </head>
   <body>
-    Registero
+    <div
+      class="bg-base-bg text-base-text flex h-screen w-screen flex-col items-center justify-center gap-4"
+    >
+      <a
+        href="/welcome"
+        class="after:bg-base-line absolute left-0 top-0 w-fit cursor-pointer p-3 text-2xl after:block after:h-0.5 after:w-0 after:duration-200 hover:after:w-full"
+      >
+        Welcome page
+      </a>
 
-    <div class="navbar-collapse collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav mb-lg-0 mb-2 me-auto">
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" th:href="@{/login}"
-            >Go Login</a
-          >
-        </li>
-      </ul>
+      <div th:if="${param.logout}">
+        <div class="text-xl">You have been logged out</div>
+      </div>
+
+      <form
+        method="post"
+        role="form"
+        th:action="@{/login-perform}"
+        class="bg-form-bg flex w-96 flex-col items-center justify-between gap-3 rounded-lg p-12"
+      >
+        <div class="w-full">
+          <label class="mb-0.5 ml-2 text-lg">Login / Email</label>
+          <input
+            class="border-form-border bg-form-bg placeholder-placeholder block w-full rounded-lg border p-2 focus:outline-none"
+            type="text"
+            id="loginOrEmail"
+            name="loginOrEmail"
+            required
+          />
+        </div>
+
+        <div class="w-full">
+          <label class="mb-0.5 ml-2 text-lg">Password</label>
+          <input
+            class="border-form-border bg-form-bg placeholder-placeholder block w-full rounded-lg border p-2 focus:outline-none"
+            type="password"
+            id="password"
+            name="password"
+            required
+          />
+
+          <div th:if="${param.error}" class="text-error text-sm">
+            Login, e-mail, or password is incorrect
+          </div>
+        </div>
+
+        <button
+          type="submit"
+          class="bg-base-button hover:bg-base-button-hov mt-6 rounded-md px-4 py-2 text-xl duration-200"
+        >
+          Login
+        </button>
+      </form>
+
+      <a
+        href="/login"
+        class="after:bg-base-line cursor-pointer text-xl after:block after:h-0.5 after:w-0 after:duration-200 hover:after:w-full"
+      >
+        Or log in
+      </a>
     </div>
   </body>
 </html>

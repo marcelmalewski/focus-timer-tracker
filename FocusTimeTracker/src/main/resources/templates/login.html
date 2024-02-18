@@ -10,11 +10,12 @@
     <div
       class="bg-base-bg text-base-text flex h-screen w-screen flex-col items-center justify-center gap-4"
     >
-      <div
+      <a
+        href="/welcome"
         class="after:bg-base-line absolute left-0 top-0 w-fit cursor-pointer p-3 text-2xl after:block after:h-0.5 after:w-0 after:duration-200 hover:after:w-full"
       >
-        <p>Welcome page</p>
-      </div>
+        Welcome page
+      </a>
 
       <div th:if="${param.logout}">
         <div class="text-xl">You have been logged out</div>
@@ -60,11 +61,12 @@
         </button>
       </form>
 
-      <div
+      <a
+        href="/register"
         class="after:bg-base-line cursor-pointer text-xl after:block after:h-0.5 after:w-0 after:duration-200 hover:after:w-full"
       >
         Or create account
-      </div>
+      </a>
     </div>
   </body>
 </html>
