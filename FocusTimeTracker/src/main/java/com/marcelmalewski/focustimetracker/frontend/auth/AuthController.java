@@ -8,7 +8,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 @Tag(name = "Auth", description = "Auth views")
 public class AuthController {
-	@Operation(summary = "Login view")
+	//TODO welcome przenieść?
+	@Operation(summary = "Welcome view")
 	@GetMapping("/welcome")
 	public String getWelcomeView() {
 		return "welcome";
@@ -20,7 +21,7 @@ public class AuthController {
 		return "login";
 	}
 
-	@Operation(summary = "Login view")
+	@Operation(summary = "Register view")
 	@GetMapping("/register")
 	public String getRegistrationView() {
 		return "register";
