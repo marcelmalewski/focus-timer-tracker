@@ -1,4 +1,4 @@
-package com.marcelmalewski.focustimetracker.frontend.auth;
+package com.marcelmalewski.focustimetracker.frontend;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -7,8 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 @Tag(name = "Auth", description = "Auth views")
-public class AuthController {
-	//TODO welcome przenieść?
+public class NotLoggedInController {
 	@Operation(summary = "Welcome view")
 	@GetMapping("/welcome")
 	public String getWelcomeView() {
