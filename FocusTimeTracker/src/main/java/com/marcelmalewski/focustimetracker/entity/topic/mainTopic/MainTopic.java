@@ -1,5 +1,6 @@
 package com.marcelmalewski.focustimetracker.entity.topic.mainTopic;
 
+import com.marcelmalewski.focustimetracker.entity.focussession.FocusSession;
 import com.marcelmalewski.focustimetracker.entity.topic.Topic;
 import com.marcelmalewski.focustimetracker.entity.person.Person;
 import com.marcelmalewski.focustimetracker.entity.topic.subTopic.SubTopic;
@@ -29,9 +30,15 @@ public class MainTopic implements Topic {
 	@JoinColumn(name = "person_id")
 	@NotNull
 	private Person owner;
+
 	@OneToMany(mappedBy = "mainTopic")
 	@NotNull
 	private List<SubTopic> subTopics;
+
+	@ManyToOne
+	@JoinColumn(name = "focussession_id")
+	@NotNull
+	private FocusSession focusSession;
 
 	@Override
 	public String toString() {

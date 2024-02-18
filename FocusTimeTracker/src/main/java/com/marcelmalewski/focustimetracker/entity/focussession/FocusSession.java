@@ -1,8 +1,11 @@
 package com.marcelmalewski.focustimetracker.entity.focussession;
 
+import com.marcelmalewski.focustimetracker.entity.topic.mainTopic.MainTopic;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
+import java.util.List;
 import java.util.Objects;
 
 @AllArgsConstructor
@@ -23,7 +26,10 @@ public class FocusSession {
 	private Boolean finished;
 
 	//TODO relations
-	private String topic;
+	@OneToMany(mappedBy = "focusSession")
+	@ToString.Exclude
+	@NotNull
+	private List<MainTopic> mainTopic;
 	private String dailyFocusSummary;
 
 	@Override
