@@ -19,6 +19,6 @@ public class RegisterRequestDto {
 	@NotBlank
 	public String password;
 	@Email
-	@NotNull
+	@NotBlank
 	public String email;
 }
