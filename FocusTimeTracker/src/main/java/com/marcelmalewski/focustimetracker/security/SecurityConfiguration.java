@@ -38,9 +38,16 @@ public class SecurityConfiguration {
 					"/swagger-ui/**",
 					"/swagger-ui.html"
 				)
-
-				//Views
 				.permitAll()
+
+				//Views post
+				.requestMatchers(
+					HttpMethod.POST,
+					"/register"
+				)
+				.permitAll()
+
+				//Views get
 				.requestMatchers(
 					HttpMethod.GET,
 					"/output.css",
