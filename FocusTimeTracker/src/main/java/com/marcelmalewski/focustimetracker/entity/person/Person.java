@@ -40,10 +40,18 @@ public class Person  implements UserDetails {
 	@Column(updatable = false)
 	private LocalDate createdAt;
 
-	private boolean timerAutoBreak;
-	private boolean stopWatchAutoBreak;
-	private int shortBreak;
-	private int longBreak;
+	@NotNull
+	@Builder.Default
+	private Boolean timerAutoBreak = false;
+	@NotNull
+	@Builder.Default
+	private Boolean stopWatchAutoBreak = true;
+	@NotNull
+	@Builder.Default
+	private Integer shortBreak = 5;
+	@NotNull
+	@Builder.Default
+	private Integer longBreak = 10;
 	private Integer interval;
 
 	@OneToMany(mappedBy = "owner")
