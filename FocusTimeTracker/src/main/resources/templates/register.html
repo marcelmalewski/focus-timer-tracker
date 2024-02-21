@@ -3,8 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <title>Register</title>
-    <!--    <link th:href="@{/output.css}" rel="stylesheet" />-->
-    <link href="../static/output.css" rel="stylesheet" />
+    <link th:href="@{/output.css}" rel="stylesheet" />
   </head>
   <body>
     <div
@@ -17,25 +16,30 @@
         Welcome page
       </a>
 
-      <div th:if="${param.logout}">
-        <div class="text-xl">You have been logged out</div>
-      </div>
-
       <form
         method="post"
         role="form"
-        th:action="@{/login-perform}"
+        th:action="@{/register}"
+        th:object="${registerRequestDto}"
         class="bg-form-bg flex w-96 flex-col items-center justify-between gap-3 rounded-lg p-12"
       >
         <div class="w-full">
-          <label class="mb-0.5 ml-2 text-lg">Login / Email</label>
+          <label for="login" class="mb-0.5 ml-2 text-lg">Login</label>
           <input
             class="border-form-border bg-form-bg placeholder-placeholder block w-full rounded-lg border p-2 focus:outline-none"
             type="text"
-            id="loginOrEmail"
-            name="loginOrEmail"
-            required
+            id="login"
+            name="login"
+            th:field="*{login}"
           />
+
+          <ul class="ml-4 list-disc">
+            <li
+              th:each="err : ${#fields.errors('login')}"
+              th:text="${err}"
+              class="text-error text-sm"
+            />
+          </ul>
         </div>
 
         <div class="w-full">
@@ -45,19 +49,40 @@
             type="password"
             id="password"
             name="password"
-            required
           />
 
-          <div th:if="${param.error}" class="text-error text-sm">
-            Login, e-mail, or password is incorrect
-          </div>
+          <ul class="ml-4 list-disc">
+            <li
+              th:each="err : ${#fields.errors('password')}"
+              th:text="${err}"
+              class="text-error text-sm"
+            />
+          </ul>
+        </div>
+
+        <div class="w-full">
+          <label class="mb-0.5 ml-2 text-lg">Email</label>
+          <input
+            class="border-form-border bg-form-bg placeholder-placeholder block w-full rounded-lg border p-2 focus:outline-none"
+            type="text"
+            id="email"
+            name="email"
+          />
+
+          <ul class="ml-4 list-disc">
+            <li
+              th:each="err : ${#fields.errors('email')}"
+              th:text="${err}"
+              class="text-error text-sm"
+            />
+          </ul>
         </div>
 
         <button
           type="submit"
           class="bg-base-button hover:bg-base-button-hov mt-6 rounded-md px-4 py-2 text-xl duration-200"
         >
-          Login
+          Register
         </button>
       </form>
 
