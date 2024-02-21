@@ -37,11 +37,11 @@ public class NotLoggedInController {
 	@Operation(summary = "Register view with validation")
 	@PostMapping("/register")
 	public String register(@Valid RegisterRequestDto registerRequestDto, BindingResult bindingResult, Model model) {
-		System.out.println(bindingResult);
-		System.out.println(registerRequestDto);
+		if (bindingResult.hasErrors()) {
+			model.addAttribute("registerRequestDto", registerRequestDto);
+			return "register";
+		}
 
-		model.addAttribute("registerRequestDto", registerRequestDto);
-
-		return "register";
+		return "login";
 	}
 }
