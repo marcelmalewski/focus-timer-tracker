@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 //TODO temp size validations values
+//TODO add password validation
 @Getter
 @Setter
 @AllArgsConstructor
