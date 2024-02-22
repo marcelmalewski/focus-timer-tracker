@@ -43,7 +43,7 @@ public class SecurityConfiguration {
 				//Views post
 				.requestMatchers(
 					HttpMethod.POST,
-					"/register"
+					"/register/validation"
 				)
 				.permitAll()
 
