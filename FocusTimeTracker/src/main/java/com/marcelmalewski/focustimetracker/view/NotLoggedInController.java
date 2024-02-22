@@ -1,6 +1,7 @@
 package com.marcelmalewski.focustimetracker.view;
 
 import com.marcelmalewski.focustimetracker.entity.person.registration.RegisterRequestDto;
+import com.marcelmalewski.focustimetracker.entity.person.registration.RegisterService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -13,6 +14,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 @Controller
 @Tag(name = "Auth", description = "Auth views")
 public class NotLoggedInController {
+	private final RegisterService registerService;
+
+	public NotLoggedInController(RegisterService registerService) {
+		this.registerService = registerService;
+	}
+
 	@Operation(summary = "Welcome view")
 	@GetMapping("/welcome")
 	public String getWelcomeView() {
@@ -35,13 +42,14 @@ public class NotLoggedInController {
 	}
 
 	@Operation(summary = "Register view with validation")
-	@PostMapping("/register")
+	@PostMapping("/register/validation")
 	public String register(@Valid RegisterRequestDto registerRequestDto, BindingResult bindingResult, Model model) {
 		if (bindingResult.hasErrors()) {
 			model.addAttribute("registerRequestDto", registerRequestDto);
 			return "register";
 		}
 
-		return "login";
+		registerService.register(registerRequestDto);
+		return "redirect:/register?success";
 	}
 }
