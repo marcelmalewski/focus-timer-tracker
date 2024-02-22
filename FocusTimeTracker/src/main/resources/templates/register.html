@@ -16,10 +16,14 @@
         Welcome page
       </a>
 
+      <div th:if="${param.success}">
+        <div class="text-xl">You have successfully registered!</div>
+      </div>
+
       <form
         method="post"
         role="form"
-        th:action="@{/register}"
+        th:action="@{/register/validation}"
         th:object="${registerRequestDto}"
         class="bg-form-bg flex w-96 flex-col items-center justify-between gap-3 rounded-lg p-12"
       >
