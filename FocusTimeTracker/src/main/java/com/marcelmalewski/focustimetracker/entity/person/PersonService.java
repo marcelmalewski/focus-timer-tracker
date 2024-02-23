@@ -10,7 +10,15 @@ public class PersonService {
 		this.personRepository = personRepository;
 	}
 
-	public Person create(Person person) {
-		return personRepository.save(person);
+	public boolean existsByLogin(String login) {
+		return personRepository.existsByLogin(login);
+	}
+
+	public boolean existsByEmail(String email) {
+		return personRepository.existsByEmail(email);
+	}
+
+	public void create(Person person) {
+		personRepository.save(person);
 	}
 }
