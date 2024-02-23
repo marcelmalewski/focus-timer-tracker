@@ -15,11 +15,11 @@ import lombok.Setter;
 public class RegisterRequestDto {
 	@Size(min = 3, max = 20)
 	@NotBlank
-	public String login;
+	private String login;
 	@Size(min = 3, max = 20)
 	@NotBlank
-	public String password;
+	private String password;
 	@Email
 	@NotBlank
-	public String email;
+	private String email;
 }
