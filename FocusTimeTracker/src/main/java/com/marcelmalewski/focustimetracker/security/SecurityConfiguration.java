@@ -69,7 +69,7 @@ public class SecurityConfiguration {
 				.loginPage("/login")
 				.loginProcessingUrl("/login-perform")
 				.usernameParameter("loginOrEmail")
-				.defaultSuccessUrl("/home")
+				.defaultSuccessUrl("/home/timer")
 				.permitAll()
 			)
 
