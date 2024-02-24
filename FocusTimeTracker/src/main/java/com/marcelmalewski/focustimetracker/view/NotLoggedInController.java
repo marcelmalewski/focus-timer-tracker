@@ -44,6 +44,9 @@ public class NotLoggedInController {
 	@Operation(summary = "Register view with validation")
 	@PostMapping("/register/validation")
 	public String register(@Valid RegisterRequestDto registerRequestDto, BindingResult bindingResult, Model model) {
+		// TODO do i need clean this password?
+		registerRequestDto.setPassword("");
+
 		if (bindingResult.hasErrors()) {
 			model.addAttribute("registerRequestDto", registerRequestDto);
 			return "register";
