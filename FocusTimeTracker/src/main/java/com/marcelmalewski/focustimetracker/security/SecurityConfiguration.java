@@ -79,12 +79,6 @@ public class SecurityConfiguration {
 				.permitAll()
 			);
 
-			//TODO dodać może error page? teraz przenosi na login
-//			.exceptionHandling(exceptionHandling -> exceptionHandling
-//				.authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))
-//				.accessDeniedHandler(accessDeniedHandler())
-//			);
-
 		return http.build();
 	}
 
@@ -92,9 +86,4 @@ public class SecurityConfiguration {
 	public BCryptPasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
-
-//	@Bean
-//	public AccessDeniedHandler accessDeniedHandler() {
-//		return new CustomAccessDeniedHandler();
-//	}
 }
