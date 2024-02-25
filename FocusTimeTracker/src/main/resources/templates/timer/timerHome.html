@@ -3,13 +3,44 @@
   <head>
     <meta charset="UTF-8" />
     <title>Timer home home</title>
+<!--        <link th:href="@{/output.css}" rel="stylesheet" />-->
+    <link href="../../static/output.css" rel="stylesheet" />
+    <style>
+      option:hover {
+        box-shadow: 0 0 10px 100px #4ddc3b inset;
+        background-color: black;
+      }
+    </style>
   </head>
   <body>
     <div
-      class="bg-base-bg text-base-text flex h-screen w-screen flex-col items-center justify-center gap-4"
+      class="bg-base-bg text-base-text flex h-screen w-screen flex-col items-center justify-start"
     >
-      <p class="text-xl">Timer mode home</p>
+      <div
+        class="flex w-[44rem] flex-col items-center justify-center gap-4 border border-black"
+      >
+        <form class="flex w-1/2 flex-col">
+          <label class="mb-0.5 ml-2 text-sm" for="topics"
+            >Select an option</label
+          >
 
+          <select
+            id="topics"
+            class="bg-form-bg rounded-lg p-2 focus:outline-none"
+          >
+            <option selected value="US">Topic 1</option>
+            <option value="CA">Topic 2</option>
+            <option value="FR">Topic 3</option>
+            <option value="DE">Topic 4</option>
+          </select>
+        </form>
+
+        <div class="my-28">Timer</div>
+
+        <div>Button</div>
+
+        <div>Stopwatch ></div>
+      </div>
       <a href="/logout" class="ml-2 mt-6 border-2 border-black"> Log out </a>
     </div>
   </body>
