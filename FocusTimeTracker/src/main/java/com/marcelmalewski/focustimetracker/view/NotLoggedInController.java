@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
-@Tag(name = "Auth", description = "Auth views")
+@Tag(name = "NotLoggedIn", description = "Views for not logged in person")
 public class NotLoggedInController {
 	private final RegisterService registerService;
 
