@@ -11,7 +11,7 @@
       class="bg-base-bg text-base-text flex h-screen w-screen flex-col items-center justify-start"
     >
       <div
-        class="flex w-[44rem] flex-col items-center justify-center gap-4 border border-black"
+        class="flex w-176 flex-col items-center justify-center gap-4 border border-black"
       >
         <form class="flex w-1/2 flex-col">
           <label class="mb-0.5 ml-2 text-sm" for="topics">Select a topic</label>
@@ -43,7 +43,6 @@
             let minutes = Math.floor(time / 60) % 60;
             let hours = Math.floor(time / 60 / 60);
 
-            // Output the result in an element with id="demo"
             document.getElementById("timer").innerHTML =
               hours + "h " + minutes + "m " + seconds + "s ";
           }, 1000);
