@@ -3,14 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <title>Timer home home</title>
-<!--        <link th:href="@{/output.css}" rel="stylesheet" />-->
+    <!--        <link th:href="@{/output.css}" rel="stylesheet" />-->
     <link href="../../static/output.css" rel="stylesheet" />
-    <style>
-      option:hover {
-        box-shadow: 0 0 10px 100px #4ddc3b inset;
-        background-color: black;
-      }
-    </style>
   </head>
   <body>
     <div
@@ -21,12 +15,12 @@
       >
         <form class="flex w-1/2 flex-col">
           <label class="mb-0.5 ml-2 text-sm" for="topics"
-            >Select an option</label
+            >Select a topic</label
           >
 
           <select
             id="topics"
-            class="bg-form-bg rounded-lg p-2 focus:outline-none"
+            class="rounded-lg p-2 focus:outline-none text-black"
           >
             <option selected value="US">Topic 1</option>
             <option value="CA">Topic 2</option>
@@ -34,6 +28,13 @@
             <option value="DE">Topic 4</option>
           </select>
         </form>
+
+        <select class="form-select" aria-label="Default select example">
+          <option selected>Open this select menu</option>
+          <option value="1">One</option>
+          <option value="2">Two</option>
+          <option value="3">Three</option>
+        </select>
 
         <div class="my-28">Timer</div>
 

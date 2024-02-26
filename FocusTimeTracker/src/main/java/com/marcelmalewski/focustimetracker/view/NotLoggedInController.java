@@ -23,13 +23,13 @@ public class NotLoggedInController {
 	@Operation(summary = "Welcome view")
 	@GetMapping("/welcome")
 	public String getWelcomeView() {
-		return "welcome";
+		return "notloggedin/welcome";
 	}
 
 	@Operation(summary = "Login view")
 	@GetMapping("/login")
 	public String getLoginView() {
-		return "login";
+		return "notloggedin/login";
 	}
 
 	@Operation(summary = "Register view")
@@ -38,7 +38,7 @@ public class NotLoggedInController {
 		RegisterRequestDto registerRequestDto = new RegisterRequestDto();
 		model.addAttribute("registerRequestDto", registerRequestDto);
 
-		return "register";
+		return "notloggedin/register";
 	}
 
 	@Operation(summary = "Register view with validation")
@@ -49,7 +49,7 @@ public class NotLoggedInController {
 
 		if (bindingResult.hasErrors()) {
 			model.addAttribute("registerRequestDto", registerRequestDto);
-			return "register";
+			return "notloggedin/register";
 		}
 
 		registerService.register(registerRequestDto);

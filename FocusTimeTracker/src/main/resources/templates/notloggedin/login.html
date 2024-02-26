@@ -3,7 +3,6 @@
   <head>
     <meta charset="UTF-8" />
     <title>Login</title>
-    <script th:href="@{/htmx.min.js}"></script>
     <link th:href="@{/output.css}" rel="stylesheet" />
   </head>
   <body>
@@ -30,7 +29,7 @@
         <div class="w-full">
           <label class="mb-0.5 ml-2 text-lg">Login / Email</label>
           <input
-            class="border-form-border bg-form-bg placeholder-placeholder block w-full rounded-lg border p-2 focus:outline-none"
+            class="border-form-border bg-form-bg block w-full rounded-lg border p-2 focus:outline-none"
             type="text"
             id="loginOrEmail"
             name="loginOrEmail"
@@ -41,7 +40,7 @@
         <div class="w-full">
           <label class="mb-0.5 ml-2 text-lg">Password</label>
           <input
-            class="border-form-border bg-form-bg placeholder-placeholder block w-full rounded-lg border p-2 focus:outline-none"
+            class="border-form-border bg-form-bg block w-full rounded-lg border p-2 focus:outline-none"
             type="password"
             id="password"
             name="password"
