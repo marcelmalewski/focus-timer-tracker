@@ -8,4 +8,7 @@
     .dash-animation {
         @apply after:bg-base-line cursor-pointer after:block after:h-0.5 after:w-0 after:duration-200 hover:after:w-full
     }
+    .screen-box {
+        @apply bg-base-bg text-base-text flex h-screen w-screen flex-col items-center justify-center
+    }
 }
