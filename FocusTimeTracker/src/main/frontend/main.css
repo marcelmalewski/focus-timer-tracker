@@ -3,3 +3,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+    .dash-animation {
+        @apply after:bg-base-line cursor-pointer after:block after:h-0.5 after:w-0 after:duration-200 hover:after:w-full
+    }
+}
