@@ -22,8 +22,10 @@ public class DailyFocusSummary {
 	@Version
 	private Integer version;
 
-	private int summedUpFocusTime;
-	private int numberOfFinishedFocusSessions;
+	@NotNull
+	private Integer summedUpFocusTime;
+	@NotNull
+	private Integer numberOfFinishedFocusSessions;
 
 	@ManyToOne
 	@JoinColumn(name = "person_id")
