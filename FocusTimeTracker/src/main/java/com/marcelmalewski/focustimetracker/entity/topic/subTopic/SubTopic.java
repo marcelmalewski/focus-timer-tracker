@@ -23,6 +23,7 @@ public class SubTopic implements Topic {
 	@Version
 	private Integer version;
 
+	@NotNull
 	private String name;
 
 	@ManyToOne

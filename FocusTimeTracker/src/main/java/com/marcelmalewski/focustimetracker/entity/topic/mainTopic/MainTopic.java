@@ -24,6 +24,7 @@ public class MainTopic implements Topic {
 	@Version
 	private Integer version;
 
+	@NotNull
 	private String name;
 
 	@ManyToOne
