@@ -2,6 +2,8 @@ package com.marcelmalewski.focustimetracker.entity.alarmsettings;
 
 import com.marcelmalewski.focustimetracker.entity.person.Person;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,9 +24,11 @@ public class AlarmSettings {
 	@Version
 	private Integer version;
 
-	private int volume;
+	@NotNull
+	private Integer volume;
 
 	@OneToOne(mappedBy = "alarmSettings")
+	@NotNull
 	private Person owner;
 
 	@Override
