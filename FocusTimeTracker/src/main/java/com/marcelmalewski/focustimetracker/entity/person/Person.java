@@ -32,9 +32,12 @@ public class Person  implements UserDetails {
 	private Integer version;
 
 	@Column(unique = true)
+	@NotNull
 	private String login;
+	@NotNull
 	private String password;
 	@Column(unique = true)
+	@NotNull
 	private String email;
 	@CreationTimestamp
 	@Column(updatable = false)
