@@ -3,8 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <title>Timer home home</title>
-    <link th:href="@{/output.css}" rel="stylesheet" />
-    <!--    <link href="../../static/output.css" rel="stylesheet" />-->
+    <!--    <link th:href="@{/output.css}" rel="stylesheet" />-->
+    <link href="../../static/output.css" rel="stylesheet" />
   </head>
   <body>
     <div
@@ -35,28 +35,63 @@
           </select>
         </form>
 
-        <div class="my-20 flex flex-col items-center justify-center gap-3">
+        <div
+          class="my-20 flex flex-col items-center justify-center gap-3 rounded-full"
+        >
           <p class="text-2xl">5h 20m 0s</p>
-          <p id="timer" class="text-5xl"></p>
+          <!--          <p id="timer" class="text-5xl"></p>-->
+          <p class="text-2xl">
+            <input
+              type="number"
+              id="hours"
+              name="hours"
+              min="0"
+              max="99"
+              class="w-20 rounded-lg border p-2 text-black focus:outline-none"
+            />
+            <label class="" for="hours">h</label>
+
+            <input
+              type="number"
+              id="minutes"
+              name="minutes"
+              min="0"
+              max="60"
+              class="w-20 rounded-lg border p-2 text-black focus:outline-none"
+            />
+            <label class="" for="minutes">m</label>
+
+            <input
+              type="number"
+              id="seconds"
+              name="seconds"
+              min="0"
+              max="60"
+              class="w-20 rounded-lg border p-2 text-black focus:outline-none"
+            />
+            <label class="" for="seconds">s</label>
+          </p>
           <p class="text-2xl">Focus</p>
         </div>
 
         <script>
-          let time = 0;
+          let startTime = 500;
 
           setInterval(function () {
-            time++;
+            if (startTime > 0) {
+              startTime--;
+            }
 
-            let seconds = time % 60;
-            let minutes = Math.floor(time / 60) % 60;
-            let hours = Math.floor(time / 60 / 60);
+            let seconds = startTime % 60;
+            let minutes = Math.floor(startTime / 60) % 60;
+            let hours = Math.floor(startTime / 60 / 60);
 
             document.getElementById("timer").innerHTML =
               hours + "h " + minutes + "m " + seconds + "s ";
           }, 1000);
         </script>
 
-        <div class="text-lg">Start</div>
+        <button class="text-lg">Start</button>
 
         <div class="text-lg">Stopwatch -></div>
       </div>
