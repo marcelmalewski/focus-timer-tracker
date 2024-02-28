@@ -22,7 +22,9 @@ public class FocusSession {
 	@Version
 	private Integer version;
 
+	@NotNull
 	private String sessionType; //timer || stopwatch
+	@NotNull
 	private Boolean finished;
 
 	@OneToMany(mappedBy = "focusSession")
