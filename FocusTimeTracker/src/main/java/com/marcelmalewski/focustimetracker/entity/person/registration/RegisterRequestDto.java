@@ -6,17 +6,18 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-//TODO temp size validations values
+import static com.marcelmalewski.focustimetracker.entity.person.PersonValidationConstants.*;
+
 //TODO add password validation
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class RegisterRequestDto {
-	@Size(min = 3, max = 20)
+	@Size(min = LOGIN_MIN_SIZE , max = LOGIN_MAX_SIZE)
 	@NotBlank
 	private String login;
-	@Size(min = 3, max = 20)
+	@Size(min = PASSWORD_MIN_SIZE, max = PASSWORD_MAX_SIZE)
 	@NotBlank
 	private String password;
 	@Email
