@@ -12,7 +12,7 @@ import java.util.List;
 @Controller
 public class TimerController {
 	@Operation(summary = "Timer home view")
-	@GetMapping("/timer/home")
+	@GetMapping("/timer")
 	public String getTimerHomeView(Model model) {
 		Integer latestTimerTime = 325;
 		model.addAttribute("latestTimerTime", latestTimerTime);
@@ -30,7 +30,10 @@ public class TimerController {
 	}
 
 	@PutMapping("/timer/running")
-	public String getTime() {
-		return "/timer/timerDivRunning";
+	public String getTime(Model model) {
+		int timerSetTime = 300;
+		model.addAttribute("timerSetTime", timerSetTime);
+
+		return "/timer/timerBoxStageRunning";
 	}
 }

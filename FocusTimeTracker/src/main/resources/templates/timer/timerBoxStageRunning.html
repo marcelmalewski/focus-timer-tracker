@@ -2,7 +2,11 @@
   <div
     class="my-20 flex flex-col items-center justify-center gap-3 rounded-full"
   >
-    <div class="text-2xl">5h 20m 0s</div>
+    <div
+      class="text-2xl"
+      th:value="${timerSetTime}"
+      th:text="${timerSetTime}"
+    ></div>
 
     <div id="timer" class="text-5xl"></div>
 
