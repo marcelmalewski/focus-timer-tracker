@@ -2,9 +2,14 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
   <head>
     <meta charset="UTF-8" />
-    <title>Timer home home</title>
-    <!--    <link th:href="@{/output.css}" rel="stylesheet" />-->
-    <link href="../../static/output.css" rel="stylesheet" />
+    <title>Timer</title>
+    <script
+      src="https://unpkg.com/htmx.org@1.9.10"
+      integrity="sha384-D1Kt99CQMDuVetoL1lrYwg5t+9QdHe7NLX/SoJYkXDFfX37iInKRy5xLSi8nO7UC"
+      crossorigin="anonymous"
+    ></script>
+    <link th:href="@{/output.css}" rel="stylesheet" />
+    <!--    <link href="../../static/output.css" rel="stylesheet" />-->
   </head>
   <body>
     <div
@@ -38,9 +43,9 @@
         <div
           class="my-20 flex flex-col items-center justify-center gap-3 rounded-full"
         >
-          <p class="text-2xl">5h 20m 0s</p>
+          <div class="text-2xl">5h 20m 0s</div>
           <!--          <p id="timer" class="text-5xl"></p>-->
-          <p class="text-2xl">
+          <div id="timer-div" class="text-2xl">
             <input
               type="number"
               id="hours"
@@ -70,28 +75,19 @@
               class="w-20 rounded-lg border p-2 text-black focus:outline-none"
             />
             <label class="" for="seconds">s</label>
-          </p>
+          </div>
           <p class="text-2xl">Focus</p>
         </div>
 
-        <script>
-          let startTime = 500;
-
-          setInterval(function () {
-            if (startTime > 0) {
-              startTime--;
-            }
-
-            let seconds = startTime % 60;
-            let minutes = Math.floor(startTime / 60) % 60;
-            let hours = Math.floor(startTime / 60 / 60);
-
-            document.getElementById("timer").innerHTML =
-              hours + "h " + minutes + "m " + seconds + "s ";
-          }, 1000);
-        </script>
-
-        <button class="text-lg">Start</button>
+        <button
+          hx-put="/timer/running"
+          hx-trigger="click"
+          hx-target="#timer-div"
+          hx-swap="outerHTML"
+          class="bg-base-button hover:bg-base-button-hov rounded-md px-4 py-2 text-xl duration-200"
+        >
+          Start
+        </button>
 
         <div class="text-lg">Stopwatch -></div>
       </div>
