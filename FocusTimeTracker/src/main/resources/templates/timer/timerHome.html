@@ -40,54 +40,55 @@
           </select>
         </form>
 
-        <div
-          class="my-20 flex flex-col items-center justify-center gap-3 rounded-full"
-        >
-          <div class="text-2xl">5h 20m 0s</div>
-          <!--          <p id="timer" class="text-5xl"></p>-->
-          <div id="timer-div" class="text-2xl">
-            <input
-              type="number"
-              id="hours"
-              name="hours"
-              min="0"
-              max="99"
-              class="w-20 rounded-lg border p-2 text-black focus:outline-none"
-            />
-            <label class="" for="hours">h</label>
+        <div id="timer-box">
+          <div
+            class="my-20 flex flex-col items-center justify-center gap-3 rounded-full"
+          >
+            <div class="text-2xl">5h 20m 0s</div>
+            <div class="text-2xl">
+              <input
+                type="number"
+                id="hours"
+                name="hours"
+                min="0"
+                max="99"
+                class="w-20 rounded-lg border p-2 text-black focus:outline-none"
+              />
+              <label class="" for="hours">h</label>
 
-            <input
-              type="number"
-              id="minutes"
-              name="minutes"
-              min="0"
-              max="60"
-              class="w-20 rounded-lg border p-2 text-black focus:outline-none"
-            />
-            <label class="" for="minutes">m</label>
+              <input
+                type="number"
+                id="minutes"
+                name="minutes"
+                min="0"
+                max="60"
+                class="w-20 rounded-lg border p-2 text-black focus:outline-none"
+              />
+              <label class="" for="minutes">m</label>
 
-            <input
-              type="number"
-              id="seconds"
-              name="seconds"
-              min="0"
-              max="60"
-              class="w-20 rounded-lg border p-2 text-black focus:outline-none"
-            />
-            <label class="" for="seconds">s</label>
+              <input
+                type="number"
+                id="seconds"
+                name="seconds"
+                min="0"
+                max="60"
+                class="w-20 rounded-lg border p-2 text-black focus:outline-none"
+              />
+              <label class="" for="seconds">s</label>
+            </div>
+            <p class="text-2xl">Focus</p>
           </div>
-          <p class="text-2xl">Focus</p>
-        </div>
 
-        <button
-          hx-put="/timer/running"
-          hx-trigger="click"
-          hx-target="#timer-div"
-          hx-swap="outerHTML"
-          class="bg-base-button hover:bg-base-button-hov rounded-md px-4 py-2 text-xl duration-200"
-        >
-          Start
-        </button>
+          <button
+            hx-put="/timer/running"
+            hx-trigger="click"
+            hx-target="#timer-div"
+            hx-swap="outerHTML"
+            class="bg-base-button hover:bg-base-button-hov rounded-md px-4 py-2 text-xl duration-200"
+          >
+            Start
+          </button>
+        </div>
 
         <div class="text-lg">Stopwatch -></div>
       </div>
