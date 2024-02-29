@@ -40,7 +40,7 @@
           </select>
         </form>
 
-        <div id="timer-box">
+        <div id="timer-box" class="flex flex-col items-center justify-center">
           <div
             class="my-20 flex flex-col items-center justify-center gap-3 rounded-full"
           >
@@ -82,7 +82,7 @@
           <button
             hx-put="/timer/running"
             hx-trigger="click"
-            hx-target="#timer-div"
+            hx-target="#timer-box"
             hx-swap="outerHTML"
             class="bg-base-button hover:bg-base-button-hov rounded-md px-4 py-2 text-xl duration-200"
           >
