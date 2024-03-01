@@ -8,6 +8,7 @@
       integrity="sha384-D1Kt99CQMDuVetoL1lrYwg5t+9QdHe7NLX/SoJYkXDFfX37iInKRy5xLSi8nO7UC"
       crossorigin="anonymous"
     ></script>
+    <script src="https://unpkg.com/htmx.org/dist/ext/json-enc.js"></script>
     <link th:href="@{/output.css}" rel="stylesheet" />
     <!--    <link href="../../static/output.css" rel="stylesheet" />-->
   </head>
@@ -81,9 +82,11 @@
 
           <button
             hx-put="/timer/running"
+            hx-ext="json-enc"
             hx-trigger="click"
             hx-target="#timer-box"
             hx-swap="outerHTML"
+            hx-include="[name='hours'], [name='minutes'], [name='seconds']"
             class="bg-base-button hover:bg-base-button-hov rounded-md px-4 py-2 text-xl duration-200"
           >
             Start
