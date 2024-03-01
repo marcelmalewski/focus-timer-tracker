@@ -45,6 +45,9 @@ public class Person  implements UserDetails {
 
 	@NotNull
 	@Builder.Default
+	private Integer latestTimerSetTime = 0;
+	@NotNull
+	@Builder.Default
 	private Boolean timerAutoBreak = false;
 	@NotNull
 	@Builder.Default
