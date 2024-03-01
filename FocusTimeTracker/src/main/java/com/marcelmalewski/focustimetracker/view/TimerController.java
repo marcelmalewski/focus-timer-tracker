@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,12 +27,12 @@ public class TimerController {
 
 		topics.removeFirst();
 		model.addAttribute("topics", topics);
-		return "timer/timerHome";
+		return "/timer/timerBase";
 	}
 
 	@PutMapping("/timer/running")
-	public String getTime(Model model) {
-		int timerSetTime = 300;
+	public String getTime(Model model, @RequestBody TimerBoxStageRunningDto timerBoxStageRunningDto) {
+		int timerSetTime = (timerBoxStageRunningDto.hours() * 60 * 60) + (timerBoxStageRunningDto.minutes() * 60) + timerBoxStageRunningDto.seconds();
 		model.addAttribute("timerSetTime", timerSetTime);
 
 		return "/timer/timerBoxStageRunning";
