@@ -1,7 +1,5 @@
-<div id="timer-box" class="flex flex-col items-center justify-center">
-  <div
-    class="my-20 flex flex-col items-center justify-center gap-3 rounded-full"
-  >
+<div id="timer-box" class="mt-20 flex flex-col items-center justify-center">
+  <div class="mb-20 flex flex-col items-center justify-center gap-3">
     <div
       class="text-2xl"
       th:value="${timerSetTime}"
@@ -15,12 +13,14 @@
 
   <button
     hx-put="/timer/running"
+    hx-ext="json-enc"
     hx-trigger="click"
     hx-target="#timer-box"
     hx-swap="outerHTML"
+    hx-include="[name='hours'], [name='minutes'], [name='seconds']"
     class="bg-base-button hover:bg-base-button-hov rounded-md px-4 py-2 text-xl duration-200"
   >
-    Stop
+    Start
   </button>
 </div>
 
@@ -28,15 +28,15 @@
   let startTime = [[${timerSetTime}]];
 
   setInterval(function () {
-    if (startTime > 0) {
-      startTime--;
-    }
+      if (startTime > 0) {
+          startTime--;
+      }
 
-    let seconds = startTime % 60;
-    let minutes = Math.floor(startTime / 60) % 60;
-    let hours = Math.floor(startTime / 60 / 60);
+      let seconds = startTime % 60;
+      let minutes = Math.floor(startTime / 60) % 60;
+      let hours = Math.floor(startTime / 60 / 60);
 
-    document.getElementById("timer").innerHTML =
-      hours + "h " + minutes + "m " + seconds + "s ";
+      document.getElementById("timer").innerHTML =
+          hours + "h " + minutes + "m " + seconds + "s ";
   }, 1000);
 </script>
