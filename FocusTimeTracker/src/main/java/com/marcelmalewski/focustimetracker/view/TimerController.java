@@ -32,6 +32,9 @@ public class TimerController {
 
 	@PutMapping("/timer/running")
 	public String getTime(Model model, @RequestBody TimerBoxStageRunningDto timerBoxStageRunningDto) {
+		String timerSetTimeAsString = timerBoxStageRunningDto.hours() + "h " + timerBoxStageRunningDto.minutes() + "m " + timerBoxStageRunningDto.seconds() + "s ";
+		model.addAttribute("timerSetTimeAsString", timerSetTimeAsString);
+
 		int timerSetTime = (timerBoxStageRunningDto.hours() * 60 * 60) + (timerBoxStageRunningDto.minutes() * 60) + timerBoxStageRunningDto.seconds();
 		model.addAttribute("timerSetTime", timerSetTime);
 
