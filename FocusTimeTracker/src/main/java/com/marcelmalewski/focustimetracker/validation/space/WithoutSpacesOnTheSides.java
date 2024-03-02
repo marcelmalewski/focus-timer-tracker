@@ -6,11 +6,12 @@ import jakarta.validation.Payload;
 import java.lang.annotation.*;
 
 @Documented
-@Constraint(validatedBy = SpaceValidator.class)
+@Constraint(validatedBy = SpaceWithinAWordValidator.class)
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface StringWithoutSpaces {
-	String message() default "must not contain spaces";
+public @interface WithoutSpacesOnTheSides {
+	String message() default "must not contain spaces on the sides";
 	Class<?>[] groups() default {};
 	Class<? extends Payload>[] payload() default {};
 }
+

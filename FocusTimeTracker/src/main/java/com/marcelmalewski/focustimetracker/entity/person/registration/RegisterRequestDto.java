@@ -1,6 +1,7 @@
 package com.marcelmalewski.focustimetracker.entity.person.registration;
 
-import com.marcelmalewski.focustimetracker.validation.space.StringWithoutSpaces;
+import com.marcelmalewski.focustimetracker.validation.space.WithoutSpacesOnTheSides;
+import com.marcelmalewski.focustimetracker.validation.space.WithoutSpacesWithinAWord;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -17,10 +18,12 @@ import static com.marcelmalewski.focustimetracker.entity.person.PersonValidation
 public class RegisterRequestDto {
 	@Size(min = LOGIN_MIN_SIZE , max = LOGIN_MAX_SIZE)
 	@NotBlank
+	@WithoutSpacesOnTheSides
 	private String login;
 	@Size(min = PASSWORD_MIN_SIZE, max = PASSWORD_MAX_SIZE)
 	@NotBlank
-	@StringWithoutSpaces
+	@WithoutSpacesWithinAWord
+	@WithoutSpacesOnTheSides
 	private String password;
 	@Email
 	@NotBlank
