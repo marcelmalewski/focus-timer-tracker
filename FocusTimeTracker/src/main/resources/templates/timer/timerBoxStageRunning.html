@@ -11,25 +11,44 @@
     <p class="text-2xl">Focus</p>
   </div>
 
-  <button
-    hx-put="/timer/running"
-    hx-ext="json-enc"
-    hx-trigger="click"
-    hx-target="#timer-box"
-    hx-swap="outerHTML"
-    hx-include="[name='hours'], [name='minutes'], [name='seconds']"
-    class="bg-base-button hover:bg-base-button-hov rounded-md px-4 py-2 text-xl duration-200"
-  >
-    Stop
-  </button>
-</div>
+  <div class="grid grid-cols-2 gap-3">
+    <button
+      hx-put="/timer/paused"
+      hx-ext="json-enc"
+      hx-trigger="click"
+      hx-target="#timer-box"
+      hx-swap="outerHTML"
+      hx-include="[id='timer']"
+      class="bg-base-button hover:bg-base-button-hov rounded-md px-4 py-2 text-xl duration-200"
+    >
+      Pause
+    </button>
 
-<script>
-  let startTime = [[${timerSetTime}]];
+    <button
+      class="bg-base-button hover:bg-base-button-hov rounded-md px-4 py-2 text-xl duration-200"
+    >
+      Home
+    </button>
 
-  setInterval(function () {
+    <button
+      class="bg-base-button hover:bg-base-button-hov rounded-md px-4 py-2 text-xl duration-200"
+    >
+      Short break
+    </button>
+
+    <button
+      class="bg-base-button hover:bg-base-button-hov rounded-md px-4 py-2 text-xl duration-200"
+    >
+      Long break
+    </button>
+  </div>
+
+  <script>
+    let startTime = [[${remainingTime}]];
+
+    setInterval(function () {
       if (startTime > 0) {
-          startTime--;
+        startTime--;
       }
 
       let seconds = startTime % 60;
@@ -38,5 +57,8 @@
 
       document.getElementById("timer").innerHTML =
           hours + "h " + minutes + "m " + seconds + "s ";
-  }, 1000);
-</script>
+
+      document.getElementById("timer").setAttribute("value", "start");
+    }, 1000);
+  </script>
+</div>
