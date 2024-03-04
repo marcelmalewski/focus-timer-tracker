@@ -1,11 +1,6 @@
 <div id="timer-box" class="mt-20 flex flex-col items-center justify-center">
   <div class="mb-20 flex flex-col items-center justify-center gap-3">
-    <div
-      id="set-time"
-      class="text-2xl"
-      th:value="${setTime}"
-      th:text="${setTimeAsString}"
-    ></div>
+    <div id="set-time" class="text-2xl" th:text="${setTimeAsString}"></div>
 
     <div id="timer" class="text-5xl" th:value="${remainingTime}"></div>
 
@@ -19,7 +14,7 @@
       hx-trigger="click"
       hx-target="#timer-box"
       hx-swap="outerHTML"
-      hx-vals="js:{remainingTime: document.getElementById('timer').getAttribute('value'), setTime: document.getElementById('set-time').getAttribute('value')}"
+      hx-vals="js:{remainingTime: document.getElementById('timer').getAttribute('value'), remainingTimeAsString: document.getElementById('timer').innerHTML, setTimeAsString: document.getElementById('set-time').innerHTML}"
       class="bg-base-button hover:bg-base-button-hov rounded-md px-4 py-2 text-xl duration-200"
     >
       Pause
@@ -48,21 +43,18 @@
     let remainingTime = [[${remainingTime}]];
 
     setInterval(function () {
-      if (remainingTime > 0) {
-        remainingTime--;
-      }
+        if (remainingTime > 0) {
+            remainingTime--;
+        }
 
-      let seconds = remainingTime % 60;
-      let minutes = Math.floor(remainingTime / 60) % 60;
-      let hours = Math.floor(remainingTime / 60 / 60);
+        let seconds = remainingTime % 60;
+        let minutes = Math.floor(remainingTime / 60) % 60;
+        let hours = Math.floor(remainingTime / 60 / 60);
 
-      document.getElementById("timer").innerHTML =
-          hours + "h " + minutes + "m " + seconds + "s ";
+        document.getElementById("timer").innerHTML =
+            hours + "h " + minutes + "m " + seconds + "s ";
 
-      document.getElementById("timer").setAttribute("value", remainingTime.toString());
+        document.getElementById("timer").setAttribute("value", remainingTime.toString());
     }, 1000);
   </script>
 </div>
-
-<!--hx-include="[name='remaining-time']"-->
-<!--hx-params="remainingTime"-->
