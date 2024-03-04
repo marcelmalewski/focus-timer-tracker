@@ -36,9 +36,6 @@ public class TimerController {
 		String setTimeAsString = time.hours() + "h " + time.minutes() + "m " + time.seconds() + "s ";
 		model.addAttribute("setTimeAsString", setTimeAsString);
 
-		int setTime = (time.hours() * 60 * 60) + (time.minutes() * 60) + time.seconds();
-		model.addAttribute("setTime", setTime);
-
 		int remainingTime = (time.hours() * 60 * 60) + (time.minutes() * 60) + time.seconds();
 		model.addAttribute("remainingTime", remainingTime);
 
@@ -47,16 +44,8 @@ public class TimerController {
 
 	@PutMapping("/timer/paused")
 	public String getTimerBoxStagePaused(Model model, @RequestBody TimerStageChangedWithSecondsDto dto) {
-		int setTime = Integer.parseInt(dto.setTime());
-		// TODO math.floor?
-		int setTimeSeconds = setTime % 60;
-		int setTimeMinutes = (setTime / 60) % 60;
-		int setTimeHours = (setTime / 60 / 60);
-
-		String setTimeAsString = setTimeHours + "h " + setTimeMinutes + "m " + setTimeSeconds + "s ";
-		model.addAttribute("setTimeAsString", setTimeAsString);
-
-		model.addAttribute("remainingTimeAsString", "test");
+		model.addAttribute("setTimeAsString", dto.setTimeAsString());
+		model.addAttribute("remainingTimeAsString", dto.remainingTimeAsString());
 
 
 		return "/timer/timerBoxStagePaused";
