@@ -27,17 +27,38 @@ public class TimerController {
 
 		topics.removeFirst();
 		model.addAttribute("topics", topics);
+
 		return "/timer/timerBase";
 	}
 
 	@PutMapping("/timer/running")
-	public String getTime(Model model, @RequestBody TimerBoxStageRunningDto timerBoxStageRunningDto) {
-		String timerSetTimeAsString = timerBoxStageRunningDto.getHours() + "h " + timerBoxStageRunningDto.getMinutes() + "m " + timerBoxStageRunningDto.getSeconds() + "s ";
-		model.addAttribute("timerSetTimeAsString", timerSetTimeAsString);
+	public String getTimerBoxStageRunning(Model model, @RequestBody Time time) {
+		String setTimeAsString = time.hours() + "h " + time.minutes() + "m " + time.seconds() + "s ";
+		model.addAttribute("setTimeAsString", setTimeAsString);
 
-		int timerSetTime = (timerBoxStageRunningDto.getHours() * 60 * 60) + (timerBoxStageRunningDto.getMinutes() * 60) + timerBoxStageRunningDto.getSeconds();
-		model.addAttribute("timerSetTime", timerSetTime);
+		int setTime = (time.hours() * 60 * 60) + (time.minutes() * 60) + time.seconds();
+		model.addAttribute("setTime", setTime);
+
+		int remainingTime = (time.hours() * 60 * 60) + (time.minutes() * 60) + time.seconds();
+		model.addAttribute("remainingTime", remainingTime);
 
 		return "/timer/timerBoxStageRunning";
+	}
+
+	@PutMapping("/timer/paused")
+	public String getTimerBoxStagePaused(Model model, @RequestBody TimerStageChangedWithSecondsDto dto) {
+		int setTime = Integer.parseInt(dto.setTime());
+		// TODO math.floor?
+		int setTimeSeconds = setTime % 60;
+		int setTimeMinutes = (setTime / 60) % 60;
+		int setTimeHours = (setTime / 60 / 60);
+
+		String setTimeAsString = setTimeHours + "h " + setTimeMinutes + "m " + setTimeSeconds + "s ";
+		model.addAttribute("setTimeAsString", setTimeAsString);
+
+		model.addAttribute("remainingTimeAsString", "test");
+
+
+		return "/timer/timerBoxStagePaused";
 	}
 }
