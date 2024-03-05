@@ -4,7 +4,7 @@
 
     <div id="timer" class="text-5xl" th:value="${remainingTime}"></div>
 
-    <p class="text-2xl">Focus</p>
+    <p id="current-stage" class="text-2xl">Focus</p>
   </div>
 
   <div class="grid grid-cols-2 gap-3">
@@ -39,17 +39,27 @@
     </button>
   </div>
 
-  <script>
+  <script id="timer-script">
     let remainingTime = [[${remainingTime}]];
+    let intervalId;
 
-    setInterval(function () {
+    intervalId = setInterval(function () {
+        const currentStage = document.getElementById("current-stage").innerHTML;
+
+        if (currentStage === "Pause") {
+            const script = document.getElementById("timer-script");
+            script.remove();
+            clearInterval(intervalId);
+            return;
+        }
+
         if (remainingTime > 0) {
             remainingTime--;
         }
 
-        let seconds = remainingTime % 60;
-        let minutes = Math.floor(remainingTime / 60) % 60;
-        let hours = Math.floor(remainingTime / 60 / 60);
+        const seconds = remainingTime % 60;
+        const minutes = Math.floor(remainingTime / 60) % 60;
+        const hours = Math.floor(remainingTime / 60 / 60);
 
         document.getElementById("timer").innerHTML =
             hours + "h " + minutes + "m " + seconds + "s ";
