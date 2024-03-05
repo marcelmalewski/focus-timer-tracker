@@ -2,7 +2,12 @@
   <div class="mb-20 flex flex-col items-center justify-center gap-3">
     <div id="set-time" class="text-2xl" th:text="${setTimeAsString}"></div>
 
-    <div id="timer" class="text-5xl" th:value="${remainingTime}"></div>
+    <div
+      id="timer"
+      class="text-5xl"
+      th:value="${remainingTime}"
+      th:text="${remainingTimeAsString}"
+    ></div>
 
     <p id="current-stage" class="text-2xl">Focus</p>
   </div>
@@ -47,8 +52,6 @@
         const currentStage = document.getElementById("current-stage").innerHTML;
 
         if (currentStage === "Pause") {
-            const script = document.getElementById("timer-script");
-            script.remove();
             clearInterval(intervalId);
             return;
         }
