@@ -1,6 +1,6 @@
-package com.marcelmalewski.focustimetracker.view;
+package com.marcelmalewski.focustimetracker.view.dto;
 
-public record Time(Integer hours, Integer minutes, Integer seconds) {
+public record TimerChangedToRunningDto(Integer hours, Integer minutes, Integer seconds) {
 
 	@Override
 	public Integer hours() {
