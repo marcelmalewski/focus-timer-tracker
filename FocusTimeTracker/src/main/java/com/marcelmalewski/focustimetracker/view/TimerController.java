@@ -1,5 +1,8 @@
 package com.marcelmalewski.focustimetracker.view;
 
+import com.marcelmalewski.focustimetracker.view.dto.TimerChangedToPausedDto;
+import com.marcelmalewski.focustimetracker.view.dto.TimerChangedToResumedDto;
+import com.marcelmalewski.focustimetracker.view.dto.TimerChangedToRunningDto;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -32,23 +35,33 @@ public class TimerController {
 	}
 
 	@PutMapping("/timer/running")
-	public String getTimerBoxStageRunning(Model model, @RequestBody Time time) {
-		String setTimeAsString = time.hours() + "h " + time.minutes() + "m " + time.seconds() + "s ";
+	public String getTimerBoxStageRunning(Model model, @RequestBody TimerChangedToRunningDto timerChangedToRunningDto) {
+		String setTimeAsString = timerChangedToRunningDto.hours() + "h " + timerChangedToRunningDto.minutes() + "m " + timerChangedToRunningDto.seconds() + "s ";
 		model.addAttribute("setTimeAsString", setTimeAsString);
 
-		String remainigTimeAsString = time.hours() + "h " + time.minutes() + "m " + time.seconds() + "s ";
+		String remainigTimeAsString = timerChangedToRunningDto.hours() + "h " + timerChangedToRunningDto.minutes() + "m " + timerChangedToRunningDto.seconds() + "s ";
 		model.addAttribute("remainingTimeAsString", remainigTimeAsString);
 
-		int remainingTime = (time.hours() * 60 * 60) + (time.minutes() * 60) + time.seconds();
+		int remainingTime = (timerChangedToRunningDto.hours() * 60 * 60) + (timerChangedToRunningDto.minutes() * 60) + timerChangedToRunningDto.seconds();
 		model.addAttribute("remainingTime", remainingTime);
 
 		return "/timer/timerBoxStageRunning";
 	}
 
-	@PutMapping("/timer/paused")
-	public String getTimerBoxStagePaused(Model model, @RequestBody TimerChangedToRunningDto dto) {
+	@PutMapping("/timer/resumed")
+	public String getTimerBoxStageResumed(Model model, @RequestBody TimerChangedToResumedDto dto) {
 		model.addAttribute("setTimeAsString", dto.setTimeAsString());
 		model.addAttribute("remainingTimeAsString", dto.remainingTimeAsString());
+		model.addAttribute("remainingTime", dto.remainingTime());
+
+		return "/timer/timerBoxStageRunning";
+	}
+
+	@PutMapping("/timer/paused")
+	public String getTimerBoxStagePaused(Model model, @RequestBody TimerChangedToPausedDto dto) {
+		model.addAttribute("setTimeAsString", dto.setTimeAsString());
+		model.addAttribute("remainingTimeAsString", dto.remainingTimeAsString());
+		model.addAttribute("remainingTime", dto.remainingTime());
 
 		return "/timer/timerBoxStagePaused";
 	}
