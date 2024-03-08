@@ -43,9 +43,17 @@ public class Person  implements UserDetails {
 	@Column(updatable = false)
 	private LocalDate createdAt;
 
+	// TODO pewnie trzeba z tego wydzielić osobne obiekty
 	@NotNull
 	@Builder.Default
-	private Integer latestTimerSetTime = 0;
+	private Integer latestSetTimeHours = 0;
+	@NotNull
+	@Builder.Default
+	private Integer latestSetTimeMinutes = 0;
+	@NotNull
+	@Builder.Default
+	private Integer latestSetTimeSeconds = 0;
+
 	@NotNull
 	@Builder.Default
 	private Boolean timerAutoBreak = false;
