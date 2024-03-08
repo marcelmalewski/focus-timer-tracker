@@ -33,6 +33,7 @@ public class TimerController {
 
 		return "/timer/timerBase";
 	}
+	//test
 
 	@PutMapping("/timer/running")
 	public String getTimerBoxStageRunning(Model model, @RequestBody TimerChangedToRunningDto timerChangedToRunningDto) {
