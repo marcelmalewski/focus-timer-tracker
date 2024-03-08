@@ -57,7 +57,7 @@
                     name="hours"
                     min="0"
                     max="99"
-                    value="00"
+                    th:value="${latestSetTimeHours}"
                     class="w-20 rounded-lg border p-2 text-black focus:outline-none"
                   />
                   <label for="hours">h</label>
@@ -70,7 +70,7 @@
                     name="minutes"
                     min="0"
                     max="60"
-                    value="00"
+                    th:value="${latestSetTimeMinutes}"
                     class="w-20 rounded-lg border p-2 text-black focus:outline-none"
                   />
                   <label for="minutes">m</label>
@@ -83,7 +83,7 @@
                     name="seconds"
                     min="0"
                     max="60"
-                    value="00"
+                    th:value="${latestSetTimeSeconds}"
                     class="w-20 rounded-lg border p-2 text-black focus:outline-none"
                   />
                   <label for="seconds">s</label>
