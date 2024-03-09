@@ -8,6 +8,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @AllArgsConstructor
@@ -34,12 +35,16 @@ public class MainTopic implements Topic {
 
 	@OneToMany(mappedBy = "mainTopic")
 	@NotNull
-	private List<SubTopic> subTopics;
+	private List<SubTopic> subTopics = new ArrayList<>();
 
 	@ManyToOne
 	@JoinColumn(name = "focussession_id")
-	@NotNull
 	private FocusSession focusSession;
+
+	public MainTopic(String name, Person owner) {
+		this.name = name;
+		this.owner = owner;
+	}
 
 	@Override
 	public String toString() {

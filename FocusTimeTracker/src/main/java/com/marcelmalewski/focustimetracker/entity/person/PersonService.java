@@ -35,8 +35,8 @@ public class PersonService {
 		return personRepository.existsByEmail(email);
 	}
 
-	public void create(Person person) {
-		personRepository.save(person);
+	public Person create(Person person) {
+		return personRepository.save(person);
 	}
 
 	public void throwExceptionAndLogoutIfAuthenticatedGamerNotFound(@NotNull Principal principal, @NotNull HttpServletRequest request,
