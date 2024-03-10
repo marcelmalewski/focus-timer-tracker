@@ -45,8 +45,8 @@ public class Person implements UserDetails {
 	@Column(updatable = false)
 	private LocalDate createdAt;
 
-	// TODO pewnie trzeba z tego wydzielić osobne obiekty
-	// TODO potencjalne entity: LatestSetTime
+	// TODO Czy jest potrzeba wydzielania tutaj dodatkowych encji?
+	// LatestSetTime
 	@NotNull
 	@Builder.Default
 	private Integer latestSetTimeHours = 0;
@@ -57,7 +57,7 @@ public class Person implements UserDetails {
 	@Builder.Default
 	private Integer latestSetTimeSeconds = 0;
 
-	// TODO potencjalne entity: BreakSettings
+	// BreakSettings
 	@NotNull
 	@Builder.Default
 	private Boolean timerAutoBreak = false;
