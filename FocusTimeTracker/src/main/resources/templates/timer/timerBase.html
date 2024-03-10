@@ -31,13 +31,13 @@
             >
               <option
                 selected
-                th:value="${firstTopic}"
-                th:text="${firstTopic}"
+                th:value="${firstTopic.getName()}"
+                th:text="${firstTopic.getName()}"
               ></option>
               <option
                 th:each="topic: ${topics}"
-                th:value="${topic}"
-                th:text="${topic}"
+                th:value="${topic.getName()}"
+                th:text="${topic.getName()}"
               ></option>
             </select>
           </form>
