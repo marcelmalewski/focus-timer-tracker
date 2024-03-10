@@ -1,5 +1,6 @@
 package com.marcelmalewski.focustimetracker.entity.person;
 
+import com.marcelmalewski.focustimetracker.entity.person.exception.PersonNotFoundException;
 import com.marcelmalewski.focustimetracker.security.exception.AuthenticatedGamerNotFoundException;
 import com.marcelmalewski.focustimetracker.security.util.PrincipalExtractor;
 import com.marcelmalewski.focustimetracker.security.util.SecurityHelper;
@@ -7,11 +8,13 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.annotation.Validated;
 
 import java.security.Principal;
 import java.util.List;
 
 @Service
+@Validated
 public class PersonService {
 	private final PersonRepository personRepository;
 	private final PrincipalExtractor principalExtractor;
@@ -21,6 +24,10 @@ public class PersonService {
 		this.principalExtractor = principalExtractor;
 		this.personRepository = personRepository;
 		this.securityHelper = securityHelper;
+	}
+
+	public Person getPersonWithFetchedMainTopics(@NotNull Long id) {
+		return personRepository.findByIdWithFetchedMainTopics(id).orElseThrow(() -> new PersonNotFoundException(id));
 	}
 
 	public List<Person> findAll() {
