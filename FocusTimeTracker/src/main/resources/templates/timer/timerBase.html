@@ -118,7 +118,7 @@
               id="short-break"
               name="short-break"
               min="0"
-              value="0"
+              th:value="${shortBreak}"
               class="col-start-1 w-16 rounded-lg border p-2 text-black focus:outline-none"
             />
             <p class="ml-2 flex items-end justify-start text-2xl">min</p>
@@ -133,35 +133,23 @@
               id="long-break"
               name="long-break"
               min="0"
-              value="0"
+              th:value="${longBreak}"
               class="col-start-1 w-16 rounded-lg border p-2 text-black focus:outline-none"
             />
             <p class="ml-2 flex items-end justify-start text-2xl">min</p>
           </div>
 
-          <div class="flex flex-col">
+          <div class="flex flex-col" th:if="${timerAutoBreak}">
             <label for="interval">Interval</label>
             <input
               type="number"
               id="interval"
               name="interval"
               min="0"
-              value="0"
+              th:value="${interval}"
               class="w-20 rounded-lg border p-2 text-black focus:outline-none"
             />
           </div>
-
-          <button
-            hx-put="/person/break-settings"
-            hx-ext="json-enc"
-            hx-trigger="click"
-            hx-target="#timer-box"
-            hx-swap="outerHTML"
-            hx-include="[name='hours'], [name='minutes'], [name='seconds']"
-            class="bg-base-button hover:bg-base-button-hov rounded-md px-4 py-2 text-xl duration-200"
-          >
-            Save
-          </button>
         </div>
       </div>
 
