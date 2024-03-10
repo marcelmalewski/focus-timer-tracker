@@ -3,14 +3,12 @@ package com.marcelmalewski.focustimetracker.view;
 import com.marcelmalewski.focustimetracker.entity.person.Person;
 import com.marcelmalewski.focustimetracker.entity.person.PersonService;
 import com.marcelmalewski.focustimetracker.entity.topic.mainTopic.MainTopic;
-import com.marcelmalewski.focustimetracker.entity.topic.mainTopic.MainTopicService;
 import com.marcelmalewski.focustimetracker.view.dto.TimerChangedToPausedDto;
 import com.marcelmalewski.focustimetracker.view.dto.TimerChangedToResumedDto;
 import com.marcelmalewski.focustimetracker.view.dto.TimerChangedToRunningDto;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,7 +16,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import java.security.Principal;
-import java.util.ArrayList;
 import java.util.List;
 
 //TODO pewnie trzeba trochę rzeczy dać do serwisu czy coś hmm
@@ -33,10 +30,8 @@ public class TimerController {
 	@Operation(summary = "Timer home view")
 	@GetMapping("/timer")
 	public String getTimerHomeView(Principal principal, HttpServletRequest request, HttpServletResponse response, Model model) {
-		personService.throwExceptionAndLogoutIfAuthenticatedGamerNotFound(principal, request, response);
-
 		Long principalId = Long.valueOf(principal.getName());
-		Person principalData = personService.getPersonWithFetchedMainTopics(principalId);
+		Person principalData = personService.getPrincipalWithFetchedMainTopics(principalId, request, response);
 
 		model.addAttribute("timerAutoBreak", principalData.getTimerAutoBreak());
 
