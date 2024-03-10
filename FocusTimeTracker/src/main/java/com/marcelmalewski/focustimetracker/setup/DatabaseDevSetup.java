@@ -32,8 +32,6 @@ public class DatabaseDevSetup implements CommandLineRunner {
 			.latestSetTimeMinutes(12)
 			.latestSetTimeSeconds(40)
 			.timerAutoBreak(false)
-			.shortBreak(5)
-			.longBreak(20)
 			.build();
 
 		Person savedAdmin = personService.create(admin);

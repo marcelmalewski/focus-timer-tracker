@@ -25,7 +25,7 @@ import java.util.List;
 @Getter
 @Entity
 @Table(name = "person")
-public class Person  implements UserDetails {
+public class Person implements UserDetails {
 	@Id
 	@SequenceGenerator(name = "person_sequence", sequenceName = "person_sequence", allocationSize = 1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "person_sequence")
@@ -70,7 +70,9 @@ public class Person  implements UserDetails {
 	@NotNull
 	@Builder.Default
 	private Integer longBreak = 10;
-	private Integer interval;
+	@NotNull
+	@Builder.Default
+	private Integer interval = 0;
 
 	@OneToMany(mappedBy = "owner")
 	@ToString.Exclude
