@@ -46,6 +46,7 @@ public class Person  implements UserDetails {
 	private LocalDate createdAt;
 
 	// TODO pewnie trzeba z tego wydzielić osobne obiekty
+	// TODO potencjalne entity: LatestSetTime
 	@NotNull
 	@Builder.Default
 	private Integer latestSetTimeHours = 0;
@@ -56,6 +57,7 @@ public class Person  implements UserDetails {
 	@Builder.Default
 	private Integer latestSetTimeSeconds = 0;
 
+	// TODO potencjalne entity: BreakSettings
 	@NotNull
 	@Builder.Default
 	private Boolean timerAutoBreak = false;
