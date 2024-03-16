@@ -1,9 +1,12 @@
 package com.marcelmalewski.focustimetracker.entity.person;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 
-import java.util.List;
+import java.security.Principal;
 
 @Controller
 public class PersonController {
@@ -13,8 +16,9 @@ public class PersonController {
 		this.personService = personService;
 	}
 
-	@GetMapping(value = "/api/v1/persons")
-	public List<Person> findAll() {
-		return personService.findAll();
+	@PatchMapping(value = "person/timer-auto-break")
+	public void updateTimerAutoBreak(Principal principal, HttpServletRequest request, HttpServletResponse response) {
+		Long principalId = Long.valueOf(principal.getName());
+		personService.updatePrincipalTimerAutoBreak(principalId, true, request, response);
 	}
 }
