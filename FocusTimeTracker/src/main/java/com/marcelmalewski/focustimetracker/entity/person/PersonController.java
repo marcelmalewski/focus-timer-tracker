@@ -5,6 +5,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.hibernate.sql.Update;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,10 +21,14 @@ public class PersonController {
 	}
 
 	@PatchMapping(value = "person/timer-auto-break")
-	public void updateTimerAutoBreak(@RequestBody UpdateTimerAutoBreakDto updateTimerAutoBreakDto, Principal principal, HttpServletRequest request, HttpServletResponse response) {
+	public String updateTimerAutoBreak(@RequestBody UpdateTimerAutoBreakDto updateTimerAutoBreakDto, Principal principal, HttpServletRequest request, HttpServletResponse response, Model model) {
 		Long principalId = Long.valueOf(principal.getName());
 		boolean timerAutoBreakValue = updateTimerAutoBreakDto.timerAutoBreak() != null;
 
 		personService.updatePrincipalTimerAutoBreak(principalId, timerAutoBreakValue, request, response);
+		
+		model.addAttribute("timerAutoBreak", timerAutoBreakValue ? "On" : "Off");
+
+		return "timer/timerAutoBreakParagraph";
 	}
 }

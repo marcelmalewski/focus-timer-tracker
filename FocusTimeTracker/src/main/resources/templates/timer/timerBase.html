@@ -108,7 +108,10 @@
           </div>
         </div>
         <div class="flex flex-col items-center justify-center gap-3 p-4">
-          <div class="flex items-center justify-center gap-3 text-2xl">
+          <div
+            id="timerAutoBreakParagraph"
+            class="flex items-center justify-center gap-2 text-2xl"
+          >
             <p>Auto break:</p>
             <p th:text="${timerAutoBreak}"></p>
           </div>
@@ -173,7 +176,8 @@
 
           <button
             hx-patch="/person/timer-auto-break"
-            hx-swap="none"
+            hx-target="#timerAutoBreakParagraph"
+            hx-swap="outerHTML"
             hx-ext="json-enc"
             hx-include="[name='timerAutoBreak']"
             type="submit"
@@ -189,15 +193,16 @@
       let remainingTime;
       let intervalId;
 
-      document.addEventListener("htmx:afterRequest", function (evt) {
-        if (evt.detail.xhr.responseURL.includes("/person/timer-auto-break")) {
-          if (evt.detail.successful) {
-            alert("Timer auto break changed");
-          } else {
-            alert("Timer auto break not changed. Some error occurred ");
-          }
-        }
-      });
+      //TODO może to nie potrzebne?
+      // document.addEventListener("htmx:afterRequest", function (evt) {
+      //   if (evt.detail.xhr.responseURL.includes("/person/timer-auto-break")) {
+      //     if (evt.detail.successful) {
+      //       alert("Timer auto break changed");
+      //     } else {
+      //       alert("Timer auto break not changed. Some error occurred ");
+      //     }
+      //   }
+      // });
     </script>
   </body>
 </html>
