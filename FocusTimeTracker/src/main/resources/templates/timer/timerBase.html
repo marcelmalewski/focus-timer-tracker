@@ -96,7 +96,6 @@
             <button
               hx-put="/timer/running"
               hx-ext="json-enc"
-              hx-trigger="click"
               hx-target="#timer-box"
               hx-swap="outerHTML"
               hx-include="[name='hours'], [name='minutes'], [name='seconds']"
@@ -110,13 +109,13 @@
         </div>
         <div class="flex flex-col items-center justify-center gap-3 p-4">
           <div class="grid grid-cols-2">
-            <label for="short-break" class="col-span-2 col-start-1"
+            <label for="shortBreak" class="col-span-2 col-start-1"
               >Short break</label
             >
             <input
               type="number"
-              id="short-break"
-              name="short-break"
+              id="shortBreak"
+              name="shortBreak"
               min="0"
               th:value="${shortBreak}"
               class="col-start-1 w-16 rounded-lg border p-2 text-black focus:outline-none"
@@ -125,13 +124,13 @@
           </div>
 
           <div class="grid grid-cols-2">
-            <label for="long-break" class="col-span-2 col-start-1"
+            <label for="longBreak" class="col-span-2 col-start-1"
               >Long break</label
             >
             <input
               type="number"
-              id="long-break"
-              name="long-break"
+              id="longBreak"
+              name="longBreak"
               min="0"
               th:value="${longBreak}"
               class="col-start-1 w-16 rounded-lg border p-2 text-black focus:outline-none"
@@ -155,13 +154,45 @@
 
       <div class="absolute bottom-0 left-0 m-3">
         <a href="/logout" class="dash-animation text-xl"> Log out </a>
-        <div class="text-xl">Settings</div>
+
+        <div class="flex items-center justify-center gap-2 text-xl">
+          <label for="timerAutoBreak">Timer auto brak:</label>
+
+          <input
+            type="checkbox"
+            id="timerAutoBreak"
+            name="timerAutoBreak"
+            class="focus:outline-none"
+            checked
+          />
+
+          <button
+            hx-patch="/person/timer-auto-break"
+            hx-swap="none"
+            hx-ext="json-enc"
+            hx-include="[name='timerAutoBreak']"
+            type="submit"
+            class="bg-base-button hover:bg-base-button-hov mt-6 rounded-md px-4 py-2 text-xl duration-200"
+          >
+            Save
+          </button>
+        </div>
       </div>
     </div>
 
     <script>
       let remainingTime;
       let intervalId;
+
+      document.addEventListener("htmx:afterRequest", function (evt) {
+        if (evt.detail.xhr.responseURL.includes("/person/timer-auto-break")) {
+          if (evt.detail.successful) {
+            alert("Timer auto break changed");
+          } else {
+            alert("Timer auto break not changed. Some error occurred ");
+          }
+        }
+      });
     </script>
   </body>
 </html>

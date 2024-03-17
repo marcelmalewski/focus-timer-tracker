@@ -16,7 +16,6 @@
     <button
       hx-put="/timer/paused"
       hx-ext="json-enc"
-      hx-trigger="click"
       hx-target="#timer-box"
       hx-swap="outerHTML"
       hx-vals="js:{remainingTime: document.getElementById('timer').getAttribute('value'), remainingTimeAsString: document.getElementById('timer').innerHTML, setTimeAsString: document.getElementById('set-time').innerHTML}"
@@ -49,6 +48,7 @@
 
     intervalId = setInterval(function () {
         const currentStage = document.getElementById("current-stage").innerHTML;
+        console.log("second")
 
         if (currentStage === "Pause") {
             clearInterval(intervalId);
