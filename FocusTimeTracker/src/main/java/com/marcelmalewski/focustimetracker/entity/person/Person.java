@@ -45,7 +45,6 @@ public class Person implements UserDetails {
 	@Column(updatable = false)
 	private LocalDate createdAt;
 
-	// TODO Czy jest potrzeba wydzielania tutaj dodatkowych encji?
 	// LatestSetTime
 	@NotNull
 	@Builder.Default
@@ -57,7 +56,7 @@ public class Person implements UserDetails {
 	@Builder.Default
 	private Integer latestSetTimeSeconds = 0;
 
-	// BreakSettings
+	// Break settings
 	@NotNull
 	@Builder.Default
 	private Boolean timerAutoBreak = false;
@@ -72,7 +71,7 @@ public class Person implements UserDetails {
 	private Integer longBreak = 10;
 	@NotNull
 	@Builder.Default
-	private Integer interval = 0;
+	private Integer interval = 1;
 
 	@OneToMany(mappedBy = "owner")
 	@ToString.Exclude

@@ -1,5 +1,7 @@
 package com.marcelmalewski.focustimetracker.entity.person;
 
+import com.marcelmalewski.focustimetracker.view.dto.TimerChangedToRunningDto;
+import jakarta.persistence.criteria.CriteriaBuilder;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -25,4 +27,23 @@ public interface PersonRepository extends JpaRepository<Person, Long> {
 	@Query("UPDATE Person person SET person.timerAutoBreak = :timerAutoBreak WHERE person.id = :id")
 	@Transactional
 	int updateTimerAutoBreak(@Param(value = "id") long id, @Param(value = "timerAutoBreak") boolean timerAutoBreak);
+
+	@Modifying(clearAutomatically = true)
+	@Query("UPDATE Person person " +
+		"SET person.latestSetTimeHours = :hours," +
+		"person.latestSetTimeMinutes = :minutes," +
+		"person.latestSetTimeSeconds = :seconds," +
+		"person.shortBreak = :shortBreak," +
+		"person.longBreak = :longBreak," +
+		"person.interval = :interval " +
+		"WHERE person.id = :id")
+	@Transactional
+	int updatePrincipalAfterStartTimerRunning(@Param(value = "id") long id,
+																						@Param(value = "hours") Integer hours,
+																						@Param(value = "minutes") Integer minutes,
+																						@Param(value = "seconds") Integer seconds,
+																						@Param(value = "shortBreak") Integer shortBreak,
+																						@Param(value = "longBreak") Integer longBreak,
+																						@Param(value = "interval") Integer interval
+	);
 }
