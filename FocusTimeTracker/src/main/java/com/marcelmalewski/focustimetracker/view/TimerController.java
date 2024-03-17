@@ -33,7 +33,7 @@ public class TimerController {
 		Long principalId = Long.valueOf(principal.getName());
 		Person principalData = personService.getPrincipalWithFetchedMainTopics(principalId, request, response);
 
-		model.addAttribute("timerAutoBreak", principalData.getTimerAutoBreak());
+		model.addAttribute("timerAutoBreak", principalData.getTimerAutoBreak() ? "On" : "Off");
 
 		model.addAttribute("latestSetTimeHours", principalData.getLatestSetTimeHours());
 		model.addAttribute("latestSetTimeMinutes", principalData.getLatestSetTimeMinutes());
