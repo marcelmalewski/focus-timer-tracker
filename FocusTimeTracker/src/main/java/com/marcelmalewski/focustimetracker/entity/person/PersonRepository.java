@@ -1,7 +1,5 @@
 package com.marcelmalewski.focustimetracker.entity.person;
 
-import com.marcelmalewski.focustimetracker.view.dto.TimerChangedToRunningDto;
-import jakarta.persistence.criteria.CriteriaBuilder;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -38,12 +36,29 @@ public interface PersonRepository extends JpaRepository<Person, Long> {
 		"person.interval = :interval " +
 		"WHERE person.id = :id")
 	@Transactional
-	int updatePrincipalAfterStartTimerRunning(@Param(value = "id") long id,
-																						@Param(value = "hours") Integer hours,
-																						@Param(value = "minutes") Integer minutes,
-																						@Param(value = "seconds") Integer seconds,
-																						@Param(value = "shortBreak") Integer shortBreak,
-																						@Param(value = "longBreak") Integer longBreak,
-																						@Param(value = "interval") Integer interval
+	int startTimerRunningUpdateWithTimerAutoBreakOn(@Param(value = "id") long id,
+																									@Param(value = "hours") Integer hours,
+																									@Param(value = "minutes") Integer minutes,
+																									@Param(value = "seconds") Integer seconds,
+																									@Param(value = "shortBreak") Integer shortBreak,
+																									@Param(value = "longBreak") Integer longBreak,
+																									@Param(value = "interval") Integer interval
+	);
+
+	@Modifying(clearAutomatically = true)
+	@Query("UPDATE Person person " +
+		"SET person.latestSetTimeHours = :hours," +
+		"person.latestSetTimeMinutes = :minutes," +
+		"person.latestSetTimeSeconds = :seconds," +
+		"person.shortBreak = :shortBreak," +
+		"person.longBreak = :longBreak " +
+		"WHERE person.id = :id")
+	@Transactional
+	int startTimerRunningUpdateWithTimerAutoBreakOff(@Param(value = "id") long id,
+																									 @Param(value = "hours") Integer hours,
+																									 @Param(value = "minutes") Integer minutes,
+																									 @Param(value = "seconds") Integer seconds,
+																									 @Param(value = "shortBreak") Integer shortBreak,
+																									 @Param(value = "longBreak") Integer longBreak
 	);
 }
