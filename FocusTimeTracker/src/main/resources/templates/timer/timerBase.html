@@ -99,6 +99,7 @@
               hx-target="#timer-box"
               hx-swap="outerHTML"
               hx-include="[name='hours'], [name='minutes'], [name='seconds'], [name='shortBreak'], [name='longBreak'], [name='interval']"
+              hx-vals='js:{"timerAutoBreak": document.getElementById("timerAutoBreakCurrentValue").getAttribute("value")}'
               class="bg-base-button hover:bg-base-button-hov rounded-md px-4 py-2 text-xl duration-200"
             >
               Start
@@ -113,7 +114,11 @@
             class="flex items-center justify-center gap-2 text-2xl"
           >
             <p>Auto break:</p>
-            <p th:text="${timerAutoBreak}"></p>
+            <p
+              id="timerAutoBreakCurrentValue"
+              th:value="${timerAutoBreak}"
+              th:text="${timerAutoBreak}"
+            ></p>
           </div>
 
           <div class="grid grid-cols-2">
