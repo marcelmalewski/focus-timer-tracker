@@ -51,17 +51,30 @@ public class PersonService {
 	}
 
 	// TODO update tylko gdy faktycznie coś się zmieniło?
-	public void updatePrincipalAfterStartTimerRunning(@NotNull Long principalId, @NotNull TimerChangedToRunningDto timerChangedToRunningDto, @NotNull HttpServletRequest request,
-																										@NotNull HttpServletResponse response) {
-		int numberOfAffectedRows = personRepository.updatePrincipalAfterStartTimerRunning(
-			principalId,
-			timerChangedToRunningDto.hours(),
-			timerChangedToRunningDto.minutes(),
-			timerChangedToRunningDto.seconds(),
-			timerChangedToRunningDto.shortBreak(),
-			timerChangedToRunningDto.longBreak(),
-			timerChangedToRunningDto.interval()
-		);
+	public void updatePrincipalChangedTimerToRunning(@NotNull long principalId, @NotNull boolean timerAutoBreak, @NotNull TimerChangedToRunningDto timerChangedToRunningDto, @NotNull HttpServletRequest request,
+																									 @NotNull HttpServletResponse response) {
+		int numberOfAffectedRows;
+
+		if (timerAutoBreak) {
+			numberOfAffectedRows = personRepository.startTimerRunningUpdateWithTimerAutoBreakOn(
+				principalId,
+				timerChangedToRunningDto.hours(),
+				timerChangedToRunningDto.minutes(),
+				timerChangedToRunningDto.seconds(),
+				timerChangedToRunningDto.shortBreak(),
+				timerChangedToRunningDto.longBreak(),
+				timerChangedToRunningDto.interval()
+			);
+		} else {
+			numberOfAffectedRows = personRepository.startTimerRunningUpdateWithTimerAutoBreakOff(
+				principalId,
+				timerChangedToRunningDto.hours(),
+				timerChangedToRunningDto.minutes(),
+				timerChangedToRunningDto.seconds(),
+				timerChangedToRunningDto.shortBreak(),
+				timerChangedToRunningDto.longBreak()
+			);
+		}
 
 		if (numberOfAffectedRows == 0) {
 			securityHelper.logoutManually(request, response);

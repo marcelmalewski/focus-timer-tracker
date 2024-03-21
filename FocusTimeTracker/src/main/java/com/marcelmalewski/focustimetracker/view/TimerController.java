@@ -56,8 +56,10 @@ public class TimerController {
 
 	@PutMapping("/timer/running")
 	public String getTimerBoxStageRunning(Principal principal, HttpServletRequest request, HttpServletResponse response, Model model, @RequestBody TimerChangedToRunningDto timerChangedToRunningDto) {
-		Long principalId = Long.valueOf(principal.getName());
-		personService.updatePrincipalAfterStartTimerRunning(principalId, timerChangedToRunningDto, request, response);
+		boolean timerAutoBreak = ((Person) principal).getTimerAutoBreak();
+		long principalId = Long.parseLong(principal.getName());
+
+		personService.updatePrincipalChangedTimerToRunning(principalId, timerAutoBreak, timerChangedToRunningDto, request, response);
 
 		String setTimeAsString = timerChangedToRunningDto.hours() + "h " + timerChangedToRunningDto.minutes() + "m " + timerChangedToRunningDto.seconds() + "s ";
 		model.addAttribute("setTimeAsString", setTimeAsString);
