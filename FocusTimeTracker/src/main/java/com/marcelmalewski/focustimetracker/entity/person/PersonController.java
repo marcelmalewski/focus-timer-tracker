@@ -3,11 +3,9 @@ package com.marcelmalewski.focustimetracker.entity.person;
 import com.marcelmalewski.focustimetracker.entity.person.dto.UpdateTimerAutoBreakDto;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.hibernate.sql.Update;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import java.security.Principal;
@@ -28,7 +26,9 @@ public class PersonController {
 		personService.updatePrincipalTimerAutoBreak(principalId, timerAutoBreakValue, request, response);
 		
 		model.addAttribute("timerAutoBreak", timerAutoBreakValue ? "On" : "Off");
+		model.addAttribute("timerAutoBreakValue", timerAutoBreakValue);
+		model.addAttribute("interval", updateTimerAutoBreakDto.interval());
 
-		return "timer/timerAutoBreakParagraph";
+		return "timer/timerAutoBreakSettings";
 	}
 }
