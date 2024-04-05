@@ -4,11 +4,7 @@
 >
   <div class="flex items-center justify-center gap-2 text-2xl">
     <p>Auto break:</p>
-    <p
-      id="timerAutoBreakCurrentValue"
-      th:value="${timerAutoBreak}"
-      th:text="${timerAutoBreak}"
-    ></p>
+    <p id="timerAutoBreakCurrentValue" th:value="${timerAutoBreak}"></p>
   </div>
 
   <div
@@ -22,7 +18,6 @@
       name="interval"
       min="0"
       th:value="${interval}"
-      th:number="${interval}"
       class="w-20 rounded-lg border p-2 text-black focus:outline-none"
     />
   </div>
