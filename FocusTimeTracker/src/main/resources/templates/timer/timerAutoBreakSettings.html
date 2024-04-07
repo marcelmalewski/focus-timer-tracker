@@ -4,13 +4,10 @@
 >
   <div class="flex items-center justify-center gap-2 text-2xl">
     <p>Auto break:</p>
-    <p id="timerAutoBreakCurrentValue" th:value="${timerAutoBreak}"></p>
+    <p id="timerAutoBreakCurrentValue" th:text="${timerAutoBreakPretty}"></p>
   </div>
 
-  <div
-    class="flex flex-col"
-    th:classappend="${timerAutoBreakValue ? '' : 'hidden'}"
-  >
+  <div class="flex flex-col" th:classappend="${timerAutoBreak ? '' : 'hidden'}">
     <label for="interval">Interval</label>
     <input
       type="number"

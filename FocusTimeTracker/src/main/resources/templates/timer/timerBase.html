@@ -71,7 +71,7 @@
             hx-target="#timer-box"
             hx-swap="outerHTML"
             hx-include="[name='hours'], [name='minutes'], [name='seconds'], [name='shortBreak'], [name='longBreak'], [name='interval']"
-            hx-vals='js:{"timerAutoBreak": document.getElementById("timerAutoBreakCurrentValue").getAttribute("value")}'
+            hx-vals='js:{"timerAutoBreak": document.getElementById("timerAutoBreakCurrent").getAttribute("value")}'
             class="bg-base-button hover:bg-base-button-hov rounded-md px-4 py-2 text-xl duration-200"
           >
             Start
@@ -142,14 +142,14 @@
             <div class="flex items-center justify-center gap-2 text-2xl">
               <p>Auto break:</p>
               <p
-                id="timerAutoBreakCurrentValue"
-                th:value="${timerAutoBreak}"
+                id="timerAutoBreakCurrent"
+                th:text="${timerAutoBreakPretty}"
               ></p>
             </div>
 
             <div
               class="flex flex-col"
-              th:classappend="${timerAutoBreakValue ? '' : 'hidden'}"
+              th:classappend="${timerAutoBreak? '' : 'hidden'}"
             >
               <label for="interval">Interval</label>
               <input
@@ -169,12 +169,12 @@
         <a href="/logout" class="dash-animation text-xl"> Log out </a>
 
         <div class="flex items-center justify-center gap-2 text-xl">
-          <label for="timerAutoBreak">Timer auto brak:</label>
+          <label for="timerAutoBreakInput">Timer auto brak:</label>
 
           <input
             type="checkbox"
-            id="timerAutoBreak"
-            name="timerAutoBreak"
+            id="timerAutoBreakInput"
+            name="timerAutoBreakInput"
             class="focus:outline-none"
             th:checked="${timerAutoBreak}"
           />
@@ -184,7 +184,7 @@
             hx-target="#timerAutoBreakSettings"
             hx-swap="outerHTML"
             hx-ext="json-enc"
-            hx-include="[name='timerAutoBreak'], [name='interval']"
+            hx-include="[name='timerAutoBreakInput'], [name='interval']"
             type="submit"
             class="bg-base-button hover:bg-base-button-hov mt-6 rounded-md px-4 py-2 text-xl duration-200"
           >
