@@ -33,8 +33,8 @@ public class TimerController {
 		Long principalId = Long.valueOf(principal.getName());
 		Person principalData = personService.getPrincipalWithFetchedMainTopics(principalId, request, response);
 
-		model.addAttribute("timerAutoBreak", principalData.getTimerAutoBreak() ? "On" : "Off");
-		model.addAttribute("timerAutoBreakValue", principalData.getTimerAutoBreak());
+		model.addAttribute("timerAutoBreakPretty", principalData.getTimerAutoBreak() ? "On" : "Off");
+		model.addAttribute("timerAutoBreak", principalData.getTimerAutoBreak());
 
 		model.addAttribute("latestSetTimeHours", principalData.getLatestSetTimeHours());
 		model.addAttribute("latestSetTimeMinutes", principalData.getLatestSetTimeMinutes());
@@ -71,7 +71,7 @@ public class TimerController {
 		int remainingTime = (timerChangedToRunningDto.hours() * 60 * 60) + (timerChangedToRunningDto.minutes() * 60) + timerChangedToRunningDto.seconds();
 		model.addAttribute("remainingTime", remainingTime);
 
-		model.addAttribute("remainingTime", remainingTime);
+		model.addAttribute("timerAutoBreak", remainingTime);
 		model.addAttribute("remainingTime", remainingTime);
 		model.addAttribute("remainingTime", remainingTime);
 
