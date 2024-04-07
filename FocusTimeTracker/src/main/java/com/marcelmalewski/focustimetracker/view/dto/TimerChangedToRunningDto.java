@@ -1,6 +1,7 @@
 package com.marcelmalewski.focustimetracker.view.dto;
 
-// TODO walidacja shortBreak longBreak interval
+// TODO walidacja shortBreak longBreak interval, timerautobreak
+// TODO "On" to powinna byc stała
 public record TimerChangedToRunningDto(Integer hours, Integer minutes, Integer seconds, Integer shortBreak, Integer longBreak, Integer interval, String timerAutoBreak) {
 
 	@Override
@@ -31,7 +32,7 @@ public record TimerChangedToRunningDto(Integer hours, Integer minutes, Integer s
 	}
 
 	public boolean timerAutoBreakAsBoolean() {
-		if (timerAutoBreak.equals("on")) {
+		if (timerAutoBreak.equals("On")) {
 			return true;
 		} else {
 			return false;

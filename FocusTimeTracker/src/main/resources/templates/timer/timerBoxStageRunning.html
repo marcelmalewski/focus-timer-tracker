@@ -1,46 +1,78 @@
-<div id="timer-box" class="mt-20 flex flex-col items-center justify-center">
-  <div class="mb-20 flex flex-col items-center justify-center gap-3">
-    <div id="set-time" class="text-2xl" th:text="${setTimeAsString}"></div>
+<div id="timer-box" class="w-192 mt-5 flex items-center justify-center">
+  <div
+    id="timer-box-logic"
+    class="flex grow flex-col items-center justify-center"
+  >
+    <div class="mb-10 flex flex-col items-center justify-center gap-3">
+      <div id="set-time" class="text-2xl" th:text="${setTimeAsString}"></div>
 
-    <div
-      id="timer"
-      class="text-5xl"
-      th:value="${remainingTime}"
-      th:text="${remainingTimeAsString}"
-    ></div>
+      <div
+        id="timer"
+        class="text-5xl"
+        th:value="${remainingTime}"
+        th:text="${remainingTimeAsString}"
+      ></div>
 
-    <p id="current-stage" class="text-2xl">Focus</p>
+      <p id="current-stage" class="text-2xl">Focus</p>
+    </div>
+
+    <div class="grid grid-cols-2 gap-3">
+      <button
+        hx-put="/timer/paused"
+        hx-ext="json-enc"
+        hx-target="#timer-box"
+        hx-swap="outerHTML"
+        hx-vals="js:{remainingTime: document.getElementById('timer').getAttribute('value'), remainingTimeAsString: document.getElementById('timer').innerHTML, setTimeAsString: document.getElementById('set-time').innerHTML}"
+        class="bg-base-button hover:bg-base-button-hov rounded-md px-4 py-2 text-xl duration-200"
+      >
+        Pause
+      </button>
+
+      <button
+        class="bg-base-button hover:bg-base-button-hov rounded-md px-4 py-2 text-xl duration-200"
+      >
+        Home
+      </button>
+
+      <button
+        class="bg-base-button hover:bg-base-button-hov rounded-md px-4 py-2 text-xl duration-200"
+      >
+        Short break
+      </button>
+
+      <button
+        class="bg-base-button hover:bg-base-button-hov rounded-md px-4 py-2 text-xl duration-200"
+      >
+        Long break
+      </button>
+    </div>
   </div>
 
-  <div class="grid grid-cols-2 gap-3">
-    <button
-      hx-put="/timer/paused"
-      hx-ext="json-enc"
-      hx-target="#timer-box"
-      hx-swap="outerHTML"
-      hx-vals="js:{remainingTime: document.getElementById('timer').getAttribute('value'), remainingTimeAsString: document.getElementById('timer').innerHTML, setTimeAsString: document.getElementById('set-time').innerHTML}"
-      class="bg-base-button hover:bg-base-button-hov rounded-md px-4 py-2 text-xl duration-200"
-    >
-      Pause
-    </button>
+  <div
+    id="timer-box-settings"
+    class="flex w-2/5 flex-col items-center justify-center gap-3 border border-black p-2"
+  >
+    <p>Selected topic</p>
 
-    <button
-      class="bg-base-button hover:bg-base-button-hov rounded-md px-4 py-2 text-xl duration-200"
-    >
-      Home
-    </button>
+    <div>
+      <label for="shortBreak" class="col-span-2 col-start-1">Short break</label>
+      <p id="shortBreak" class="text-2xl">10 min</p>
+    </div>
 
-    <button
-      class="bg-base-button hover:bg-base-button-hov rounded-md px-4 py-2 text-xl duration-200"
-    >
-      Short break
-    </button>
+    <div>
+      <label for="longBreak" class="col-span-2 col-start-1">Long break</label>
+      <p id="longBreak" class="text-2xl">10 min</p>
+    </div>
 
-    <button
-      class="bg-base-button hover:bg-base-button-hov rounded-md px-4 py-2 text-xl duration-200"
-    >
-      Long break
-    </button>
+    <div class="flex items-center justify-center gap-2 text-2xl">
+      <p>Auto break:</p>
+      <p th:text="${timerAutoBreak}"></p>
+    </div>
+
+    <div th:classappend="${timerAutoBreak? '' : 'hidden'}">
+      <label for="interval" class="col-span-2 col-start-1">Interval</label>
+      <p id="interval" class="text-2xl">10</p>
+    </div>
   </div>
 
   <script>

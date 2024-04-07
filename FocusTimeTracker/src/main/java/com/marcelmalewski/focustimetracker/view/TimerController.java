@@ -71,9 +71,7 @@ public class TimerController {
 		int remainingTime = (timerChangedToRunningDto.hours() * 60 * 60) + (timerChangedToRunningDto.minutes() * 60) + timerChangedToRunningDto.seconds();
 		model.addAttribute("remainingTime", remainingTime);
 
-		model.addAttribute("timerAutoBreak", remainingTime);
-		model.addAttribute("remainingTime", remainingTime);
-		model.addAttribute("remainingTime", remainingTime);
+		model.addAttribute("timerAutoBreak", timerAutoBreak);
 
 		return "/timer/timerBoxStageRunning";
 	}
