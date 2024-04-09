@@ -71,7 +71,7 @@
             hx-target="#timer-box"
             hx-swap="outerHTML"
             hx-include="[name='hours'], [name='minutes'], [name='seconds'], [name='shortBreak'], [name='longBreak'], [name='interval']"
-            hx-vals='js:{"timerAutoBreak": document.getElementById("timerAutoBreakCurrent").innerHTML}'
+            hx-vals='js:{"timerAutoBreak": document.getElementById("timerAutoBreakCurrent").innerHTML, "selectedTopic": document.getElementById("selectedTopic").innerHTML}'
             class="bg-base-button hover:bg-base-button-hov rounded-md px-4 py-2 text-xl duration-200"
           >
             Start
@@ -93,6 +93,7 @@
               class="rounded-lg p-2 text-black focus:outline-none"
             >
               <option
+                id="selectedTopic"
                 selected
                 th:value="${firstTopic.getName()}"
                 th:text="${firstTopic.getName()}"
