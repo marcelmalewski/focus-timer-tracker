@@ -72,6 +72,7 @@ public class TimerController {
 		model.addAttribute("remainingTime", remainingTime);
 
 		model.addAttribute("timerAutoBreak", timerAutoBreak);
+		model.addAttribute("selectedTopic", timerChangedToRunningDto.selectedTopic());
 
 		return "/timer/timerBoxStageRunning";
 	}
