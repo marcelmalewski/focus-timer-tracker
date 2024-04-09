@@ -52,7 +52,12 @@
     id="timer-box-settings"
     class="flex w-2/5 flex-col items-center justify-center gap-3 border border-black p-2"
   >
-    <p>Selected topic</p>
+    <div>
+      <label for="selectedTopic" class="col-span-2 col-start-1"
+        >Selected topic</label
+      >
+      <p id="selectedTopic" class="text-2xl" th:text="${selectedTopic}"></p>
+    </div>
 
     <div>
       <label for="shortBreak" class="col-span-2 col-start-1">Short break</label>
