@@ -73,6 +73,8 @@ public class TimerController {
 
 		model.addAttribute("timerAutoBreak", timerAutoBreak);
 		model.addAttribute("selectedTopic", timerChangedToRunningDto.selectedTopic());
+		model.addAttribute("shortBreak", "5");
+		model.addAttribute("longBreak", "25");
 
 		return "/timer/timerBoxStageRunning";
 	}
