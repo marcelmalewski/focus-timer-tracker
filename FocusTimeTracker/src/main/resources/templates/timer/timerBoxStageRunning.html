@@ -50,7 +50,7 @@
 
   <div
     id="timer-box-settings"
-    class="flex w-2/5 flex-col items-center justify-center gap-3 border border-black p-2"
+    class="flex w-2/5 flex-col items-start justify-center gap-3 border-l-2 border-black pl-4"
   >
     <div>
       <label for="selectedTopic" class="col-span-2 col-start-1"
@@ -60,16 +60,19 @@
     </div>
 
     <div>
-      <label for="shortBreak" class="col-span-2 col-start-1">Short break</label>
-      <div id="shortBreak">
+      <label for="shortBreak">Short break</label>
+      <div id="shortBreak" class="flex">
         <p class="text-2xl" th:text="${shortBreak}"></p>
         <p class="text-2xl">min</p>
       </div>
     </div>
 
     <div>
-      <label for="longBreak" class="col-span-2 col-start-1">Long break</label>
-      <p id="longBreak" class="text-2xl" th:text="${shortBreak}"></p>
+      <label for="longBreak">Long break</label>
+      <div id="longBreak" class="flex">
+        <p class="text-2xl" th:text="${longBreak}"></p>
+        <p class="text-2xl">min</p>
+      </div>
     </div>
 
     <div class="flex items-center justify-center gap-2 text-2xl">
@@ -78,7 +81,7 @@
     </div>
 
     <div th:classappend="${timerAutoBreak? '' : 'hidden'}">
-      <label for="interval" class="col-span-2 col-start-1">Interval</label>
+      <label for="interval">Interval</label>
       <p id="interval" class="text-2xl">10</p>
     </div>
   </div>
