@@ -1,21 +1,25 @@
-<div
-  id="timerAutoBreakSettings"
-  class="flex flex-col items-center justify-center gap-3"
->
-  <div class="flex items-center justify-center gap-2 text-2xl">
-    <p>Auto break:</p>
-    <p id="timerAutoBreakCurrentValue" th:text="${timerAutoBreakPretty}"></p>
+<div id="timerAutoBreakSettings" class="flex flex-col items-start gap-3">
+  <div>
+    <label class="mb-0.5 ml-2" for="timerAutoBreakCurrent">Auto break</label>
+    <p
+      id="timerAutoBreakCurrent"
+      class="text-2xl"
+      th:text="${timerAutoBreakPretty}"
+    ></p>
   </div>
 
-  <div class="flex flex-col" th:classappend="${timerAutoBreak ? '' : 'hidden'}">
-    <label for="interval">Interval</label>
+  <div
+    class="flex flex-col items-start"
+    th:classappend="${timerAutoBreak? '' : 'hidden'}"
+  >
+    <label class="mb-0.5 ml-2" for="interval">Interval</label>
     <input
       type="number"
       id="interval"
       name="interval"
       min="0"
       th:value="${interval}"
-      class="w-20 rounded-lg border p-2 text-black focus:outline-none"
+      class="w-16 rounded-lg border p-2 text-black focus:outline-none"
     />
   </div>
 </div>
