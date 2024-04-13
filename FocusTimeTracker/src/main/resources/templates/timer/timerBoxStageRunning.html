@@ -60,28 +60,28 @@
     </div>
 
     <div>
-      <label for="shortBreak">Short break</label>
-      <div id="shortBreak" class="flex">
+      <label class="mb-0.5 ml-2" for="shortBreak">Short break</label>
+      <div id="shortBreak" class="flex gap-2">
         <p class="text-2xl" th:text="${shortBreak}"></p>
         <p class="text-2xl">min</p>
       </div>
     </div>
 
     <div>
-      <label for="longBreak">Long break</label>
-      <div id="longBreak" class="flex">
+      <label class="mb-0.5 ml-2" for="longBreak">Long break</label>
+      <div id="longBreak" class="flex gap-2">
         <p class="text-2xl" th:text="${longBreak}"></p>
         <p class="text-2xl">min</p>
       </div>
     </div>
 
-    <div class="flex items-center justify-center gap-2 text-2xl">
-      <p>Auto break:</p>
-      <p th:text="${timerAutoBreak}"></p>
+    <div>
+      <label class="mb-0.5 ml-2" for="autoBreak">Auto break</label>
+      <p id="autoBreak" class="text-2xl" th:text="${timerAutoBreakPretty}"></p>
     </div>
 
     <div th:classappend="${timerAutoBreak? '' : 'hidden'}">
-      <label for="interval">Interval</label>
+      <label class="mb-0.5 ml-2" for="interval">Interval</label>
       <p id="interval" class="text-2xl">10</p>
     </div>
   </div>
