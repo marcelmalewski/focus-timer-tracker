@@ -23,6 +23,10 @@ import java.util.List;
 public class TimerController {
 	private final PersonService personService;
 
+	private String makeTimerAutoBreakPretty(boolean timerAutoBreak) {
+		return timerAutoBreak ? "On" : "Off";
+	}
+
 	public TimerController(PersonService personService) {
 		this.personService = personService;
 	}
@@ -33,7 +37,7 @@ public class TimerController {
 		Long principalId = Long.valueOf(principal.getName());
 		Person principalData = personService.getPrincipalWithFetchedMainTopics(principalId, request, response);
 
-		model.addAttribute("timerAutoBreakPretty", principalData.getTimerAutoBreak() ? "On" : "Off");
+		model.addAttribute("timerAutoBreakPretty", makeTimerAutoBreakPretty(principalData.getTimerAutoBreak()));
 		model.addAttribute("timerAutoBreak", principalData.getTimerAutoBreak());
 
 		model.addAttribute("latestSetTimeHours", principalData.getLatestSetTimeHours());
@@ -72,6 +76,7 @@ public class TimerController {
 		model.addAttribute("remainingTime", remainingTime);
 
 		model.addAttribute("timerAutoBreak", timerAutoBreak);
+		model.addAttribute("timerAutoBreakPretty", timerChangedToRunningDto.timerAutoBreakPretty());
 		model.addAttribute("selectedTopic", timerChangedToRunningDto.selectedTopic());
 		model.addAttribute("shortBreak", "5");
 		model.addAttribute("longBreak", "25");
