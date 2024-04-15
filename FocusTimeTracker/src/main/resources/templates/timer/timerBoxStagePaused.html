@@ -1,4 +1,4 @@
-<div id="timer-box" class="mt-20 flex flex-col items-center justify-center">
+<div id="timerBox" class="mt-20 flex flex-col items-center justify-center">
   <div class="mb-20 flex flex-col items-center justify-center gap-3">
     <div id="set-time" class="text-2xl" th:text="${setTimeAsString}"></div>
 
@@ -16,7 +16,7 @@
     <button
       hx-put="/timer/resumed"
       hx-ext="json-enc"
-      hx-target="#timer-box"
+      hx-target="#timerBox"
       hx-swap="outerHTML"
       hx-vals="js:{remainingTime: document.getElementById('timer').getAttribute('value'), remainingTimeAsString: document.getElementById('timer').innerHTML, setTimeAsString: document.getElementById('set-time').innerHTML}"
       class="bg-base-button hover:bg-base-button-hov rounded-md px-4 py-2 text-xl duration-200"

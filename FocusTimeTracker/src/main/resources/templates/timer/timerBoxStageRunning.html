@@ -1,6 +1,6 @@
-<div id="timer-box" class="w-192 mt-5 flex items-center justify-center">
+<div id="timerBox" class="w-192 mt-5 flex items-center justify-center">
   <div
-    id="timer-box-logic"
+    id="timerBoxLogic"
     class="flex grow flex-col items-center justify-center"
   >
     <div class="mb-10 flex flex-col items-center justify-center gap-3">
@@ -13,14 +13,14 @@
         th:text="${remainingTimeAsString}"
       ></div>
 
-      <p id="current-stage" class="text-2xl">Focus</p>
+      <p id="currentStage" class="text-2xl">Focus</p>
     </div>
 
     <div class="grid grid-cols-2 gap-3">
       <button
         hx-put="/timer/paused"
         hx-ext="json-enc"
-        hx-target="#timer-box"
+        hx-target="#timerBox"
         hx-swap="outerHTML"
         hx-vals="js:{remainingTime: document.getElementById('timer').getAttribute('value'), remainingTimeAsString: document.getElementById('timer').innerHTML, setTimeAsString: document.getElementById('set-time').innerHTML}"
         class="bg-base-button hover:bg-base-button-hov rounded-md px-4 py-2 text-xl duration-200"
@@ -31,7 +31,7 @@
       <button
         class="bg-base-button hover:bg-base-button-hov rounded-md px-4 py-2 text-xl duration-200"
       >
-        Home
+        Reset
       </button>
 
       <button
@@ -49,7 +49,7 @@
   </div>
 
   <div
-    id="timer-box-settings"
+    id="timerBoxSettings"
     class="flex w-2/5 flex-col items-start justify-center gap-3 border-l-2 border-black pl-4"
   >
     <div>
@@ -90,10 +90,9 @@
     remainingTime = [[${remainingTime}]];
 
     intervalId = setInterval(function () {
-        const currentStage = document.getElementById("current-stage").innerHTML;
-        console.log("second")
+        const currentStage = document.getElementById("currentStage").innerHTML;
 
-        if (currentStage === "Pause") {
+        if (currentStage !== "Pause") {
             clearInterval(intervalId);
             return;
         }
