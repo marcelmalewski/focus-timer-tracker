@@ -23,8 +23,12 @@ import java.util.List;
 public class TimerController {
 	private final PersonService personService;
 
-	private String makeTimerAutoBreakPretty(boolean timerAutoBreak) {
+	private String timerAutoBreakToPretty(boolean timerAutoBreak) {
 		return timerAutoBreak ? "On" : "Off";
+	}
+
+	private boolean timerAutoBreakToBoolean(String timerAutoBreakPretty) {
+		return timerAutoBreakPretty.equals("On");
 	}
 
 	public TimerController(PersonService personService) {
@@ -37,7 +41,7 @@ public class TimerController {
 		Long principalId = Long.valueOf(principal.getName());
 		Person principalData = personService.getPrincipalWithFetchedMainTopics(principalId, request, response);
 
-		model.addAttribute("timerAutoBreakPretty", makeTimerAutoBreakPretty(principalData.getTimerAutoBreak()));
+		model.addAttribute("timerAutoBreakPretty", timerAutoBreakToPretty(principalData.getTimerAutoBreak()));
 		model.addAttribute("timerAutoBreak", principalData.getTimerAutoBreak());
 
 		model.addAttribute("latestSetTimeHours", principalData.getLatestSetTimeHours());
@@ -90,6 +94,12 @@ public class TimerController {
 		model.addAttribute("remainingTimeAsString", dto.remainingTimeAsString());
 		model.addAttribute("remainingTime", dto.remainingTime());
 
+		model.addAttribute("timerAutoBreak", true);
+		model.addAttribute("timerAutoBreakPretty", "On");
+		model.addAttribute("selectedTopic", "Programming");
+		model.addAttribute("shortBreak", "12");
+		model.addAttribute("longBreak", "20");
+
 		return "/timer/timerBoxStageRunning";
 	}
 
@@ -98,6 +108,12 @@ public class TimerController {
 		model.addAttribute("setTimeAsString", dto.setTimeAsString());
 		model.addAttribute("remainingTimeAsString", dto.remainingTimeAsString());
 		model.addAttribute("remainingTime", dto.remainingTime());
+
+		model.addAttribute("timerAutoBreak", true);
+		model.addAttribute("timerAutoBreakPretty", "On");
+		model.addAttribute("selectedTopic", "Programming");
+		model.addAttribute("shortBreak", "12");
+		model.addAttribute("longBreak", "20");
 
 		return "/timer/timerBoxStagePaused";
 	}
