@@ -65,7 +65,7 @@ public class TimerController {
 
 	@PutMapping("/timer/running")
 	public String getTimerBoxStageRunning(Principal principal, HttpServletRequest request, HttpServletResponse response, Model model, @RequestBody TimerChangedToRunningDto timerChangedToRunningDto) {
-		boolean timerAutoBreak = timerChangedToRunningDto.timerAutoBreakAsBoolean();
+		boolean timerAutoBreak = timerAutoBreakToBoolean(timerChangedToRunningDto.timerAutoBreakPretty());
 		long principalId = Long.parseLong(principal.getName());
 
 		personService.updatePrincipalChangedTimerToRunning(principalId, timerAutoBreak, timerChangedToRunningDto, request, response);
