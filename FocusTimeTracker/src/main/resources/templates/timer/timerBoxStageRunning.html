@@ -22,7 +22,14 @@
         hx-ext="json-enc"
         hx-target="#timerBox"
         hx-swap="outerHTML"
-        hx-vals="js:{remainingTime: document.getElementById('timer').getAttribute('value'), remainingTimeAsString: document.getElementById('timer').innerHTML, setTimeAsString: document.getElementById('set-time').innerHTML}"
+        hx-include="[name='shortBreak'], [name='longBreak'], [name='interval']"
+        hx-vals="js:{
+            remainingTime: document.getElementById('timer').getAttribute('value'),
+            remainingTimeAsString: document.getElementById('timer').innerHTML,
+            setTimeAsString: document.getElementById('set-time').innerHTML
+            timerAutoBreakPretty: document.getElementById('timerAutoBreak').innerHTML,
+
+      }"
         class="bg-base-button hover:bg-base-button-hov rounded-md px-4 py-2 text-xl duration-200"
       >
         Pause
