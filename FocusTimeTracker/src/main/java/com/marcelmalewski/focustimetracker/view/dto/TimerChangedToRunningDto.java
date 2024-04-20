@@ -1,14 +1,16 @@
 package com.marcelmalewski.focustimetracker.view.dto;
 
 // TODO walidacja nulli?
-public record TimerChangedToRunningDto(Integer hours,
-																			 Integer minutes,
-																			 Integer seconds,
-																			 Integer shortBreak,
-																			 Integer longBreak,
-																			 Integer interval,
-																			 String timerAutoBreakPretty,
-																			 String selectedTopic) {
+public record TimerChangedToRunningDto(
+	Integer hours,
+	Integer minutes,
+	Integer seconds,
+	String selectedTopic,
+	Integer shortBreak,
+	Integer longBreak,
+	String timerAutoBreakPretty,
+	Integer interval
+) {
 
 	@Override
 	public Integer hours() {
