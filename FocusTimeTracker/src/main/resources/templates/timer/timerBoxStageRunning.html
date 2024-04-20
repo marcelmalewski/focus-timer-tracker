@@ -22,12 +22,15 @@
         hx-ext="json-enc"
         hx-target="#timerBox"
         hx-swap="outerHTML"
-        hx-include="[name='shortBreak'], [name='longBreak'], [name='interval']"
         hx-vals="js:{
-            remainingTime: document.getElementById('timer').getAttribute('value'),
-            remainingTimeAsString: document.getElementById('timer').innerHTML,
             setTimeAsString: document.getElementById('set-time').innerHTML,
-            timerAutoBreakPretty: document.getElementById('timerAutoBreak').innerHTML
+            remainingTimeAsString: document.getElementById('timer').innerHTML,
+            remainingTime: document.getElementById('timer').getAttribute('value'),
+            selectedTopic: document.getElementById('selectedTopic').innerHTML,
+            shortBreak: document.getElementById('shortBreak').innerHTML,
+            longBreak: document.getElementById('longBreak').innerHTML,
+            timerAutoBreakPretty: document.getElementById('timerAutoBreak').innerHTML,
+            interval: document.getElementById('interval').innerHTML
       }"
         class="bg-base-button hover:bg-base-button-hov rounded-md px-4 py-2 text-xl duration-200"
       >
@@ -67,24 +70,28 @@
     </div>
 
     <div>
-      <label class="mb-0.5 ml-2" for="shortBreak">Short break</label>
-      <div id="shortBreak" class="flex gap-2">
-        <p class="text-2xl" th:text="${shortBreak}"></p>
+      <label class="mb-0.5 ml-2" for="shortBreakBox">Short break</label>
+      <div id="shortBreakBox" class="flex gap-2">
+        <p id="shortBreak" class="text-2xl" th:text="${shortBreak}"></p>
         <p class="text-2xl">min</p>
       </div>
     </div>
 
     <div>
-      <label class="mb-0.5 ml-2" for="longBreak">Long break</label>
-      <div id="longBreak" class="flex gap-2">
-        <p class="text-2xl" th:text="${longBreak}"></p>
+      <label class="mb-0.5 ml-2" for="longBreakBox">Long break</label>
+      <div id="longBreakBox" class="flex gap-2">
+        <p id="longBreak" class="text-2xl" th:text="${longBreak}"></p>
         <p class="text-2xl">min</p>
       </div>
     </div>
 
     <div>
-      <label class="mb-0.5 ml-2" for="autoBreak">Auto break</label>
-      <p id="autoBreak" class="text-2xl" th:text="${timerAutoBreakPretty}"></p>
+      <label class="mb-0.5 ml-2" for="timerAutoBreak">Auto break</label>
+      <p
+        id="timerAutoBreak"
+        class="text-2xl"
+        th:text="${timerAutoBreakPretty}"
+      ></p>
     </div>
 
     <div th:classappend="${timerAutoBreak? '' : 'hidden'}">

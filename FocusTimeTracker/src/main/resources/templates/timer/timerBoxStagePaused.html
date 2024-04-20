@@ -13,7 +13,7 @@
         th:text="${remainingTimeAsString}"
       ></div>
 
-      <p id="currentStage" class="text-2xl">Focus</p>
+      <p id="currentStage" class="text-2xl">Pause</p>
     </div>
 
     <div class="grid grid-cols-2 gap-3">
@@ -22,7 +22,12 @@
         hx-ext="json-enc"
         hx-target="#timerBox"
         hx-swap="outerHTML"
-        hx-vals="js:{remainingTime: document.getElementById('timer').getAttribute('value'), remainingTimeAsString: document.getElementById('timer').innerHTML, setTimeAsString: document.getElementById('set-time').innerHTML}"
+        hx-vals="js:{
+            remainingTime: document.getElementById('timer').getAttribute('value'),
+            remainingTimeAsString: document.getElementById('timer').innerHTML,
+            setTimeAsString: document.getElementById('set-time').innerHTML,
+            selectedTopic: document.getElementById('selectedTopic').innerHTML
+          }"
         class="bg-base-button hover:bg-base-button-hov rounded-md px-4 py-2 text-xl duration-200"
       >
         Resume

@@ -88,33 +88,33 @@ public class TimerController {
 		return "/timer/timerBoxStageRunning";
 	}
 
-	@PutMapping("/timer/resumed")
-	public String getTimerBoxStageResumed(Model model, @RequestBody TimerChangedToResumedDto dto) {
-		model.addAttribute("setTimeAsString", dto.setTimeAsString());
-		model.addAttribute("remainingTimeAsString", dto.remainingTimeAsString());
-		model.addAttribute("remainingTime", dto.remainingTime());
-
-		model.addAttribute("timerAutoBreak", true);
-		model.addAttribute("timerAutoBreakPretty", "On");
-		model.addAttribute("selectedTopic", "Programming");
-		model.addAttribute("shortBreak", "12");
-		model.addAttribute("longBreak", "20");
-
-		return "/timer/timerBoxStageRunning";
-	}
-
 	@PutMapping("/timer/paused")
 	public String getTimerBoxStagePaused(Model model, @RequestBody TimerChangedToPausedDto dto) {
 		model.addAttribute("setTimeAsString", dto.setTimeAsString());
 		model.addAttribute("remainingTimeAsString", dto.remainingTimeAsString());
 		model.addAttribute("remainingTime", dto.remainingTime());
 
-		model.addAttribute("timerAutoBreak", true);
-		model.addAttribute("timerAutoBreakPretty", "On");
-		model.addAttribute("selectedTopic", "Programming");
-		model.addAttribute("shortBreak", "12");
-		model.addAttribute("longBreak", "20");
+		model.addAttribute("selectedTopic", dto.selectedTopic());
+		model.addAttribute("shortBreak", dto.shortBreak());
+		model.addAttribute("longBreak", dto.longBreak());
+		model.addAttribute("timerAutoBreak", timerAutoBreakToBoolean(dto.timerAutoBreakPretty()));
+		model.addAttribute("timerAutoBreakPretty", dto.timerAutoBreakPretty());
 
 		return "/timer/timerBoxStagePaused";
+	}
+
+	@PutMapping("/timer/resumed")
+	public String getTimerBoxStageResumed(Model model, @RequestBody TimerChangedToResumedDto dto) {
+		model.addAttribute("setTimeAsString", dto.setTimeAsString());
+		model.addAttribute("remainingTimeAsString", dto.remainingTimeAsString());
+		model.addAttribute("remainingTime", dto.remainingTime());
+
+//		model.addAttribute("selectedTopic", dto.selectedTopic());
+//		model.addAttribute("shortBreak", dto.shortBreak());
+//		model.addAttribute("longBreak", dto.longBreak());
+//		model.addAttribute("timerAutoBreak", timerAutoBreakToBoolean(dto.timerAutoBreakPretty()));
+//		model.addAttribute("timerAutoBreakPretty", dto.timerAutoBreakPretty());
+
+		return "/timer/timerBoxStageRunning";
 	}
 }
