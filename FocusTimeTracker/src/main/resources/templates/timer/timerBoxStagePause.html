@@ -13,12 +13,12 @@
         th:text="${remainingTimeAsString}"
       ></div>
 
-      <p id="currentStage" class="text-2xl">Focus</p>
+      <p id="currentStage" class="text-2xl">Pause</p>
     </div>
 
     <div class="grid grid-cols-2 gap-3">
       <button
-        hx-put="/timer/paused"
+        hx-put="/timer/focusAfterPause"
         hx-ext="json-enc"
         hx-target="#timerBox"
         hx-swap="outerHTML"
@@ -34,7 +34,7 @@
         }"
         class="bg-base-button hover:bg-base-button-hov rounded-md px-4 py-2 text-xl duration-200"
       >
-        Pause
+        Resume
       </button>
 
       <a
@@ -78,7 +78,7 @@
     </div>
 
     <div>
-      <label class="mb-0.5 ml-2" for="longBreakBox">Long break</label>
+      <label class="mb-0.5 ml-2" for="longBreak">Long break</label>
       <div id="longBreakBox" class="flex gap-2">
         <p id="longBreak" class="text-2xl" th:text="${longBreak}"></p>
         <p class="text-2xl">min</p>
@@ -99,30 +99,4 @@
       <p id="interval" class="text-2xl">10</p>
     </div>
   </div>
-
-  <script>
-    remainingTime = [[${remainingTime}]];
-
-    intervalId = setInterval(function () {
-        const currentStage = document.getElementById("currentStage").innerHTML;
-
-        if (currentStage !== "Focus") {
-            clearInterval(intervalId);
-            return;
-        }
-
-        if (remainingTime > 0) {
-            remainingTime--;
-        }
-
-        const seconds = remainingTime % 60;
-        const minutes = Math.floor(remainingTime / 60) % 60;
-        const hours = Math.floor(remainingTime / 60 / 60);
-
-        document.getElementById("timer").innerHTML =
-            hours + "h " + minutes + "m " + seconds + "s ";
-
-        document.getElementById("timer").setAttribute("value", remainingTime.toString());
-    }, 1000);
-  </script>
 </div>

@@ -62,7 +62,7 @@ public class TimerController {
 		return "/timer/timerBase";
 	}
 
-	@PutMapping("/timer/running")
+	@PutMapping("/timer/focus")
 	public String getTimerBoxStageRunning(Principal principal, HttpServletRequest request, HttpServletResponse response, Model model, @RequestBody TimerChangedToRunningDto timerChangedToRunningDto) {
 		boolean timerAutoBreak = timerAutoBreakToBoolean(timerChangedToRunningDto.timerAutoBreakPretty());
 		long principalId = Long.parseLong(principal.getName());
@@ -84,10 +84,10 @@ public class TimerController {
 		model.addAttribute("timerAutoBreak", timerAutoBreak);
 		model.addAttribute("timerAutoBreakPretty", timerChangedToRunningDto.timerAutoBreakPretty());
 
-		return "/timer/timerBoxStageRunning";
+		return "timer/timerBoxStageFocus";
 	}
 
-	@PutMapping("/timer/paused")
+	@PutMapping("/timer/pause")
 	public String getTimerBoxStagePaused(Model model, @RequestBody TimerPauseDto dto) {
 		model.addAttribute("setTimeAsString", dto.setTimeAsString());
 		model.addAttribute("remainingTimeAsString", dto.remainingTimeAsString());
@@ -99,10 +99,10 @@ public class TimerController {
 		model.addAttribute("timerAutoBreak", timerAutoBreakToBoolean(dto.timerAutoBreakPretty()));
 		model.addAttribute("timerAutoBreakPretty", dto.timerAutoBreakPretty());
 
-		return "/timer/timerBoxStagePaused";
+		return "timer/timerBoxStagePause";
 	}
 
-	@PutMapping("/timer/resumed")
+	@PutMapping("/timer/focusAfterPause")
 	public String getTimerBoxStageResumed(Model model, @RequestBody TimerPauseDto dto) {
 		model.addAttribute("setTimeAsString", dto.setTimeAsString());
 		model.addAttribute("remainingTimeAsString", dto.remainingTimeAsString());
@@ -114,6 +114,11 @@ public class TimerController {
 		model.addAttribute("timerAutoBreak", timerAutoBreakToBoolean(dto.timerAutoBreakPretty()));
 		model.addAttribute("timerAutoBreakPretty", dto.timerAutoBreakPretty());
 
-		return "/timer/timerBoxStageRunning";
+		return "timer/timerBoxStageFocus";
+	}
+
+	@PutMapping("/timer/shortBreak")
+	public String getTimerBoxStageShortBreak() {
+		return "/timer/timerBoxStageShortBreak";
 	}
 }
