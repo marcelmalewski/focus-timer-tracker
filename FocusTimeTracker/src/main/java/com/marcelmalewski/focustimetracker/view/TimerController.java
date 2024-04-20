@@ -3,8 +3,7 @@ package com.marcelmalewski.focustimetracker.view;
 import com.marcelmalewski.focustimetracker.entity.person.Person;
 import com.marcelmalewski.focustimetracker.entity.person.PersonService;
 import com.marcelmalewski.focustimetracker.entity.topic.mainTopic.MainTopic;
-import com.marcelmalewski.focustimetracker.view.dto.TimerChangedToPausedDto;
-import com.marcelmalewski.focustimetracker.view.dto.TimerChangedToResumedDto;
+import com.marcelmalewski.focustimetracker.view.dto.TimerPauseDto;
 import com.marcelmalewski.focustimetracker.view.dto.TimerChangedToRunningDto;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.servlet.http.HttpServletRequest;
@@ -79,17 +78,17 @@ public class TimerController {
 		int remainingTime = (timerChangedToRunningDto.hours() * 60 * 60) + (timerChangedToRunningDto.minutes() * 60) + timerChangedToRunningDto.seconds();
 		model.addAttribute("remainingTime", remainingTime);
 
-		model.addAttribute("timerAutoBreak", timerAutoBreak);
-		model.addAttribute("timerAutoBreakPretty", timerChangedToRunningDto.timerAutoBreakPretty());
 		model.addAttribute("selectedTopic", timerChangedToRunningDto.selectedTopic());
 		model.addAttribute("shortBreak", timerChangedToRunningDto.shortBreak());
 		model.addAttribute("longBreak", timerChangedToRunningDto.longBreak());
+		model.addAttribute("timerAutoBreak", timerAutoBreak);
+		model.addAttribute("timerAutoBreakPretty", timerChangedToRunningDto.timerAutoBreakPretty());
 
 		return "/timer/timerBoxStageRunning";
 	}
 
 	@PutMapping("/timer/paused")
-	public String getTimerBoxStagePaused(Model model, @RequestBody TimerChangedToPausedDto dto) {
+	public String getTimerBoxStagePaused(Model model, @RequestBody TimerPauseDto dto) {
 		model.addAttribute("setTimeAsString", dto.setTimeAsString());
 		model.addAttribute("remainingTimeAsString", dto.remainingTimeAsString());
 		model.addAttribute("remainingTime", dto.remainingTime());
@@ -104,16 +103,16 @@ public class TimerController {
 	}
 
 	@PutMapping("/timer/resumed")
-	public String getTimerBoxStageResumed(Model model, @RequestBody TimerChangedToResumedDto dto) {
+	public String getTimerBoxStageResumed(Model model, @RequestBody TimerPauseDto dto) {
 		model.addAttribute("setTimeAsString", dto.setTimeAsString());
 		model.addAttribute("remainingTimeAsString", dto.remainingTimeAsString());
 		model.addAttribute("remainingTime", dto.remainingTime());
 
-//		model.addAttribute("selectedTopic", dto.selectedTopic());
-//		model.addAttribute("shortBreak", dto.shortBreak());
-//		model.addAttribute("longBreak", dto.longBreak());
-//		model.addAttribute("timerAutoBreak", timerAutoBreakToBoolean(dto.timerAutoBreakPretty()));
-//		model.addAttribute("timerAutoBreakPretty", dto.timerAutoBreakPretty());
+		model.addAttribute("selectedTopic", dto.selectedTopic());
+		model.addAttribute("shortBreak", dto.shortBreak());
+		model.addAttribute("longBreak", dto.longBreak());
+		model.addAttribute("timerAutoBreak", timerAutoBreakToBoolean(dto.timerAutoBreakPretty()));
+		model.addAttribute("timerAutoBreakPretty", dto.timerAutoBreakPretty());
 
 		return "/timer/timerBoxStageRunning";
 	}
