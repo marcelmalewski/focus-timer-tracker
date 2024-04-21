@@ -1,1 +1,76 @@
-<div>short break</div>
+<div id="timerBox" class="w-192 mt-5 flex items-center justify-center">
+  <div
+    id="timerBoxLogic"
+    class="flex grow flex-col items-center justify-center"
+  >
+    <div class="mb-10 flex flex-col items-center justify-center gap-3">
+      <div id="setTime" class="text-2xl" th:text="${shortBreak}"></div>
+
+      <div
+        id="timer"
+        class="text-5xl"
+        th:value="${shortBreak}"
+        th:text="${shortBreak}"
+      ></div>
+
+      <p id="currentStage" class="text-2xl">Short break</p>
+    </div>
+
+    <div class="flex gap-3">
+      <button
+        class="bg-base-button hover:bg-base-button-hov rounded-md px-4 py-2 text-xl duration-200"
+      >
+        Focus
+      </button>
+
+      <a
+        class="bg-base-button hover:bg-base-button-hov flex items-center justify-center rounded-md px-4 py-2 text-xl duration-200"
+        href="/timer"
+      >
+        Reset
+      </a>
+    </div>
+  </div>
+
+  <div
+    id="timerBoxSettings"
+    class="flex w-2/5 flex-col items-start justify-center gap-3 border-l-2 border-black pl-4"
+  >
+    <div>
+      <label for="selectedTopic" class="col-span-2 col-start-1"
+        >Selected topic</label
+      >
+      <p id="selectedTopic" class="text-2xl" th:text="${selectedTopic}"></p>
+    </div>
+
+    <div>
+      <label class="mb-0.5 ml-2" for="shortBreakBox">Short break</label>
+      <div id="shortBreakBox" class="flex gap-2">
+        <p id="shortBreak" class="text-2xl" th:text="${shortBreak}"></p>
+        <p class="text-2xl">min</p>
+      </div>
+    </div>
+
+    <div>
+      <label class="mb-0.5 ml-2" for="longBreakBox">Long break</label>
+      <div id="longBreakBox" class="flex gap-2">
+        <p id="longBreak" class="text-2xl" th:text="${longBreak}"></p>
+        <p class="text-2xl">min</p>
+      </div>
+    </div>
+
+    <div>
+      <label class="mb-0.5 ml-2" for="timerAutoBreak">Auto break</label>
+      <p
+        id="timerAutoBreak"
+        class="text-2xl"
+        th:text="${timerAutoBreakPretty}"
+      ></p>
+    </div>
+
+    <div th:classappend="${timerAutoBreak? '' : 'hidden'}">
+      <label class="mb-0.5 ml-2" for="interval">Interval</label>
+      <p id="interval" class="text-2xl">XD</p>
+    </div>
+  </div>
+</div>

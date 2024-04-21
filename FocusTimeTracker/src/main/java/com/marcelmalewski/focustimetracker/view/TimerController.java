@@ -3,6 +3,7 @@ package com.marcelmalewski.focustimetracker.view;
 import com.marcelmalewski.focustimetracker.entity.person.Person;
 import com.marcelmalewski.focustimetracker.entity.person.PersonService;
 import com.marcelmalewski.focustimetracker.entity.topic.mainTopic.MainTopic;
+import com.marcelmalewski.focustimetracker.view.dto.TimerChangedToShortBreakDto;
 import com.marcelmalewski.focustimetracker.view.dto.TimerPauseDto;
 import com.marcelmalewski.focustimetracker.view.dto.TimerChangedToRunningDto;
 import io.swagger.v3.oas.annotations.Operation;
@@ -118,7 +119,17 @@ public class TimerController {
 	}
 
 	@PutMapping("/timer/shortBreak")
-	public String getTimerBoxStageShortBreak() {
+	public String getTimerBoxStageShortBreak(Model model, @RequestBody TimerChangedToShortBreakDto dto) {
+		model.addAttribute("breakTimeAsString", dto.shortBreak());
+		model.addAttribute("breakRemainingTimeAsString", dto.shortBreak());
+		model.addAttribute("breakRemainingTime", dto.shortBreak());
+
+		model.addAttribute("selectedTopic", dto.selectedTopic());
+		model.addAttribute("shortBreak", dto.shortBreak());
+		model.addAttribute("longBreak", dto.longBreak());
+		model.addAttribute("timerAutoBreak", timerAutoBreakToBoolean(dto.timerAutoBreakPretty()));
+		model.addAttribute("timerAutoBreakPretty", dto.timerAutoBreakPretty());
+
 		return "/timer/timerBoxStageShortBreak";
 	}
 }
