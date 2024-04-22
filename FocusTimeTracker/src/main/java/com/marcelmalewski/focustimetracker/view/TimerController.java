@@ -120,8 +120,7 @@ public class TimerController {
 
 	@PutMapping("/timer/shortBreak")
 	public String getTimerBoxStageShortBreak(Model model, @RequestBody TimerChangedToShortBreakDto dto) {
-		model.addAttribute("breakTimeAsString", dto.shortBreak());
-		model.addAttribute("breakRemainingTimeAsString", dto.shortBreak());
+		model.addAttribute("breakSetTime", dto.shortBreak());
 		model.addAttribute("breakRemainingTime", dto.shortBreak());
 
 		model.addAttribute("selectedTopic", dto.selectedTopic());

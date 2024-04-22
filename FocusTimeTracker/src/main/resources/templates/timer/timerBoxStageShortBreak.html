@@ -4,14 +4,12 @@
     class="flex grow flex-col items-center justify-center"
   >
     <div class="mb-10 flex flex-col items-center justify-center gap-3">
-      <div id="setTime" class="text-2xl" th:text="${shortBreak}"></div>
+      <div id="breakSetTimeBox" class="flex gap-2">
+        <p id="breakSetTime" class="text-2xl" th:text="${breakSetTime}"></p>
+        <p class="text-2xl">min</p>
+      </div>
 
-      <div
-        id="timer"
-        class="text-5xl"
-        th:value="${shortBreak}"
-        th:text="${shortBreak}"
-      ></div>
+      <div id="timer" class="text-5xl" th:text="${breakRemainingTime}"></div>
 
       <p id="currentStage" class="text-2xl">Short break</p>
     </div>
