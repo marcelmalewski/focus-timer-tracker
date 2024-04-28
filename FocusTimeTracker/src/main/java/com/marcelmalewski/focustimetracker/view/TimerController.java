@@ -70,10 +70,10 @@ public class TimerController {
 
 		personService.updatePrincipalChangedTimerToRunning(principalId, timerAutoBreak, timerChangedToRunningDto, request, response);
 
-		String setTimeAsString = timerChangedToRunningDto.hours() + "h " + timerChangedToRunningDto.minutes() + "m " + timerChangedToRunningDto.seconds() + "s ";
+		String setTimeAsString = timerChangedToRunningDto.hours() + "h " + timerChangedToRunningDto.minutes() + "m " + timerChangedToRunningDto.seconds() + "s";
 		model.addAttribute("setTimeAsString", setTimeAsString);
 
-		String remainigTimeAsString = timerChangedToRunningDto.hours() + "h " + timerChangedToRunningDto.minutes() + "m " + timerChangedToRunningDto.seconds() + "s ";
+		String remainigTimeAsString = timerChangedToRunningDto.hours() + "h " + timerChangedToRunningDto.minutes() + "m " + timerChangedToRunningDto.seconds() + "s";
 		model.addAttribute("remainingTimeAsString", remainigTimeAsString);
 
 		int remainingTime = (timerChangedToRunningDto.hours() * 60 * 60) + (timerChangedToRunningDto.minutes() * 60) + timerChangedToRunningDto.seconds();
@@ -121,8 +121,12 @@ public class TimerController {
 	@PutMapping("/timer/shortBreak")
 	public String getTimerBoxStageShortBreak(Model model, @RequestBody TimerChangedToShortBreakDto dto) {
 		model.addAttribute("breakSetTime", dto.shortBreak());
-		model.addAttribute("breakRemainingTime", dto.shortBreak());
+		model.addAttribute("breakRemainingTime", dto.shortBreak() * 60);
 
+		String breakRemainigTimeAsString = dto.shortBreak() + "m " + "0s";
+		model.addAttribute("breakRemainingTimeAsString", breakRemainigTimeAsString);
+
+		model.addAttribute("currentStageValue", "shortBreak");
 		model.addAttribute("selectedTopic", dto.selectedTopic());
 		model.addAttribute("shortBreak", dto.shortBreak());
 		model.addAttribute("longBreak", dto.longBreak());

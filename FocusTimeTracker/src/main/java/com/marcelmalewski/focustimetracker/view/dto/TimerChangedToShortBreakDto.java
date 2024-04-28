@@ -3,8 +3,8 @@ package com.marcelmalewski.focustimetracker.view.dto;
 // TODO walidacja nulli?
 public record TimerChangedToShortBreakDto(
 	String selectedTopic,
-	String shortBreak,
-	String longBreak,
+	Integer shortBreak,
+	Integer longBreak,
 	String timerAutoBreakPretty,
 	String interval
 ) {
