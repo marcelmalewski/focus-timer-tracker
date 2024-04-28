@@ -9,9 +9,15 @@
         <p class="text-2xl">min</p>
       </div>
 
-      <div id="timer" class="text-5xl" th:text="${breakRemainingTime}"></div>
+      <div
+        id="timer"
+        class="text-5xl"
+        th:text="${breakRemainingTimeAsString}"
+      ></div>
 
-      <p id="currentStage" class="text-2xl">Short break</p>
+      <p id="currentStage" class="text-2xl" th:value="${currentStageValue}">
+        Short break
+      </p>
     </div>
 
     <div class="flex gap-3">
@@ -71,4 +77,28 @@
       <p id="interval" class="text-2xl">XD</p>
     </div>
   </div>
+
+  <script>
+    breakRemainingTime = [[${breakRemainingTime}]];
+
+    breakIntervalId = setInterval(function () {
+        const currentStage = document.getElementById("currentStage").getAttribute("value");
+
+        if (currentStage !== "shortBreak") {
+            clearInterval(breakIntervalId);
+            return;
+        }
+
+        if (breakRemainingTime > 0) {
+            breakRemainingTime--;
+        }
+
+        const seconds = breakRemainingTime % 60;
+        const minutes = Math.floor(breakRemainingTime / 60) % 60;
+
+        document.getElementById("timer").innerHTML =
+            minutes + "m " + seconds + "s";
+        document.getElementById("timer").setAttribute("value", breakRemainingTime.toString());
+    }, 1000);
+  </script>
 </div>
