@@ -3,7 +3,7 @@ package com.marcelmalewski.focustimetracker.view;
 import com.marcelmalewski.focustimetracker.entity.person.Person;
 import com.marcelmalewski.focustimetracker.entity.person.PersonService;
 import com.marcelmalewski.focustimetracker.entity.topic.mainTopic.MainTopic;
-import com.marcelmalewski.focustimetracker.view.dto.TimerChangedToShortBreakDto;
+import com.marcelmalewski.focustimetracker.view.dto.TimerChangedToBreakDto;
 import com.marcelmalewski.focustimetracker.view.dto.TimerPauseDto;
 import com.marcelmalewski.focustimetracker.view.dto.TimerChangedToRunningDto;
 import io.swagger.v3.oas.annotations.Operation;
@@ -119,20 +119,37 @@ public class TimerController {
 	}
 
 	@PutMapping("/timer/shortBreak")
-	public String getTimerBoxStageShortBreak(Model model, @RequestBody TimerChangedToShortBreakDto dto) {
+	public String getTimerBoxStageShortBreak(Model model, @RequestBody TimerChangedToBreakDto dto) {
+		loadModelAttributesForBreakView(model, dto);
+
+		model.addAttribute("breakType", "shortBreak");
+		model.addAttribute("breakTypePretty", "Short break");
+
+		return "timer/timerBoxStageBreak";
+	}
+
+	@PutMapping("/timer/longBreak")
+	public String getTimerBoxStageLongBreak(Model model, @RequestBody TimerChangedToBreakDto dto) {
+		loadModelAttributesForBreakView(model, dto);
+
+		model.addAttribute("breakType", "longBreak");
+		model.addAttribute("breakTypePretty", "Long break");
+
+		return "timer/timerBoxStageBreak";
+	}
+
+	// TODO move to service
+	private void loadModelAttributesForBreakView(Model model, TimerChangedToBreakDto dto) {
 		model.addAttribute("breakSetTime", dto.shortBreak());
 		model.addAttribute("breakRemainingTime", dto.shortBreak() * 60);
 
 		String breakRemainigTimeAsString = dto.shortBreak() + "m " + "0s";
 		model.addAttribute("breakRemainingTimeAsString", breakRemainigTimeAsString);
 
-		model.addAttribute("currentStageValue", "shortBreak");
 		model.addAttribute("selectedTopic", dto.selectedTopic());
 		model.addAttribute("shortBreak", dto.shortBreak());
 		model.addAttribute("longBreak", dto.longBreak());
 		model.addAttribute("timerAutoBreak", timerAutoBreakToBoolean(dto.timerAutoBreakPretty()));
 		model.addAttribute("timerAutoBreakPretty", dto.timerAutoBreakPretty());
-
-		return "/timer/timerBoxStageShortBreak";
 	}
 }

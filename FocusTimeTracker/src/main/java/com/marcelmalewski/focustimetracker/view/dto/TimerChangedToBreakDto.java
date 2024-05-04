@@ -1,7 +1,7 @@
 package com.marcelmalewski.focustimetracker.view.dto;
 
 // TODO walidacja nulli?
-public record TimerChangedToShortBreakDto(
+public record TimerChangedToBreakDto(
 	String selectedTopic,
 	Integer shortBreak,
 	Integer longBreak,
