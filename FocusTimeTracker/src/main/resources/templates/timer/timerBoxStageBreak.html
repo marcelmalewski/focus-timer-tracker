@@ -15,9 +15,12 @@
         th:text="${breakRemainingTimeAsString}"
       ></div>
 
-      <p id="currentStage" class="text-2xl" th:value="${currentStageValue}">
-        Short break
-      </p>
+      <p
+        id="currentStage"
+        class="text-2xl"
+        th:value="${breakType}"
+        th:text="${breakTypePretty}"
+      ></p>
     </div>
 
     <div class="flex gap-3">
@@ -80,28 +83,32 @@
 
   <script>
     breakRemainingTime = [[${breakRemainingTime}]];
-    breakIntervalId = setInterval(function () {
-      const currentStage = document
+    currentBreakType = document
         .getElementById("currentStage")
         .getAttribute("value");
 
-      if (currentStage !== "shortBreak") {
-        clearInterval(breakIntervalId);
-        return;
-      }
+    breakIntervalId = setInterval(function () {
+        const currentStage = document
+            .getElementById("currentStage")
+            .getAttribute("value");
 
-      if (breakRemainingTime > 0) {
-        breakRemainingTime--;
-      }
+        if (currentStage !== currentBreakType) {
+            clearInterval(breakIntervalId);
+            return;
+        }
 
-      const seconds = breakRemainingTime % 60;
-      const minutes = Math.floor(breakRemainingTime / 60) % 60;
+        if (breakRemainingTime > 0) {
+            breakRemainingTime--;
+        }
 
-      document.getElementById("timer").innerHTML =
-        minutes + "m " + seconds + "s";
-      document
-        .getElementById("timer")
-        .setAttribute("value", breakRemainingTime.toString());
+        const seconds = breakRemainingTime % 60;
+        const minutes = Math.floor(breakRemainingTime / 60) % 60;
+
+        document.getElementById("timer").innerHTML =
+            minutes + "m " + seconds + "s";
+        document
+            .getElementById("timer")
+            .setAttribute("value", breakRemainingTime.toString());
     }, 1000);
   </script>
 </div>
