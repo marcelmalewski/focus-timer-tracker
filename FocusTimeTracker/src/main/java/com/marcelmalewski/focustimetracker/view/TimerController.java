@@ -22,17 +22,11 @@ import java.util.List;
 @Controller
 public class TimerController {
 	private final PersonService personService;
+	private final TimerService timerService;
 
-	private String timerAutoBreakToPretty(boolean timerAutoBreak) {
-		return timerAutoBreak ? "On" : "Off";
-	}
-
-	private boolean timerAutoBreakToBoolean(String timerAutoBreakPretty) {
-		return timerAutoBreakPretty.equals("On");
-	}
-
-	public TimerController(PersonService personService) {
+	public TimerController(PersonService personService, TimerService timerService) {
 		this.personService = personService;
+		this.timerService = timerService;
 	}
 
 	@Operation(summary = "Timer home view")
@@ -41,7 +35,7 @@ public class TimerController {
 		Long principalId = Long.valueOf(principal.getName());
 		Person principalData = personService.getPrincipalWithFetchedMainTopics(principalId, request, response);
 
-		model.addAttribute("timerAutoBreakPretty", timerAutoBreakToPretty(principalData.getTimerAutoBreak()));
+		model.addAttribute("timerAutoBreakPretty", timerService.timerAutoBreakToPretty(principalData.getTimerAutoBreak()));
 		model.addAttribute("timerAutoBreak", principalData.getTimerAutoBreak());
 
 		model.addAttribute("latestSetTimeHours", principalData.getLatestSetTimeHours());
@@ -65,7 +59,7 @@ public class TimerController {
 
 	@PutMapping("/timer/focus")
 	public String getTimerBoxStageRunning(Principal principal, HttpServletRequest request, HttpServletResponse response, Model model, @RequestBody TimerChangedToRunningDto timerChangedToRunningDto) {
-		boolean timerAutoBreak = timerAutoBreakToBoolean(timerChangedToRunningDto.timerAutoBreakPretty());
+		boolean timerAutoBreak = timerService.timerAutoBreakToBoolean(timerChangedToRunningDto.timerAutoBreakPretty());
 		long principalId = Long.parseLong(principal.getName());
 
 		personService.updatePrincipalChangedTimerToRunning(principalId, timerAutoBreak, timerChangedToRunningDto, request, response);
@@ -97,7 +91,7 @@ public class TimerController {
 		model.addAttribute("selectedTopic", dto.selectedTopic());
 		model.addAttribute("shortBreak", dto.shortBreak());
 		model.addAttribute("longBreak", dto.longBreak());
-		model.addAttribute("timerAutoBreak", timerAutoBreakToBoolean(dto.timerAutoBreakPretty()));
+		model.addAttribute("timerAutoBreak", timerService.timerAutoBreakToBoolean(dto.timerAutoBreakPretty()));
 		model.addAttribute("timerAutoBreakPretty", dto.timerAutoBreakPretty());
 
 		return "timer/timerBoxStagePause";
@@ -112,7 +106,7 @@ public class TimerController {
 		model.addAttribute("selectedTopic", dto.selectedTopic());
 		model.addAttribute("shortBreak", dto.shortBreak());
 		model.addAttribute("longBreak", dto.longBreak());
-		model.addAttribute("timerAutoBreak", timerAutoBreakToBoolean(dto.timerAutoBreakPretty()));
+		model.addAttribute("timerAutoBreak", timerService.timerAutoBreakToBoolean(dto.timerAutoBreakPretty()));
 		model.addAttribute("timerAutoBreakPretty", dto.timerAutoBreakPretty());
 
 		return "timer/timerBoxStageFocus";
@@ -120,36 +114,33 @@ public class TimerController {
 
 	@PutMapping("/timer/shortBreak")
 	public String getTimerBoxStageShortBreak(Model model, @RequestBody TimerChangedToBreakDto dto) {
-		loadModelAttributesForBreakView(model, dto);
+		timerService.loadBasicModelAttributesForBreakView(model, dto);
 
 		model.addAttribute("breakType", "shortBreak");
 		model.addAttribute("breakTypePretty", "Short break");
+
+		String breakRemainigTimeAsString = dto.shortBreak() + "m " + "0s";
+
+		model.addAttribute("breakSetTime", dto.shortBreak());
+		model.addAttribute("breakRemainingTime", dto.shortBreak() * 60);
+		model.addAttribute("breakRemainingTimeAsString", breakRemainigTimeAsString);
 
 		return "timer/timerBoxStageBreak";
 	}
 
 	@PutMapping("/timer/longBreak")
 	public String getTimerBoxStageLongBreak(Model model, @RequestBody TimerChangedToBreakDto dto) {
-		loadModelAttributesForBreakView(model, dto);
+		timerService.loadBasicModelAttributesForBreakView(model, dto);
 
 		model.addAttribute("breakType", "longBreak");
 		model.addAttribute("breakTypePretty", "Long break");
 
-		return "timer/timerBoxStageBreak";
-	}
+		String breakRemainigTimeAsString = dto.longBreak() + "m " + "0s";
 
-	// TODO move to service
-	private void loadModelAttributesForBreakView(Model model, TimerChangedToBreakDto dto) {
-		model.addAttribute("breakSetTime", dto.shortBreak());
-		model.addAttribute("breakRemainingTime", dto.shortBreak() * 60);
-
-		String breakRemainigTimeAsString = dto.shortBreak() + "m " + "0s";
+		model.addAttribute("breakSetTime", dto.longBreak());
+		model.addAttribute("breakRemainingTime", dto.longBreak() * 60);
 		model.addAttribute("breakRemainingTimeAsString", breakRemainigTimeAsString);
 
-		model.addAttribute("selectedTopic", dto.selectedTopic());
-		model.addAttribute("shortBreak", dto.shortBreak());
-		model.addAttribute("longBreak", dto.longBreak());
-		model.addAttribute("timerAutoBreak", timerAutoBreakToBoolean(dto.timerAutoBreakPretty()));
-		model.addAttribute("timerAutoBreakPretty", dto.timerAutoBreakPretty());
+		return "timer/timerBoxStageBreak";
 	}
 }
