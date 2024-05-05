@@ -2,7 +2,7 @@ package com.marcelmalewski.focustimetracker.entity.person;
 
 import com.marcelmalewski.focustimetracker.entity.person.exception.AuthenticatedPersonNotFoundException;
 import com.marcelmalewski.focustimetracker.security.util.SecurityHelper;
-import com.marcelmalewski.focustimetracker.view.dto.TimerChangedToRunningDto;
+import com.marcelmalewski.focustimetracker.view.dto.TimerFromHomeToFocusDto;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.constraints.NotNull;
@@ -51,28 +51,28 @@ public class PersonService {
 	}
 
 	// TODO update tylko gdy faktycznie coś się zmieniło?
-	public void updatePrincipalChangedTimerToRunning(@NotNull long principalId, @NotNull boolean timerAutoBreak, @NotNull TimerChangedToRunningDto timerChangedToRunningDto, @NotNull HttpServletRequest request,
-																									 @NotNull HttpServletResponse response) {
+	public void updatePrincipalWhenStartFocus(@NotNull long principalId, @NotNull boolean timerAutoBreak, @NotNull TimerFromHomeToFocusDto timerFromHomeToFocusDto, @NotNull HttpServletRequest request,
+																						@NotNull HttpServletResponse response) {
 		int numberOfAffectedRows;
 
 		if (timerAutoBreak) {
 			numberOfAffectedRows = personRepository.startTimerRunningUpdateWithTimerAutoBreakOn(
 				principalId,
-				timerChangedToRunningDto.hours(),
-				timerChangedToRunningDto.minutes(),
-				timerChangedToRunningDto.seconds(),
-				timerChangedToRunningDto.shortBreak(),
-				timerChangedToRunningDto.longBreak(),
-				timerChangedToRunningDto.interval()
+				timerFromHomeToFocusDto.hours(),
+				timerFromHomeToFocusDto.minutes(),
+				timerFromHomeToFocusDto.seconds(),
+				timerFromHomeToFocusDto.shortBreak(),
+				timerFromHomeToFocusDto.longBreak(),
+				timerFromHomeToFocusDto.interval()
 			);
 		} else {
 			numberOfAffectedRows = personRepository.startTimerRunningUpdateWithTimerAutoBreakOff(
 				principalId,
-				timerChangedToRunningDto.hours(),
-				timerChangedToRunningDto.minutes(),
-				timerChangedToRunningDto.seconds(),
-				timerChangedToRunningDto.shortBreak(),
-				timerChangedToRunningDto.longBreak()
+				timerFromHomeToFocusDto.hours(),
+				timerFromHomeToFocusDto.minutes(),
+				timerFromHomeToFocusDto.seconds(),
+				timerFromHomeToFocusDto.shortBreak(),
+				timerFromHomeToFocusDto.longBreak()
 			);
 		}
 

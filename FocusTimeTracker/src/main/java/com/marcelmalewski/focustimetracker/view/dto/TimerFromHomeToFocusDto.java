@@ -1,7 +1,7 @@
 package com.marcelmalewski.focustimetracker.view.dto;
 
 // TODO walidacja nulli?
-public record TimerChangedToRunningDto(
+public record TimerFromHomeToFocusDto(
 	Integer hours,
 	Integer minutes,
 	Integer seconds,
