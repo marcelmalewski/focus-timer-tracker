@@ -8,7 +8,7 @@ public record TimerChangedToRunningDto(
 	String selectedTopic,
 	Integer shortBreak,
 	Integer longBreak,
-	String timerAutoBreakPretty,
+	Boolean timerAutoBreak,
 	Integer interval
 ) {
 

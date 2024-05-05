@@ -8,7 +8,7 @@ public record TimerPauseDto(
 	String selectedTopic,
 	String shortBreak,
 	String longBreak,
-	String timerAutoBreakPretty,
+	Boolean timerAutoBreak,
 	String interval
 ) {
 }

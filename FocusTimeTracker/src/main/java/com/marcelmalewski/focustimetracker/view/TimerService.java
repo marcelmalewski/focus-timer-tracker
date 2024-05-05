@@ -10,12 +10,8 @@ public class TimerService {
 		model.addAttribute("selectedTopic", dto.selectedTopic());
 		model.addAttribute("shortBreak", dto.shortBreak());
 		model.addAttribute("longBreak", dto.longBreak());
-		model.addAttribute("timerAutoBreak", timerAutoBreakToBoolean(dto.timerAutoBreakPretty()));
-		model.addAttribute("timerAutoBreakPretty", dto.timerAutoBreakPretty());
-	}
-
-	public boolean timerAutoBreakToBoolean(String timerAutoBreakPretty) {
-		return timerAutoBreakPretty.equals("On");
+		model.addAttribute("timerAutoBreak", dto.timerAutoBreak());
+		model.addAttribute("timerAutoBreakPretty", timerAutoBreakToPretty(dto.timerAutoBreak()));
 	}
 
 	public String timerAutoBreakToPretty(boolean timerAutoBreak) {

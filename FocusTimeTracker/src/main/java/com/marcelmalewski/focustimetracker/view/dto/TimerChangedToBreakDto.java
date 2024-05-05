@@ -5,7 +5,7 @@ public record TimerChangedToBreakDto(
 	String selectedTopic,
 	Integer shortBreak,
 	Integer longBreak,
-	String timerAutoBreakPretty,
+	Boolean timerAutoBreak,
 	String interval
 ) {
 }

@@ -59,10 +59,8 @@ public class TimerController {
 
 	@PutMapping("/timer/focus")
 	public String getTimerBoxStageRunning(Principal principal, HttpServletRequest request, HttpServletResponse response, Model model, @RequestBody TimerChangedToRunningDto timerChangedToRunningDto) {
-		boolean timerAutoBreak = timerService.timerAutoBreakToBoolean(timerChangedToRunningDto.timerAutoBreakPretty());
 		long principalId = Long.parseLong(principal.getName());
-
-		personService.updatePrincipalChangedTimerToRunning(principalId, timerAutoBreak, timerChangedToRunningDto, request, response);
+		personService.updatePrincipalChangedTimerToRunning(principalId, timerChangedToRunningDto.timerAutoBreak(), timerChangedToRunningDto, request, response);
 
 		String setTimeAsString = timerChangedToRunningDto.hours() + "h " + timerChangedToRunningDto.minutes() + "m " + timerChangedToRunningDto.seconds() + "s";
 		model.addAttribute("setTimeAsString", setTimeAsString);
@@ -76,8 +74,8 @@ public class TimerController {
 		model.addAttribute("selectedTopic", timerChangedToRunningDto.selectedTopic());
 		model.addAttribute("shortBreak", timerChangedToRunningDto.shortBreak());
 		model.addAttribute("longBreak", timerChangedToRunningDto.longBreak());
-		model.addAttribute("timerAutoBreak", timerAutoBreak);
-		model.addAttribute("timerAutoBreakPretty", timerChangedToRunningDto.timerAutoBreakPretty());
+		model.addAttribute("timerAutoBreak", timerChangedToRunningDto.timerAutoBreak());
+		model.addAttribute("timerAutoBreakPretty", timerService.timerAutoBreakToPretty(timerChangedToRunningDto.timerAutoBreak()));
 
 		return "timer/timerBoxStageFocus";
 	}
@@ -91,14 +89,14 @@ public class TimerController {
 		model.addAttribute("selectedTopic", dto.selectedTopic());
 		model.addAttribute("shortBreak", dto.shortBreak());
 		model.addAttribute("longBreak", dto.longBreak());
-		model.addAttribute("timerAutoBreak", timerService.timerAutoBreakToBoolean(dto.timerAutoBreakPretty()));
-		model.addAttribute("timerAutoBreakPretty", dto.timerAutoBreakPretty());
+		model.addAttribute("timerAutoBreak", dto.timerAutoBreak());
+		model.addAttribute("timerAutoBreakPretty", timerService.timerAutoBreakToPretty(dto.timerAutoBreak()));
 
 		return "timer/timerBoxStagePause";
 	}
 
 	@PutMapping("/timer/focusAfterPause")
-	public String getTimerBoxStageResumed(Model model, @RequestBody TimerPauseDto dto) {
+	public String getTimerBoxStageFocusAfterPause(Model model, @RequestBody TimerPauseDto dto) {
 		model.addAttribute("setTimeAsString", dto.setTimeAsString());
 		model.addAttribute("remainingTimeAsString", dto.remainingTimeAsString());
 		model.addAttribute("remainingTime", dto.remainingTime());
@@ -106,9 +104,14 @@ public class TimerController {
 		model.addAttribute("selectedTopic", dto.selectedTopic());
 		model.addAttribute("shortBreak", dto.shortBreak());
 		model.addAttribute("longBreak", dto.longBreak());
-		model.addAttribute("timerAutoBreak", timerService.timerAutoBreakToBoolean(dto.timerAutoBreakPretty()));
-		model.addAttribute("timerAutoBreakPretty", dto.timerAutoBreakPretty());
+		model.addAttribute("timerAutoBreak", dto.timerAutoBreak());
+		model.addAttribute("timerAutoBreakPretty", timerService.timerAutoBreakToPretty(dto.timerAutoBreak()));
 
+		return "timer/timerBoxStageFocus";
+	}
+
+	@PutMapping("/timer/focusAfterBreak")
+	public String getTimerBoxStageFocusAfterBreak(Model model) {
 		return "timer/timerBoxStageFocus";
 	}
 
