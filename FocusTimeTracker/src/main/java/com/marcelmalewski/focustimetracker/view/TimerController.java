@@ -2,10 +2,13 @@ package com.marcelmalewski.focustimetracker.view;
 
 import com.marcelmalewski.focustimetracker.entity.person.Person;
 import com.marcelmalewski.focustimetracker.entity.person.PersonService;
+import com.marcelmalewski.focustimetracker.entity.person.exception.AuthenticatedPersonNotFoundException;
 import com.marcelmalewski.focustimetracker.entity.topic.mainTopic.MainTopic;
-import com.marcelmalewski.focustimetracker.view.dto.TimerToBreakDto;
+import com.marcelmalewski.focustimetracker.security.util.SecurityHelper;
+import com.marcelmalewski.focustimetracker.view.dto.TimerBreakDto;
+import com.marcelmalewski.focustimetracker.view.dto.TimerFocusAfterBreakDto;
 import com.marcelmalewski.focustimetracker.view.dto.TimerPauseDto;
-import com.marcelmalewski.focustimetracker.view.dto.TimerFromHomeToFocusDto;
+import com.marcelmalewski.focustimetracker.view.dto.TimerFocusAfterHomeDto;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -17,23 +20,32 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import java.security.Principal;
 import java.util.List;
+import java.util.Optional;
 
 //TODO pewnie trzeba trochę rzeczy dać do serwisu czy coś hmm
 @Controller
 public class TimerController {
 	private final PersonService personService;
 	private final TimerService timerService;
+	private final SecurityHelper securityHelper;
 
-	public TimerController(PersonService personService, TimerService timerService) {
+	public TimerController(PersonService personService, TimerService timerService, SecurityHelper securityHelper) {
 		this.personService = personService;
 		this.timerService = timerService;
+		this.securityHelper = securityHelper;
 	}
 
 	@Operation(summary = "Timer home view")
 	@GetMapping("/timer")
 	public String getTimerHomeView(Principal principal, HttpServletRequest request, HttpServletResponse response, Model model) {
 		Long principalId = Long.valueOf(principal.getName());
-		Person principalData = personService.getPrincipalWithFetchedMainTopics(principalId, request, response);
+		Optional<Person> optionalPrincipalData = personService.getPrincipalWithFetchedMainTopics(principalId);
+
+		if (optionalPrincipalData.isEmpty()) {
+			securityHelper.logoutManually(request, response);
+			throw new AuthenticatedPersonNotFoundException();
+		}
+		Person principalData = optionalPrincipalData.get();
 
 		model.addAttribute("timerAutoBreakPretty", timerService.timerAutoBreakToPretty(principalData.getTimerAutoBreak()));
 		model.addAttribute("timerAutoBreak", principalData.getTimerAutoBreak());
@@ -57,31 +69,30 @@ public class TimerController {
 		return "/timer/timerBase";
 	}
 
-	@PutMapping("/timer/focus")
-	public String getTimerBoxStageRunning(Principal principal, HttpServletRequest request, HttpServletResponse response, Model model, @RequestBody TimerFromHomeToFocusDto timerFromHomeToFocusDto) {
+	@PutMapping("/timer/focusAfterHome")
+	public String getTimerFocusAfterHome(Principal principal, HttpServletRequest request, HttpServletResponse response, Model model, @RequestBody TimerFocusAfterHomeDto timerFocusAfterHomeDto) {
 		long principalId = Long.parseLong(principal.getName());
-		personService.updatePrincipalWhenStartFocus(principalId, timerFromHomeToFocusDto.timerAutoBreak(), timerFromHomeToFocusDto, request, response);
+		//TODO catch excpetion
+		personService.updatePrincipalWhenStartFocus(principalId, timerFocusAfterHomeDto.timerAutoBreak(), timerFocusAfterHomeDto, request, response);
 
-		String setTimeAsString = timerFromHomeToFocusDto.hours() + "h " + timerFromHomeToFocusDto.minutes() + "m " + timerFromHomeToFocusDto.seconds() + "s";
-		model.addAttribute("setTimeAsString", setTimeAsString);
+		String setTimePretty = timerFocusAfterHomeDto.hours() + "h " + timerFocusAfterHomeDto.minutes() + "m " + timerFocusAfterHomeDto.seconds() + "s";
+		model.addAttribute("setTimeAsString", setTimePretty);
+		model.addAttribute("remainingTimeAsString", setTimePretty);
 
-		String remainigTimeAsString = timerFromHomeToFocusDto.hours() + "h " + timerFromHomeToFocusDto.minutes() + "m " + timerFromHomeToFocusDto.seconds() + "s";
-		model.addAttribute("remainingTimeAsString", remainigTimeAsString);
-
-		int remainingTime = (timerFromHomeToFocusDto.hours() * 60 * 60) + (timerFromHomeToFocusDto.minutes() * 60) + timerFromHomeToFocusDto.seconds();
+		int remainingTime = (timerFocusAfterHomeDto.hours() * 60 * 60) + (timerFocusAfterHomeDto.minutes() * 60) + timerFocusAfterHomeDto.seconds();
 		model.addAttribute("remainingTime", remainingTime);
 
-		model.addAttribute("selectedTopic", timerFromHomeToFocusDto.selectedTopic());
-		model.addAttribute("shortBreak", timerFromHomeToFocusDto.shortBreak());
-		model.addAttribute("longBreak", timerFromHomeToFocusDto.longBreak());
-		model.addAttribute("timerAutoBreak", timerFromHomeToFocusDto.timerAutoBreak());
-		model.addAttribute("timerAutoBreakPretty", timerService.timerAutoBreakToPretty(timerFromHomeToFocusDto.timerAutoBreak()));
+		model.addAttribute("selectedTopic", timerFocusAfterHomeDto.selectedTopic());
+		model.addAttribute("shortBreak", timerFocusAfterHomeDto.shortBreak());
+		model.addAttribute("longBreak", timerFocusAfterHomeDto.longBreak());
+		model.addAttribute("timerAutoBreak", timerFocusAfterHomeDto.timerAutoBreak());
+		model.addAttribute("timerAutoBreakPretty", timerService.timerAutoBreakToPretty(timerFocusAfterHomeDto.timerAutoBreak()));
 
 		return "timer/timerBoxStageFocus";
 	}
 
 	@PutMapping("/timer/pause")
-	public String getTimerBoxStagePaused(Model model, @RequestBody TimerPauseDto dto) {
+	public String getTimerToPause(Model model, @RequestBody TimerPauseDto dto) {
 		model.addAttribute("setTimeAsString", dto.setTimeAsString());
 		model.addAttribute("remainingTimeAsString", dto.remainingTimeAsString());
 		model.addAttribute("remainingTime", dto.remainingTime());
@@ -96,7 +107,7 @@ public class TimerController {
 	}
 
 	@PutMapping("/timer/focusAfterPause")
-	public String getTimerBoxStageFocusAfterPause(Model model, @RequestBody TimerPauseDto dto) {
+	public String getTimerFocusAfterPause(Model model, @RequestBody TimerPauseDto dto) {
 		model.addAttribute("setTimeAsString", dto.setTimeAsString());
 		model.addAttribute("remainingTimeAsString", dto.remainingTimeAsString());
 		model.addAttribute("remainingTime", dto.remainingTime());
@@ -111,12 +122,35 @@ public class TimerController {
 	}
 
 	@PutMapping("/timer/focusAfterBreak")
-	public String getTimerBoxStageFocusAfterBreak(Model model) {
+	public String getTimerFocusAfterBreak(Principal principal, HttpServletRequest request, HttpServletResponse response, Model model, @RequestBody TimerFocusAfterBreakDto dto) {
+		long principalId = Long.parseLong(principal.getName());
+		Optional<Person> optionalPrincipalData = personService.getPrincipal(principalId);
+
+		if (optionalPrincipalData.isEmpty()) {
+			securityHelper.logoutManually(request, response);
+			throw new AuthenticatedPersonNotFoundException();
+		}
+		Person principalData = optionalPrincipalData.get();
+
+		String setTimePretty = principalData.getLatestSetTimeHours() + "h " + principalData.getLatestSetTimeMinutes() + "m " + principalData.getLatestSetTimeSeconds() + "s";
+		model.addAttribute("setTimeAsString", setTimePretty);
+		model.addAttribute("remainingTimeAsString", setTimePretty);
+
+		int remainingTime = (principalData.getLatestSetTimeHours() * 60 * 60) + (principalData.getLatestSetTimeMinutes() * 60) + principalData.getLatestSetTimeSeconds();
+		model.addAttribute("remainingTime", remainingTime);
+
+
+		model.addAttribute("selectedTopic", dto.selectedTopic());
+		model.addAttribute("shortBreak", dto.shortBreak());
+		model.addAttribute("longBreak", dto.longBreak());
+		model.addAttribute("timerAutoBreak", dto.timerAutoBreak());
+		model.addAttribute("timerAutoBreakPretty", timerService.timerAutoBreakToPretty(dto.timerAutoBreak()));
+
 		return "timer/timerBoxStageFocus";
 	}
 
 	@PutMapping("/timer/shortBreak")
-	public String getTimerBoxStageShortBreak(Model model, @RequestBody TimerToBreakDto dto) {
+	public String getTimerShortBreak(Model model, @RequestBody TimerBreakDto dto) {
 		timerService.loadBasicModelAttributesForBreakView(model, dto);
 
 		model.addAttribute("breakType", "shortBreak");
@@ -132,7 +166,7 @@ public class TimerController {
 	}
 
 	@PutMapping("/timer/longBreak")
-	public String getTimerBoxStageLongBreak(Model model, @RequestBody TimerToBreakDto dto) {
+	public String getTimerLongBreak(Model model, @RequestBody TimerBreakDto dto) {
 		timerService.loadBasicModelAttributesForBreakView(model, dto);
 
 		model.addAttribute("breakType", "longBreak");

@@ -18,11 +18,12 @@ public class PersonController {
 		this.personService = personService;
 	}
 
-	@PatchMapping(value = "person/timer-auto-break")
+	@PatchMapping(value = "person/timerAutoBreak")
 	public String updateTimerAutoBreak(@RequestBody UpdateTimerAutoBreakDto updateTimerAutoBreakDto, Principal principal, HttpServletRequest request, HttpServletResponse response, Model model) {
 		Long principalId = Long.valueOf(principal.getName());
 		boolean timerAutoBreak = updateTimerAutoBreakDto.timerAutoBreakInput() != null;
 
+		//TODO catch excpetion
 		personService.updatePrincipalTimerAutoBreak(principalId, timerAutoBreak, request, response);
 
 		model.addAttribute("timerAutoBreakPretty", timerAutoBreak ? "On" : "Off");

@@ -1,12 +1,12 @@
 package com.marcelmalewski.focustimetracker.view;
 
-import com.marcelmalewski.focustimetracker.view.dto.TimerToBreakDto;
+import com.marcelmalewski.focustimetracker.view.dto.TimerBreakDto;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
 @Service
 public class TimerService {
-	public void loadBasicModelAttributesForBreakView(Model model, TimerToBreakDto dto) {
+	public void loadBasicModelAttributesForBreakView(Model model, TimerBreakDto dto) {
 		model.addAttribute("selectedTopic", dto.selectedTopic());
 		model.addAttribute("shortBreak", dto.shortBreak());
 		model.addAttribute("longBreak", dto.longBreak());

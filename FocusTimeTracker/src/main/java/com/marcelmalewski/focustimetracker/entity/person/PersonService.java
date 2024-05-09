@@ -2,12 +2,15 @@ package com.marcelmalewski.focustimetracker.entity.person;
 
 import com.marcelmalewski.focustimetracker.entity.person.exception.AuthenticatedPersonNotFoundException;
 import com.marcelmalewski.focustimetracker.security.util.SecurityHelper;
-import com.marcelmalewski.focustimetracker.view.dto.TimerFromHomeToFocusDto;
+import com.marcelmalewski.focustimetracker.view.dto.TimerFocusAfterHomeDto;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
+
+import javax.swing.text.html.Option;
+import java.util.Optional;
 
 @Service
 @Validated
@@ -20,12 +23,12 @@ public class PersonService {
 		this.securityHelper = securityHelper;
 	}
 
-	public Person getPrincipalWithFetchedMainTopics(@NotNull Long principalId, @NotNull HttpServletRequest request,
-																									@NotNull HttpServletResponse response) {
-		return personRepository.findByIdWithFetchedMainTopics(principalId).orElseThrow(() -> {
-			securityHelper.logoutManually(request, response);
-			return new AuthenticatedPersonNotFoundException();
-		});
+	public Optional<Person> getPrincipal(@NotNull Long principalId) {
+		return personRepository.findById(principalId);
+	}
+
+	public Optional<Person> getPrincipalWithFetchedMainTopics(@NotNull Long principalId) {
+		return personRepository.findByIdWithFetchedMainTopics(principalId);
 	}
 
 	public boolean existsByLogin(String login) {
@@ -40,8 +43,12 @@ public class PersonService {
 		return personRepository.save(person);
 	}
 
-	public void updatePrincipalTimerAutoBreak(@NotNull Long principalId, @NotNull Boolean timerAutoBreak, @NotNull HttpServletRequest request,
-																						@NotNull HttpServletResponse response) {
+	public void updatePrincipalTimerAutoBreak(
+		@NotNull Long principalId,
+		@NotNull Boolean timerAutoBreak,
+		@NotNull HttpServletRequest request,
+		@NotNull HttpServletResponse response
+	) throws AuthenticatedPersonNotFoundException {
 		int numberOfAffectedRows = personRepository.updateTimerAutoBreak(principalId, timerAutoBreak);
 
 		if (numberOfAffectedRows == 0) {
@@ -51,28 +58,33 @@ public class PersonService {
 	}
 
 	// TODO update tylko gdy faktycznie coś się zmieniło?
-	public void updatePrincipalWhenStartFocus(@NotNull long principalId, @NotNull boolean timerAutoBreak, @NotNull TimerFromHomeToFocusDto timerFromHomeToFocusDto, @NotNull HttpServletRequest request,
-																						@NotNull HttpServletResponse response) {
+	public void updatePrincipalWhenStartFocus(
+		@NotNull long principalId,
+		@NotNull boolean timerAutoBreak,
+		@NotNull TimerFocusAfterHomeDto timerFocusAfterHomeDto,
+		@NotNull HttpServletRequest request,
+		@NotNull HttpServletResponse response
+	) throws AuthenticatedPersonNotFoundException {
 		int numberOfAffectedRows;
 
 		if (timerAutoBreak) {
 			numberOfAffectedRows = personRepository.startTimerRunningUpdateWithTimerAutoBreakOn(
 				principalId,
-				timerFromHomeToFocusDto.hours(),
-				timerFromHomeToFocusDto.minutes(),
-				timerFromHomeToFocusDto.seconds(),
-				timerFromHomeToFocusDto.shortBreak(),
-				timerFromHomeToFocusDto.longBreak(),
-				timerFromHomeToFocusDto.interval()
+				timerFocusAfterHomeDto.hours(),
+				timerFocusAfterHomeDto.minutes(),
+				timerFocusAfterHomeDto.seconds(),
+				timerFocusAfterHomeDto.shortBreak(),
+				timerFocusAfterHomeDto.longBreak(),
+				timerFocusAfterHomeDto.interval()
 			);
 		} else {
 			numberOfAffectedRows = personRepository.startTimerRunningUpdateWithTimerAutoBreakOff(
 				principalId,
-				timerFromHomeToFocusDto.hours(),
-				timerFromHomeToFocusDto.minutes(),
-				timerFromHomeToFocusDto.seconds(),
-				timerFromHomeToFocusDto.shortBreak(),
-				timerFromHomeToFocusDto.longBreak()
+				timerFocusAfterHomeDto.hours(),
+				timerFocusAfterHomeDto.minutes(),
+				timerFocusAfterHomeDto.seconds(),
+				timerFocusAfterHomeDto.shortBreak(),
+				timerFocusAfterHomeDto.longBreak()
 			);
 		}
 

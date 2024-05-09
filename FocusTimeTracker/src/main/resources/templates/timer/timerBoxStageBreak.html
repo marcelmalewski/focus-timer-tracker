@@ -30,12 +30,10 @@
         hx-target="#timerBox"
         hx-swap="outerHTML"
         hx-vals="js:{
-            remainingTime: document.getElementById('timer').getAttribute('value'),
             selectedTopic: document.getElementById('selectedTopic').innerHTML,
             shortBreak: document.getElementById('shortBreak').innerHTML,
             longBreak: document.getElementById('longBreak').innerHTML,
-            timerAutoBreakPretty: document.getElementById('timerAutoBreak').innerHTML,
-            interval: document.getElementById('interval').innerHTML
+            timerAutoBreak: document.getElementById('timerAutoBreak').getAttribute('value'),
         }"
         class="bg-base-button hover:bg-base-button-hov rounded-md px-4 py-2 text-xl duration-200"
       >
@@ -84,6 +82,7 @@
         id="timerAutoBreak"
         class="text-2xl"
         th:text="${timerAutoBreakPretty}"
+        th:value="${timerAutoBreak}"
       ></p>
     </div>
 
