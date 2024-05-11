@@ -10,7 +10,7 @@ public record TimerFocusAfterHomeDto(
 	Integer longBreak,
 	Boolean timerAutoBreak,
 	Integer interval
-) {
+) implements TimerBasicFields {
 
 	@Override
 	public Integer hours() {

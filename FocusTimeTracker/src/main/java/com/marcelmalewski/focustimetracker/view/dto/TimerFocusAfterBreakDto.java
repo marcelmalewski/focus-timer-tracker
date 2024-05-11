@@ -5,5 +5,5 @@ public record TimerFocusAfterBreakDto(
 	Integer shortBreak,
 	Integer longBreak,
 	Boolean timerAutoBreak
-) {
+) implements TimerBasicFields {
 }

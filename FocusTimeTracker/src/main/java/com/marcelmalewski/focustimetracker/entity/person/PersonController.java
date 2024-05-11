@@ -23,7 +23,6 @@ public class PersonController {
 		Long principalId = Long.valueOf(principal.getName());
 		boolean timerAutoBreak = updateTimerAutoBreakDto.timerAutoBreakInput() != null;
 
-		//TODO catch excpetion
 		personService.updatePrincipalTimerAutoBreak(principalId, timerAutoBreak, request, response);
 
 		model.addAttribute("timerAutoBreakPretty", timerAutoBreak ? "On" : "Off");

@@ -5,7 +5,6 @@ public record TimerBreakDto(
 	String selectedTopic,
 	Integer shortBreak,
 	Integer longBreak,
-	Boolean timerAutoBreak,
-	String interval
-) {
+	Boolean timerAutoBreak
+) implements TimerBasicFields{
 }
