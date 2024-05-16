@@ -40,11 +40,13 @@ public class TimerController {
 		Long principalId = Long.valueOf(principal.getName());
 		Optional<Person> optionalPrincipalData = personService.getPrincipalWithFetchedMainTopics(principalId);
 
-		if (optionalPrincipalData.isEmpty()) {
-			securityHelper.logoutManually(request, response);
-			throw new AuthenticatedPersonNotFoundException();
-		}
-		Person principalData = optionalPrincipalData.get();
+		Person principalData = switch (optionalPrincipalData.orElse(null)) {
+			case null -> {
+				securityHelper.logoutManually(request, response);
+				throw new AuthenticatedPersonNotFoundException();
+			}
+			case Person person -> person;
+		};
 
 		model.addAttribute("timerAutoBreakPretty", timerService.timerAutoBreakToPretty(principalData.getTimerAutoBreak()));
 		model.addAttribute("timerAutoBreak", principalData.getTimerAutoBreak());
@@ -104,11 +106,13 @@ public class TimerController {
 		long principalId = Long.parseLong(principal.getName());
 		Optional<Person> optionalPrincipalData = personService.getPrincipal(principalId);
 
-		if (optionalPrincipalData.isEmpty()) {
-			securityHelper.logoutManually(request, response);
-			throw new AuthenticatedPersonNotFoundException();
-		}
-		Person principalData = optionalPrincipalData.get();
+		Person principalData = switch (optionalPrincipalData.orElse(null)) {
+			case null -> {
+				securityHelper.logoutManually(request, response);
+				throw new AuthenticatedPersonNotFoundException();
+			}
+			case Person person -> person;
+		};
 
 		String setTimePretty = principalData.getLatestSetTimeHours() + "h " + principalData.getLatestSetTimeMinutes() + "m " + principalData.getLatestSetTimeSeconds() + "s";
 		model.addAttribute("setTimeAsString", setTimePretty);
