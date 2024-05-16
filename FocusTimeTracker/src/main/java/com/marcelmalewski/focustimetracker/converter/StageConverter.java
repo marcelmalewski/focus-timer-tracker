@@ -6,7 +6,7 @@ import jakarta.persistence.Converter;
 
 import java.util.stream.Stream;
 
-@Converter(autoApply = true)
+@Converter
 public class StageConverter implements AttributeConverter<Stage, String> {
 
 	@Override
