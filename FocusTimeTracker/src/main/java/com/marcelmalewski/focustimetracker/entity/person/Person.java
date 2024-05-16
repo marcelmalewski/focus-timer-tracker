@@ -1,8 +1,11 @@
 package com.marcelmalewski.focustimetracker.entity.person;
 
+import com.marcelmalewski.focustimetracker.converter.StageConverter;
 import com.marcelmalewski.focustimetracker.entity.alarmsettings.AlarmSettings;
 import com.marcelmalewski.focustimetracker.entity.dailyfocusSummary.DailyFocusSummary;
 import com.marcelmalewski.focustimetracker.entity.topic.mainTopic.MainTopic;
+import com.marcelmalewski.focustimetracker.view.Stage;
+import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
@@ -43,7 +46,13 @@ public class Person implements UserDetails {
 	@Column(updatable = false)
 	private LocalDate createdAt;
 
-	// LatestSetTime
+	// LatestSet
+	@NotNull
+	@Convert(converter = StageConverter.class)
+	@Builder.Default
+	private Stage latestSetStage = Stage.HOME;
+	@Nullable
+	private String latestSelectedTopic;
 	@NotNull
 	@Builder.Default
 	private Integer latestSetTimeHours = 0;
@@ -57,16 +66,16 @@ public class Person implements UserDetails {
 	// Break settings
 	@NotNull
 	@Builder.Default
-	private Boolean timerAutoBreak = false;
-	@NotNull
-	@Builder.Default
-	private Boolean stopWatchAutoBreak = true;
-	@NotNull
-	@Builder.Default
 	private Integer shortBreak = 5;
 	@NotNull
 	@Builder.Default
 	private Integer longBreak = 10;
+	@NotNull
+	@Builder.Default
+	private Boolean timerAutoBreak = false;
+	@NotNull
+	@Builder.Default
+	private Boolean stopWatchAutoBreak = true;
 	@NotNull
 	@Builder.Default
 	private Integer interval = 1;
