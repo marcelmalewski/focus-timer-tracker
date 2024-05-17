@@ -129,7 +129,7 @@ public class TimerController {
 	@PutMapping("/timer/shortBreak")
 	public String getTimerShortBreak(Model model, @RequestBody TimerBreakDto dto) {
 		model.addAttribute("breakType", "shortBreak");
-		model.addAttribute("breakTypePretty", "Short break");
+		model.addAttribute("breakTypePretty", Stage.SHORT_BREAK);
 
 		String breakRemainigTimeAsString = dto.shortBreak() + "m " + "0s";
 
@@ -145,7 +145,7 @@ public class TimerController {
 	@PutMapping("/timer/longBreak")
 	public String getTimerLongBreak(Model model, @RequestBody TimerBreakDto dto) {
 		model.addAttribute("breakType", "longBreak");
-		model.addAttribute("breakTypePretty", "Long break");
+		model.addAttribute("breakTypePretty", Stage.LONG_BREAK);
 
 		String breakRemainigTimeAsString = dto.longBreak() + "m " + "0s";
 
