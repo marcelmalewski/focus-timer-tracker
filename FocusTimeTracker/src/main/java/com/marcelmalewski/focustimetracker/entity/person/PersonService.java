@@ -2,6 +2,7 @@ package com.marcelmalewski.focustimetracker.entity.person;
 
 import com.marcelmalewski.focustimetracker.entity.person.exception.AuthenticatedPersonNotFoundException;
 import com.marcelmalewski.focustimetracker.security.util.SecurityHelper;
+import com.marcelmalewski.focustimetracker.view.Stage;
 import com.marcelmalewski.focustimetracker.view.dto.TimerFocusAfterHomeDto;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -23,29 +24,29 @@ public class PersonService {
 		this.securityHelper = securityHelper;
 	}
 
-	public Optional<Person> getPrincipal(@NotNull Long principalId) {
+	public Optional<Person> getPrincipal(long principalId) {
 		return personRepository.findById(principalId);
 	}
 
-	public Optional<Person> getPrincipalWithFetchedMainTopics(@NotNull Long principalId) {
+	public Optional<Person> getPrincipalWithFetchedMainTopics(long principalId) {
 		return personRepository.findByIdWithFetchedMainTopics(principalId);
 	}
 
-	public boolean existsByLogin(String login) {
+	public boolean existsByLogin(@NotNull String login) {
 		return personRepository.existsByLogin(login);
 	}
 
-	public boolean existsByEmail(String email) {
+	public boolean existsByEmail(@NotNull String email) {
 		return personRepository.existsByEmail(email);
 	}
 
-	public Person create(Person person) {
+	public Person create(@NotNull Person person) {
 		return personRepository.save(person);
 	}
 
 	public void updatePrincipalTimerAutoBreak(
-		@NotNull Long principalId,
-		@NotNull Boolean timerAutoBreak,
+		long principalId,
+		boolean timerAutoBreak,
 		@NotNull HttpServletRequest request,
 		@NotNull HttpServletResponse response
 	) throws AuthenticatedPersonNotFoundException {
@@ -59,9 +60,10 @@ public class PersonService {
 
 	// TODO update tylko gdy faktycznie coś się zmieniło?
 	public void updatePrincipalWhenStartFocus(
-		@NotNull long principalId,
-		@NotNull boolean timerAutoBreak,
+		long principalId,
+		boolean timerAutoBreak,
 		@NotNull TimerFocusAfterHomeDto timerFocusAfterHomeDto,
+		@NotNull Stage currentStage,
 		@NotNull HttpServletRequest request,
 		@NotNull HttpServletResponse response
 	) throws AuthenticatedPersonNotFoundException {
@@ -70,6 +72,7 @@ public class PersonService {
 		if (timerAutoBreak) {
 			numberOfAffectedRows = personRepository.startTimerRunningUpdateWithTimerAutoBreakOn(
 				principalId,
+				timerFocusAfterHomeDto.selectedTopic(),
 				timerFocusAfterHomeDto.hours(),
 				timerFocusAfterHomeDto.minutes(),
 				timerFocusAfterHomeDto.seconds(),
@@ -80,6 +83,7 @@ public class PersonService {
 		} else {
 			numberOfAffectedRows = personRepository.startTimerRunningUpdateWithTimerAutoBreakOff(
 				principalId,
+				timerFocusAfterHomeDto.selectedTopic(),
 				timerFocusAfterHomeDto.hours(),
 				timerFocusAfterHomeDto.minutes(),
 				timerFocusAfterHomeDto.seconds(),

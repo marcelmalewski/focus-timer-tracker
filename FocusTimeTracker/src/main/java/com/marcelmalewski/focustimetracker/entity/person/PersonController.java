@@ -19,7 +19,7 @@ public class PersonController {
 	}
 
 	@PatchMapping(value = "person/timerAutoBreak")
-	public String updateTimerAutoBreak(@RequestBody UpdateTimerAutoBreakDto updateTimerAutoBreakDto, Principal principal, HttpServletRequest request, HttpServletResponse response, Model model) {
+	public String updateTimerAutoBreak(Principal principal, HttpServletRequest request, HttpServletResponse response, Model model, @RequestBody UpdateTimerAutoBreakDto updateTimerAutoBreakDto) {
 		Long principalId = Long.valueOf(principal.getName());
 		boolean timerAutoBreak = updateTimerAutoBreakDto.timerAutoBreakInput() != null;
 

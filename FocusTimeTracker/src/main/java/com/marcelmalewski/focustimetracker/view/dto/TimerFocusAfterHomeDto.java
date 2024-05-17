@@ -1,6 +1,6 @@
 package com.marcelmalewski.focustimetracker.view.dto;
 
-// TODO walidacja nulli?
+// TODO walidacja nulli
 public record TimerFocusAfterHomeDto(
 	Integer hours,
 	Integer minutes,
