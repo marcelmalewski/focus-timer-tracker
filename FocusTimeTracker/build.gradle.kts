@@ -27,8 +27,6 @@ dependencies {
     annotationProcessor("org.mapstruct:mapstruct-processor:1.5.3.Final")
     developmentOnly("org.springframework.boot:spring-boot-devtools")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
-    testImplementation("org.springframework.security:spring-security-test:6.1.2")
-    testImplementation("org.testcontainers:postgresql:1.19.1")
 }
 
 tasks.withType<Test> {

@@ -1,8 +1,10 @@
 package com.marcelmalewski.focustimetracker.entity.person;
 
+import com.marcelmalewski.focustimetracker.entity.person.dto.PrincipalBasicDataDto;
 import com.marcelmalewski.focustimetracker.entity.person.exception.AuthenticatedPersonNotFoundException;
+import com.marcelmalewski.focustimetracker.mapper.PersonPrincipleDataMapper;
 import com.marcelmalewski.focustimetracker.security.util.SecurityHelper;
-import com.marcelmalewski.focustimetracker.view.Stage;
+import com.marcelmalewski.focustimetracker.enums.Stage;
 import com.marcelmalewski.focustimetracker.view.dto.TimerFocusAfterHomeDto;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -10,26 +12,44 @@ import jakarta.validation.constraints.NotNull;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
-import javax.swing.text.html.Option;
 import java.util.Optional;
 
+//AuthenticatedPersonNotFoundException is only for principal methods
 @Service
 @Validated
 public class PersonService {
 	private final PersonRepository personRepository;
 	private final SecurityHelper securityHelper;
+	private final PersonPrincipleDataMapper personMapper;
 
-	public PersonService(PersonRepository personRepository, SecurityHelper securityHelper) {
+	public PersonService(PersonRepository personRepository, SecurityHelper securityHelper, PersonPrincipleDataMapper personMapper) {
 		this.personRepository = personRepository;
 		this.securityHelper = securityHelper;
+		this.personMapper = personMapper;
 	}
 
-	public Optional<Person> getPrincipal(long principalId) {
-		return personRepository.findById(principalId);
+	public PrincipalBasicDataDto getPrincipalBasicData(long principalId, HttpServletRequest request, HttpServletResponse response) {
+		Optional<Person> optionalPerson = personRepository.findById(principalId);
+
+		return switch (optionalPerson.orElse(null)) {
+			case null -> {
+				securityHelper.logoutManually(request, response);
+				throw new AuthenticatedPersonNotFoundException();
+			}
+			case Person person -> personMapper.toPrincipalBasicDataDto(person);
+		};
 	}
 
-	public Optional<Person> getPrincipalWithFetchedMainTopics(long principalId) {
-		return personRepository.findByIdWithFetchedMainTopics(principalId);
+	public PrincipalBasicDataDto getPrincipalBasicDataWithFetchedMainTopics(long principalId, HttpServletRequest request, HttpServletResponse response) {
+		Optional<Person> optionalPerson = personRepository.findByIdWithFetchedMainTopics(principalId);
+
+		return switch (optionalPerson.orElse(null)) {
+			case null -> {
+				securityHelper.logoutManually(request, response);
+				throw new AuthenticatedPersonNotFoundException();
+			}
+			case Person person -> personMapper.toPrincipalBasicDataDto(person);
+		};
 	}
 
 	public boolean existsByLogin(@NotNull String login) {
@@ -78,7 +98,8 @@ public class PersonService {
 				timerFocusAfterHomeDto.seconds(),
 				timerFocusAfterHomeDto.shortBreak(),
 				timerFocusAfterHomeDto.longBreak(),
-				timerFocusAfterHomeDto.interval()
+				timerFocusAfterHomeDto.interval(),
+				currentStage
 			);
 		} else {
 			numberOfAffectedRows = personRepository.startTimerRunningUpdateWithTimerAutoBreakOff(
@@ -88,7 +109,8 @@ public class PersonService {
 				timerFocusAfterHomeDto.minutes(),
 				timerFocusAfterHomeDto.seconds(),
 				timerFocusAfterHomeDto.shortBreak(),
-				timerFocusAfterHomeDto.longBreak()
+				timerFocusAfterHomeDto.longBreak(),
+				currentStage
 			);
 		}
 

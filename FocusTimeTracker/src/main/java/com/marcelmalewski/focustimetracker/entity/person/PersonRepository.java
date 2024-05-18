@@ -1,5 +1,6 @@
 package com.marcelmalewski.focustimetracker.entity.person;
 
+import com.marcelmalewski.focustimetracker.enums.Stage;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -28,37 +29,47 @@ public interface PersonRepository extends JpaRepository<Person, Long> {
 
 	@Modifying(clearAutomatically = true)
 	@Query("UPDATE Person person " +
-		"SET person.latestSetTimeHours = :hours," +
+		"SET person.latestSelectedTopic = :selectedTopic," +
+		"person.latestSetTimeHours = :hours," +
 		"person.latestSetTimeMinutes = :minutes," +
 		"person.latestSetTimeSeconds = :seconds," +
 		"person.shortBreak = :shortBreak," +
 		"person.longBreak = :longBreak," +
-		"person.interval = :interval " +
+		"person.interval = :interval," +
+		"person.latestSetStage = :currentStage " +
 		"WHERE person.id = :id")
 	@Transactional
-	int startTimerRunningUpdateWithTimerAutoBreakOn(@Param(value = "id") long id,
-																									@Param(value = "hours") Integer hours,
-																									@Param(value = "minutes") Integer minutes,
-																									@Param(value = "seconds") Integer seconds,
-																									@Param(value = "shortBreak") Integer shortBreak,
-																									@Param(value = "longBreak") Integer longBreak,
-																									@Param(value = "interval") Integer interval
+	int startTimerRunningUpdateWithTimerAutoBreakOn(
+		@Param(value = "id") long id,
+		@Param(value = "selectedTopic") String selectedTopic,
+		@Param(value = "hours") Integer hours,
+		@Param(value = "minutes") Integer minutes,
+		@Param(value = "seconds") Integer seconds,
+		@Param(value = "shortBreak") Integer shortBreak,
+		@Param(value = "longBreak") Integer longBreak,
+		@Param(value = "interval") Integer interval,
+		@Param(value = "currentStage") Stage currentStage
 	);
 
 	@Modifying(clearAutomatically = true)
 	@Query("UPDATE Person person " +
-		"SET person.latestSetTimeHours = :hours," +
+		"SET person.latestSelectedTopic = :selectedTopic," +
+		"person.latestSetTimeHours = :hours," +
 		"person.latestSetTimeMinutes = :minutes," +
 		"person.latestSetTimeSeconds = :seconds," +
 		"person.shortBreak = :shortBreak," +
-		"person.longBreak = :longBreak " +
+		"person.longBreak = :longBreak," +
+		"person.latestSetStage = :currentStage " +
 		"WHERE person.id = :id")
 	@Transactional
-	int startTimerRunningUpdateWithTimerAutoBreakOff(@Param(value = "id") long id,
-																									 @Param(value = "hours") Integer hours,
-																									 @Param(value = "minutes") Integer minutes,
-																									 @Param(value = "seconds") Integer seconds,
-																									 @Param(value = "shortBreak") Integer shortBreak,
-																									 @Param(value = "longBreak") Integer longBreak
+	int startTimerRunningUpdateWithTimerAutoBreakOff(
+		@Param(value = "id") long id,
+		@Param(value = "selectedTopic") String selectedTopic,
+		@Param(value = "hours") Integer hours,
+		@Param(value = "minutes") Integer minutes,
+		@Param(value = "seconds") Integer seconds,
+		@Param(value = "shortBreak") Integer shortBreak,
+		@Param(value = "longBreak") Integer longBreak,
+		@Param(value = "currentStage") Stage currentStage
 	);
 }

@@ -1,4 +1,4 @@
-package com.marcelmalewski.focustimetracker.view;
+package com.marcelmalewski.focustimetracker.enums;
 
 public enum Stage {
 	HOME("Home"),

@@ -1,6 +1,6 @@
 package com.marcelmalewski.focustimetracker.converter;
 
-import com.marcelmalewski.focustimetracker.view.Stage;
+import com.marcelmalewski.focustimetracker.enums.Stage;
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
 
