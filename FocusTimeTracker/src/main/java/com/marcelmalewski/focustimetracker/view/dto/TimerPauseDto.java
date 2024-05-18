@@ -5,9 +5,9 @@ public record TimerPauseDto(
 	String setTimeAsString,
 	String remainingTimeAsString,
 	Integer remainingTime,
-	String selectedTopic,
-	String shortBreak,
-	String longBreak,
+	String timerSelectedTopic,
+	String timerShortBreak,
+	String timerLongBreak,
 	Boolean timerAutoBreak
 ) {
 }

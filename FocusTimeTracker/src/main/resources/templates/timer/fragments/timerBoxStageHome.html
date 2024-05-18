@@ -8,40 +8,40 @@
         <div>
           <input
             type="number"
-            id="hours"
-            name="hours"
+            id="timerSetHours"
+            name="timerSetHours"
             min="0"
             max="99"
-            th:value="${latestSetTimeHours}"
+            th:value="${timerSetHours}"
             class="w-20 rounded-lg border p-2 text-black focus:outline-none"
           />
-          <label for="hours">h</label>
+          <label for="timerSetHours">h</label>
         </div>
 
         <div>
           <input
             type="number"
-            id="minutes"
-            name="minutes"
+            id="timerSetMinutes"
+            name="timerSetMinutes"
             min="0"
             max="60"
-            th:value="${latestSetTimeMinutes}"
+            th:value="${timerSetMinutes}"
             class="w-20 rounded-lg border p-2 text-black focus:outline-none"
           />
-          <label for="minutes">m</label>
+          <label for="timerSetMinutes">m</label>
         </div>
 
         <div>
           <input
             type="number"
-            id="seconds"
-            name="seconds"
+            id="timerSetSeconds"
+            name="timerSetSeconds"
             min="0"
             max="60"
-            th:value="${latestSetTimeSeconds}"
+            th:value="${timerSetSeconds}"
             class="w-20 rounded-lg border p-2 text-black focus:outline-none"
           />
-          <label for="seconds">s</label>
+          <label for="timerSetSeconds">s</label>
         </div>
       </div>
 
@@ -53,10 +53,10 @@
       hx-ext="json-enc"
       hx-target="#timerBox"
       hx-swap="outerHTML"
-      hx-include="[name='hours'], [name='minutes'], [name='seconds'], [name='shortBreak'], [name='longBreak'], [name='interval']"
+      hx-include="[name='timerSetHours'], [name='timerSetMinutes'], [name='timerSetSeconds'], [name='shortBreak'], [name='longBreak'], [name='interval']"
       hx-vals="js:{
           timerAutoBreak: document.getElementById('timerAutoBreak').getAttribute('value'),
-          selectedTopic: document.getElementById('selectedTopic').innerHTML
+          timerSelectedTopic: document.getElementById('selectedTopic').innerHTML
         }"
       class="bg-base-button hover:bg-base-button-hov rounded-md px-4 py-2 text-xl duration-200"
     >

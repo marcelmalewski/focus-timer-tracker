@@ -27,7 +27,7 @@ public class PersonController {
 
 		model.addAttribute("timerAutoBreakPretty", timerAutoBreak ? "On" : "Off");
 		model.addAttribute("timerAutoBreak", timerAutoBreak);
-		model.addAttribute("interval", updateTimerAutoBreakDto.interval());
+		model.addAttribute("interval", updateTimerAutoBreakDto.timerInterval());
 
 		return "timer/timerAutoBreakSettings";
 	}

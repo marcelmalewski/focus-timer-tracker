@@ -22,11 +22,8 @@ public class TimerService {
 	public void loadTimerFocusAfterHome(Person principalBasicData, HttpServletRequest request, HttpServletResponse response, Model model) {
 //		personService.updatePrincipalWhenStartFocus(principalData.getId(), principalData.getTimerAutoBreak(), dto, Stage.FOCUS, request, response);
 //
-//		String setTimePretty = dto.hours() + "h " + dto.minutes() + "m " + dto.seconds() + "s";
 //		model.addAttribute("setTimeAsString", setTimePretty);
 //		model.addAttribute("remainingTimeAsString", setTimePretty);
-//
-//		int remainingTime = (dto.hours() * 60 * 60) + (dto.minutes() * 60) + dto.seconds();
 //		model.addAttribute("remainingTime", remainingTime);
 //
 //		loadBasicModelAttributes(model, dto);
@@ -35,9 +32,9 @@ public class TimerService {
 	}
 
 	public void loadBasicModelAttributes(Model model, @NotNull TimerBasicFields dto) {
-		model.addAttribute("selectedTopic", dto.selectedTopic());
-		model.addAttribute("shortBreak", dto.shortBreak());
-		model.addAttribute("longBreak", dto.longBreak());
+		model.addAttribute("selectedTopic", dto.timerSelectedTopic());
+		model.addAttribute("shortBreak", dto.timerSelectedTopic());
+		model.addAttribute("longBreak", dto.timerLongBreak());
 		model.addAttribute("timerAutoBreak", dto.timerAutoBreak());
 		model.addAttribute("timerAutoBreakPretty", timerAutoBreakToPretty(dto.timerAutoBreak()));
 	}
@@ -47,9 +44,9 @@ public class TimerService {
 		model.addAttribute("remainingTimeAsString", dto.remainingTimeAsString());
 		model.addAttribute("remainingTime", dto.remainingTime());
 
-		model.addAttribute("selectedTopic", dto.selectedTopic());
-		model.addAttribute("shortBreak", dto.shortBreak());
-		model.addAttribute("longBreak", dto.longBreak());
+		model.addAttribute("selectedTopic", dto.timerSelectedTopic());
+		model.addAttribute("shortBreak", dto.timerShortBreak());
+		model.addAttribute("longBreak", dto.timerShortBreak());
 		model.addAttribute("timerAutoBreak", dto.timerAutoBreak());
 		model.addAttribute("timerAutoBreakPretty", timerAutoBreakToPretty(dto.timerAutoBreak()));
 	}

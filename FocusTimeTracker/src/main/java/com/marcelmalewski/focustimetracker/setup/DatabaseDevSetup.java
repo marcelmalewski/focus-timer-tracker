@@ -28,9 +28,9 @@ public class DatabaseDevSetup implements CommandLineRunner {
 			.login("admin")
 			.password(passwordEncoder.encode("admin.123"))
 			.email("admin@admin.com")
-			.latestSetTimeHours(1)
-			.latestSetTimeMinutes(12)
-			.latestSetTimeSeconds(40)
+			.timerSetHours(1)
+			.timerSetMinutes(12)
+			.timerSetSeconds(40)
 			.timerAutoBreak(false)
 			.build();
 

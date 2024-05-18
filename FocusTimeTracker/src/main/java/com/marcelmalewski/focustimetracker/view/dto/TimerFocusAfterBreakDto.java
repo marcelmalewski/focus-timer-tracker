@@ -1,9 +1,9 @@
 package com.marcelmalewski.focustimetracker.view.dto;
 
 public record TimerFocusAfterBreakDto(
-	String selectedTopic,
-	Integer shortBreak,
-	Integer longBreak,
+	String timerSelectedTopic,
+	Integer timerShortBreak,
+	Integer timerLongBreak,
 	Boolean timerAutoBreak
 ) implements TimerBasicFields {
 }

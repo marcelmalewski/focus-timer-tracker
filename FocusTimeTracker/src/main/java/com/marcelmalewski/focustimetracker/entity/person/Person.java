@@ -46,39 +46,40 @@ public class Person implements UserDetails {
 	@Column(updatable = false)
 	private LocalDate createdAt;
 
-	// LatestSet
+	//timer settings
 	@NotNull
 	@Convert(converter = StageConverter.class)
 	@Builder.Default
-	private Stage latestSetStage = Stage.HOME;
+	private Stage timerStage = Stage.HOME;
 	@Nullable
-	private String latestSelectedTopic;
+	private String timerSelectedTopic;
 	@NotNull
 	@Builder.Default
-	private Integer latestSetTimeHours = 0;
+	private Integer timerSetHours = 0;
 	@NotNull
 	@Builder.Default
-	private Integer latestSetTimeMinutes = 0;
+	private Integer timerSetMinutes = 0;
 	@NotNull
 	@Builder.Default
-	private Integer latestSetTimeSeconds = 0;
+	private Integer timerSetSeconds = 0;
 
 	// Break settings
 	@NotNull
 	@Builder.Default
-	private Integer shortBreak = 5;
+	private Integer timerShortBreak = 5;
 	@NotNull
 	@Builder.Default
-	private Integer longBreak = 10;
+	private Integer timerLongBreak = 10;
+	@NotNull
+	@Builder.Default
+	private Integer timerInterval = 1;
 	@NotNull
 	@Builder.Default
 	private Boolean timerAutoBreak = false;
 	@NotNull
 	@Builder.Default
 	private Boolean stopWatchAutoBreak = true;
-	@NotNull
-	@Builder.Default
-	private Integer interval = 1;
+
 
 	@OneToMany(mappedBy = "owner")
 	@ToString.Exclude

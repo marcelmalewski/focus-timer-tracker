@@ -2,10 +2,10 @@ package com.marcelmalewski.focustimetracker.view.dto;
 
 // TODO walidacja nulli
 public record TimerFocusAfterHomeDto(
-	Integer hours,
-	Integer minutes,
-	Integer seconds,
-	String selectedTopic,
+	String timerSelectedTopic,
+	Integer timerSetHours,
+	Integer timerSetMinutes,
+	Integer timerSetSeconds,
 	Integer shortBreak,
 	Integer longBreak,
 	Boolean timerAutoBreak,
@@ -13,30 +13,38 @@ public record TimerFocusAfterHomeDto(
 ) implements TimerBasicFields {
 
 	@Override
-	public Integer hours() {
-		if (hours == null) {
+	public Integer timerSetHours() {
+		if (timerSetHours == null) {
 			return 0;
 		}
 
-		return hours;
+		return timerSetHours;
 	}
 
 	@Override
-	public Integer minutes() {
-		if (minutes == null) {
+	public Integer timerSetMinutes() {
+		if (timerSetMinutes == null) {
 			return 0;
 		}
 
-		return minutes;
+		return timerSetMinutes;
 	}
 
 	@Override
-	public Integer seconds() {
-		if (seconds == null) {
+	public Integer timerSetSeconds() {
+		if (timerSetSeconds == null) {
 			return 0;
 		}
 
-		return seconds;
+		return timerSetSeconds;
+	}
+
+	public Integer timerShortBreak() {
+		return shortBreak;
+	}
+
+	public Integer timerLongBreak() {
+		return shortBreak;
 	}
 }
 

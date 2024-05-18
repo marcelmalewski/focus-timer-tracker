@@ -41,13 +41,13 @@ public class TimerController {
 		model.addAttribute("timerAutoBreakPretty", timerService.timerAutoBreakToPretty(principalBasicData.timerAutoBreak()));
 		model.addAttribute("timerAutoBreak", principalBasicData.timerAutoBreak());
 
-		model.addAttribute("latestSetTimeHours", principalBasicData.latestSetTimeHours());
-		model.addAttribute("latestSetTimeMinutes", principalBasicData.latestSetTimeMinutes());
-		model.addAttribute("latestSetTimeSeconds", principalBasicData.latestSetTimeSeconds());
+		model.addAttribute("timerSetHours", principalBasicData.timerSetHours());
+		model.addAttribute("timerSetMinutes", principalBasicData.timerSetMinutes());
+		model.addAttribute("timerSetSeconds", principalBasicData.timerSetSeconds());
 
-		model.addAttribute("shortBreak", principalBasicData.shortBreak());
-		model.addAttribute("longBreak", principalBasicData.longBreak());
-		model.addAttribute("interval", principalBasicData.interval());
+		model.addAttribute("shortBreak", principalBasicData.timerShortBreak());
+		model.addAttribute("longBreak", principalBasicData.timerLongBreak());
+		model.addAttribute("interval", principalBasicData.timerInterval());
 
 		List<MainTopic> topics = principalBasicData.mainTopics();
 
@@ -65,11 +65,11 @@ public class TimerController {
 		long principalId = Long.parseLong(principal.getName());
 		personService.updatePrincipalWhenStartFocus(principalId, dto.timerAutoBreak(), dto, Stage.FOCUS, request, response);
 
-		String setTimePretty = dto.hours() + "h " + dto.minutes() + "m " + dto.seconds() + "s";
+		String setTimePretty = dto.timerSetHours() + "h " + dto.timerSetMinutes() + "m " + dto.timerSetSeconds() + "s";
 		model.addAttribute("setTimeAsString", setTimePretty);
 		model.addAttribute("remainingTimeAsString", setTimePretty);
 
-		int remainingTime = (dto.hours() * 60 * 60) + (dto.minutes() * 60) + dto.seconds();
+		int remainingTime = (dto.timerSetHours() * 60 * 60) + (dto.timerSetMinutes() * 60) + dto.timerSetSeconds();
 		model.addAttribute("remainingTime", remainingTime);
 
 		timerService.loadBasicModelAttributes(model, dto);
@@ -96,11 +96,11 @@ public class TimerController {
 		long principalId = Long.parseLong(principal.getName());
 		PrincipalBasicDataDto principalBasicData = personService.getPrincipalBasicData(principalId, request, response);
 
-		String setTimePretty = principalBasicData.latestSetTimeHours() + "h " + principalBasicData.latestSetTimeMinutes() + "m " + principalBasicData.latestSetTimeSeconds() + "s";
+		String setTimePretty = principalBasicData.timerSetHours() + "h " + principalBasicData.timerSetMinutes() + "m " + principalBasicData.timerSetSeconds() + "s";
 		model.addAttribute("setTimeAsString", setTimePretty);
 		model.addAttribute("remainingTimeAsString", setTimePretty);
 
-		int remainingTime = (principalBasicData.latestSetTimeHours() * 60 * 60) + (principalBasicData.latestSetTimeMinutes() * 60) + principalBasicData.latestSetTimeSeconds();
+		int remainingTime = (principalBasicData.timerSetHours() * 60 * 60) + (principalBasicData.timerSetMinutes() * 60) + principalBasicData.timerSetSeconds();
 		model.addAttribute("remainingTime", remainingTime);
 
 		timerService.loadBasicModelAttributes(model, dto);
@@ -113,10 +113,10 @@ public class TimerController {
 		model.addAttribute("breakType", "shortBreak");
 		model.addAttribute("breakTypePretty", Stage.SHORT_BREAK);
 
-		String breakRemainigTimeAsString = dto.shortBreak() + "m " + "0s";
+		String breakRemainigTimeAsString = dto.timerShortBreak() + "m " + "0s";
 
-		model.addAttribute("breakSetTime", dto.shortBreak());
-		model.addAttribute("breakRemainingTime", dto.shortBreak() * 60);
+		model.addAttribute("breakSetTime", dto.timerShortBreak());
+		model.addAttribute("breakRemainingTime", dto.timerShortBreak() * 60);
 		model.addAttribute("breakRemainingTimeAsString", breakRemainigTimeAsString);
 
 		timerService.loadBasicModelAttributes(model, dto);
@@ -129,10 +129,10 @@ public class TimerController {
 		model.addAttribute("breakType", "longBreak");
 		model.addAttribute("breakTypePretty", Stage.LONG_BREAK);
 
-		String breakRemainigTimeAsString = dto.longBreak() + "m " + "0s";
+		String breakRemainigTimeAsString = dto.timerLongBreak() + "m " + "0s";
 
-		model.addAttribute("breakSetTime", dto.longBreak());
-		model.addAttribute("breakRemainingTime", dto.longBreak() * 60);
+		model.addAttribute("breakSetTime", dto.timerLongBreak());
+		model.addAttribute("breakRemainingTime", dto.timerLongBreak() * 60);
 		model.addAttribute("breakRemainingTimeAsString", breakRemainigTimeAsString);
 
 		timerService.loadBasicModelAttributes(model, dto);

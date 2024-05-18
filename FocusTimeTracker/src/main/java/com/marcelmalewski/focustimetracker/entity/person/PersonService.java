@@ -92,10 +92,10 @@ public class PersonService {
 		if (timerAutoBreak) {
 			numberOfAffectedRows = personRepository.startTimerRunningUpdateWithTimerAutoBreakOn(
 				principalId,
-				timerFocusAfterHomeDto.selectedTopic(),
-				timerFocusAfterHomeDto.hours(),
-				timerFocusAfterHomeDto.minutes(),
-				timerFocusAfterHomeDto.seconds(),
+				timerFocusAfterHomeDto.timerSelectedTopic(),
+				timerFocusAfterHomeDto.timerSetHours(),
+				timerFocusAfterHomeDto.timerSetMinutes(),
+				timerFocusAfterHomeDto.timerSetSeconds(),
 				timerFocusAfterHomeDto.shortBreak(),
 				timerFocusAfterHomeDto.longBreak(),
 				timerFocusAfterHomeDto.interval(),
@@ -104,10 +104,10 @@ public class PersonService {
 		} else {
 			numberOfAffectedRows = personRepository.startTimerRunningUpdateWithTimerAutoBreakOff(
 				principalId,
-				timerFocusAfterHomeDto.selectedTopic(),
-				timerFocusAfterHomeDto.hours(),
-				timerFocusAfterHomeDto.minutes(),
-				timerFocusAfterHomeDto.seconds(),
+				timerFocusAfterHomeDto.timerSelectedTopic(),
+				timerFocusAfterHomeDto.timerSetHours(),
+				timerFocusAfterHomeDto.timerSetMinutes(),
+				timerFocusAfterHomeDto.timerSetSeconds(),
 				timerFocusAfterHomeDto.shortBreak(),
 				timerFocusAfterHomeDto.longBreak(),
 				currentStage
