@@ -1,6 +1,7 @@
 package com.marcelmalewski.focustimetracker.entity.person;
 
 import com.marcelmalewski.focustimetracker.entity.person.dto.PrincipalBasicDataDto;
+import com.marcelmalewski.focustimetracker.entity.person.dto.PrincipalBasicDataWithMainTopicsDto;
 import com.marcelmalewski.focustimetracker.entity.person.exception.AuthenticatedPersonNotFoundException;
 import com.marcelmalewski.focustimetracker.mapper.PersonPrincipleDataMapper;
 import com.marcelmalewski.focustimetracker.security.util.SecurityHelper;
@@ -40,7 +41,7 @@ public class PersonService {
 		};
 	}
 
-	public PrincipalBasicDataDto getPrincipalBasicDataWithFetchedMainTopics(long principalId, HttpServletRequest request, HttpServletResponse response) {
+	public PrincipalBasicDataWithMainTopicsDto getPrincipalBasicDataWithMainTopics(long principalId, HttpServletRequest request, HttpServletResponse response) {
 		Optional<Person> optionalPerson = personRepository.findByIdWithFetchedMainTopics(principalId);
 
 		return switch (optionalPerson.orElse(null)) {
@@ -48,7 +49,7 @@ public class PersonService {
 				securityHelper.logoutManually(request, response);
 				throw new AuthenticatedPersonNotFoundException();
 			}
-			case Person person -> personMapper.toPrincipalBasicDataDto(person);
+			case Person person -> personMapper.toPrincipalBasicDataWithMainTopicsDto(person);
 		};
 	}
 

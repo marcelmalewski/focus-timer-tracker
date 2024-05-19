@@ -2,7 +2,7 @@ package com.marcelmalewski.focustimetracker.view;
 
 import com.marcelmalewski.focustimetracker.entity.person.PersonService;
 import com.marcelmalewski.focustimetracker.entity.person.dto.PrincipalBasicDataDto;
-import com.marcelmalewski.focustimetracker.entity.topic.mainTopic.MainTopic;
+import com.marcelmalewski.focustimetracker.entity.person.dto.PrincipalBasicDataWithMainTopicsDto;
 import com.marcelmalewski.focustimetracker.enums.Stage;
 import com.marcelmalewski.focustimetracker.view.dto.TimerBreakDto;
 import com.marcelmalewski.focustimetracker.view.dto.TimerFocusAfterBreakDto;
@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import java.security.Principal;
-import java.util.List;
 
 @Controller
 public class TimerController {
@@ -34,15 +33,15 @@ public class TimerController {
 	@GetMapping("/timer")
 	public String getTimerHomeView(Principal principal, HttpServletRequest request, HttpServletResponse response, Model model) {
 		long principalId = Long.parseLong(principal.getName());
-		PrincipalBasicDataDto principalBasicData = personService.getPrincipalBasicDataWithFetchedMainTopics(principalId, request, response);
+		PrincipalBasicDataWithMainTopicsDto principalData = personService.getPrincipalBasicDataWithMainTopics(principalId, request, response);
 
-		return switch (principalBasicData.timerStage()) {
+		return switch (principalData.timerStage()) {
 			case FOCUS -> {
-				timerService.loadTimerFocusAfterHome(principalBasicData, principalId, request, response, model);
+				timerService.loadTimerFocusAfterHome(principalData, principalId, request, response, model);
 				yield "/timer/timerBaseWithStageFocus";
 			}
 			default -> {
-				timerService.loadHome(principalBasicData, model);
+				timerService.loadHome(principalData, model);
 				yield "/timer/timerBaseWithStageHome";
 			}
 		};
@@ -73,13 +72,13 @@ public class TimerController {
 	@PutMapping("/timer/focusAfterBreak")
 	public String getTimerFocusAfterBreak(Principal principal, HttpServletRequest request, HttpServletResponse response, Model model, @RequestBody TimerFocusAfterBreakDto dto) {
 		long principalId = Long.parseLong(principal.getName());
-		PrincipalBasicDataDto principalBasicData = personService.getPrincipalBasicData(principalId, request, response);
+		PrincipalBasicDataDto principalData = personService.getPrincipalBasicData(principalId, request, response);
 
-		String setTimePretty = principalBasicData.timerSetHours() + "h " + principalBasicData.timerSetMinutes() + "m " + principalBasicData.timerSetSeconds() + "s";
+		String setTimePretty = principalData.timerSetHours() + "h " + principalData.timerSetMinutes() + "m " + principalData.timerSetSeconds() + "s";
 		model.addAttribute("setTimeAsString", setTimePretty);
 		model.addAttribute("remainingTimeAsString", setTimePretty);
 
-		int remainingTime = (principalBasicData.timerSetHours() * 60 * 60) + (principalBasicData.timerSetMinutes() * 60) + principalBasicData.timerSetSeconds();
+		int remainingTime = (principalData.timerSetHours() * 60 * 60) + (principalData.timerSetMinutes() * 60) + principalData.timerSetSeconds();
 		model.addAttribute("remainingTime", remainingTime);
 
 		timerService.loadBasicModelAttributes(model, dto);

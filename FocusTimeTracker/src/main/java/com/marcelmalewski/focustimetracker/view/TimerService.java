@@ -2,6 +2,7 @@ package com.marcelmalewski.focustimetracker.view;
 
 import com.marcelmalewski.focustimetracker.entity.person.PersonService;
 import com.marcelmalewski.focustimetracker.entity.person.dto.PrincipalBasicDataDto;
+import com.marcelmalewski.focustimetracker.entity.person.dto.PrincipalBasicDataWithMainTopicsDto;
 import com.marcelmalewski.focustimetracker.entity.topic.mainTopic.MainTopic;
 import com.marcelmalewski.focustimetracker.enums.Stage;
 import com.marcelmalewski.focustimetracker.view.interfaces.TimerBasicFields;
@@ -24,7 +25,7 @@ public class TimerService {
 	}
 
 
-	public void loadHome(PrincipalBasicDataDto dto, Model model) {
+	public void loadHome(PrincipalBasicDataWithMainTopicsDto dto, Model model) {
 		model.addAttribute("timerAutoBreakPretty", timerAutoBreakToPretty(dto.timerAutoBreak()));
 		model.addAttribute("timerAutoBreak", dto.timerAutoBreak());
 
