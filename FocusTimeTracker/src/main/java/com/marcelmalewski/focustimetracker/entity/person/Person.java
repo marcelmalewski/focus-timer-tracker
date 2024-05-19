@@ -62,8 +62,6 @@ public class Person implements UserDetails {
 	@NotNull
 	@Builder.Default
 	private Integer timerSetSeconds = 0;
-
-	// Break settings
 	@NotNull
 	@Builder.Default
 	private Integer timerShortBreak = 5;
@@ -72,14 +70,15 @@ public class Person implements UserDetails {
 	private Integer timerLongBreak = 10;
 	@NotNull
 	@Builder.Default
-	private Integer timerInterval = 1;
-	@NotNull
-	@Builder.Default
 	private Boolean timerAutoBreak = false;
 	@NotNull
 	@Builder.Default
-	private Boolean stopWatchAutoBreak = true;
+	private Integer timerInterval = 1;
 
+	// Stopwatch settings
+	@NotNull
+	@Builder.Default
+	private Boolean stopWatchAutoBreak = true;
 
 	@OneToMany(mappedBy = "owner")
 	@ToString.Exclude

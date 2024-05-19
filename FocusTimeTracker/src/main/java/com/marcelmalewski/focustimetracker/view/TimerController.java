@@ -36,59 +36,38 @@ public class TimerController {
 		long principalId = Long.parseLong(principal.getName());
 		PrincipalBasicDataDto principalBasicData = personService.getPrincipalBasicDataWithFetchedMainTopics(principalId, request, response);
 
-
-
-		model.addAttribute("timerAutoBreakPretty", timerService.timerAutoBreakToPretty(principalBasicData.timerAutoBreak()));
-		model.addAttribute("timerAutoBreak", principalBasicData.timerAutoBreak());
-
-		model.addAttribute("timerSetHours", principalBasicData.timerSetHours());
-		model.addAttribute("timerSetMinutes", principalBasicData.timerSetMinutes());
-		model.addAttribute("timerSetSeconds", principalBasicData.timerSetSeconds());
-
-		model.addAttribute("shortBreak", principalBasicData.timerShortBreak());
-		model.addAttribute("longBreak", principalBasicData.timerLongBreak());
-		model.addAttribute("interval", principalBasicData.timerInterval());
-
-		List<MainTopic> topics = principalBasicData.mainTopics();
-
-		MainTopic firstTopic = topics.getFirst();
-		model.addAttribute("firstTopic", firstTopic);
-
-		topics.removeFirst();
-		model.addAttribute("topics", topics);
-
-		return "/timer/timerBase";
+		return switch (principalBasicData.timerStage()) {
+			case FOCUS -> {
+				timerService.loadTimerFocusAfterHome(principalBasicData, principalId, request, response, model);
+				yield "/timer/timerBaseWithStageFocus";
+			}
+			default -> {
+				timerService.loadHome(principalBasicData, model);
+				yield "/timer/timerBaseWithStageHome";
+			}
+		};
 	}
 
 	@PutMapping("/timer/focusAfterHome")
 	public String getTimerFocusAfterHome(Principal principal, HttpServletRequest request, HttpServletResponse response, Model model, @RequestBody TimerFocusAfterHomeDto dto) {
 		long principalId = Long.parseLong(principal.getName());
-		personService.updatePrincipalWhenStartFocus(principalId, dto.timerAutoBreak(), dto, Stage.FOCUS, request, response);
+		timerService.loadTimerFocusAfterHome(dto, principalId, request, response, model);
 
-		String setTimePretty = dto.timerSetHours() + "h " + dto.timerSetMinutes() + "m " + dto.timerSetSeconds() + "s";
-		model.addAttribute("setTimeAsString", setTimePretty);
-		model.addAttribute("remainingTimeAsString", setTimePretty);
-
-		int remainingTime = (dto.timerSetHours() * 60 * 60) + (dto.timerSetMinutes() * 60) + dto.timerSetSeconds();
-		model.addAttribute("remainingTime", remainingTime);
-
-		timerService.loadBasicModelAttributes(model, dto);
-
-		return "timer/timerBoxStageFocus";
+		return "timer/fragments/timerBoxStageFocus";
 	}
 
 	@PutMapping("/timer/pause")
 	public String getTimerToPause(Model model, @RequestBody TimerPauseDto dto) {
 		timerService.loadBasicModelAttributesForPause(model, dto);
 
-		return "timer/timerBoxStagePause";
+		return "timer/fragments/timerBoxStagePause";
 	}
 
 	@PutMapping("/timer/focusAfterPause")
 	public String getTimerFocusAfterPause(Model model, @RequestBody TimerPauseDto dto) {
 		timerService.loadBasicModelAttributesForPause(model, dto);
 
-		return "timer/timerBoxStageFocus";
+		return "timer/fragments/timerBoxStageFocus";
 	}
 
 	@PutMapping("/timer/focusAfterBreak")
@@ -105,13 +84,13 @@ public class TimerController {
 
 		timerService.loadBasicModelAttributes(model, dto);
 
-		return "timer/timerBoxStageFocus";
+		return "timer/fragments/timerBoxStageFocus";
 	}
 
 	@PutMapping("/timer/shortBreak")
 	public String getTimerShortBreak(Model model, @RequestBody TimerBreakDto dto) {
 		model.addAttribute("breakType", "shortBreak");
-		model.addAttribute("breakTypePretty", Stage.SHORT_BREAK);
+		model.addAttribute("breakTypePretty", Stage.SHORT_BREAK.getStageName());
 
 		String breakRemainigTimeAsString = dto.timerShortBreak() + "m " + "0s";
 
@@ -121,13 +100,13 @@ public class TimerController {
 
 		timerService.loadBasicModelAttributes(model, dto);
 
-		return "timer/timerBoxStageBreak";
+		return "timer/fragments/timerBoxStageBreak";
 	}
 
 	@PutMapping("/timer/longBreak")
 	public String getTimerLongBreak(Model model, @RequestBody TimerBreakDto dto) {
 		model.addAttribute("breakType", "longBreak");
-		model.addAttribute("breakTypePretty", Stage.LONG_BREAK);
+		model.addAttribute("breakTypePretty", Stage.LONG_BREAK.getStageName());
 
 		String breakRemainigTimeAsString = dto.timerLongBreak() + "m " + "0s";
 
@@ -137,6 +116,6 @@ public class TimerController {
 
 		timerService.loadBasicModelAttributes(model, dto);
 
-		return "timer/timerBoxStageBreak";
+		return "timer/fragments/timerBoxStageBreak";
 	}
 }

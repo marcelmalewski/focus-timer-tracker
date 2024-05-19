@@ -5,7 +5,7 @@ import com.marcelmalewski.focustimetracker.entity.person.exception.Authenticated
 import com.marcelmalewski.focustimetracker.mapper.PersonPrincipleDataMapper;
 import com.marcelmalewski.focustimetracker.security.util.SecurityHelper;
 import com.marcelmalewski.focustimetracker.enums.Stage;
-import com.marcelmalewski.focustimetracker.view.dto.TimerFocusAfterHomeDto;
+import com.marcelmalewski.focustimetracker.view.interfaces.TimerFocusAferHome;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.constraints.NotNull;
@@ -82,7 +82,7 @@ public class PersonService {
 	public void updatePrincipalWhenStartFocus(
 		long principalId,
 		boolean timerAutoBreak,
-		@NotNull TimerFocusAfterHomeDto timerFocusAfterHomeDto,
+		@NotNull TimerFocusAferHome timerFocusAfterHome,
 		@NotNull Stage currentStage,
 		@NotNull HttpServletRequest request,
 		@NotNull HttpServletResponse response
@@ -92,24 +92,24 @@ public class PersonService {
 		if (timerAutoBreak) {
 			numberOfAffectedRows = personRepository.startTimerRunningUpdateWithTimerAutoBreakOn(
 				principalId,
-				timerFocusAfterHomeDto.timerSelectedTopic(),
-				timerFocusAfterHomeDto.timerSetHours(),
-				timerFocusAfterHomeDto.timerSetMinutes(),
-				timerFocusAfterHomeDto.timerSetSeconds(),
-				timerFocusAfterHomeDto.shortBreak(),
-				timerFocusAfterHomeDto.longBreak(),
-				timerFocusAfterHomeDto.interval(),
+				timerFocusAfterHome.timerSelectedTopic(),
+				timerFocusAfterHome.timerSetHours(),
+				timerFocusAfterHome.timerSetMinutes(),
+				timerFocusAfterHome.timerSetSeconds(),
+				timerFocusAfterHome.timerShortBreak(),
+				timerFocusAfterHome.timerLongBreak(),
+				timerFocusAfterHome.timerInterval(),
 				currentStage
 			);
 		} else {
 			numberOfAffectedRows = personRepository.startTimerRunningUpdateWithTimerAutoBreakOff(
 				principalId,
-				timerFocusAfterHomeDto.timerSelectedTopic(),
-				timerFocusAfterHomeDto.timerSetHours(),
-				timerFocusAfterHomeDto.timerSetMinutes(),
-				timerFocusAfterHomeDto.timerSetSeconds(),
-				timerFocusAfterHomeDto.shortBreak(),
-				timerFocusAfterHomeDto.longBreak(),
+				timerFocusAfterHome.timerSelectedTopic(),
+				timerFocusAfterHome.timerSetHours(),
+				timerFocusAfterHome.timerSetMinutes(),
+				timerFocusAfterHome.timerSetSeconds(),
+				timerFocusAfterHome.timerShortBreak(),
+				timerFocusAfterHome.timerLongBreak(),
 				currentStage
 			);
 		}

@@ -1,15 +1,19 @@
 package com.marcelmalewski.focustimetracker.view;
 
-import com.marcelmalewski.focustimetracker.entity.person.Person;
 import com.marcelmalewski.focustimetracker.entity.person.PersonService;
+import com.marcelmalewski.focustimetracker.entity.person.dto.PrincipalBasicDataDto;
+import com.marcelmalewski.focustimetracker.entity.topic.mainTopic.MainTopic;
 import com.marcelmalewski.focustimetracker.enums.Stage;
-import com.marcelmalewski.focustimetracker.view.dto.TimerBasicFields;
+import com.marcelmalewski.focustimetracker.view.interfaces.TimerBasicFields;
+import com.marcelmalewski.focustimetracker.view.interfaces.TimerFocusAferHome;
 import com.marcelmalewski.focustimetracker.view.dto.TimerPauseDto;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
+
+import java.util.List;
 
 @Service
 public class TimerService {
@@ -19,21 +23,44 @@ public class TimerService {
 		this.personService = personService;
 	}
 
-	public void loadTimerFocusAfterHome(Person principalBasicData, HttpServletRequest request, HttpServletResponse response, Model model) {
-//		personService.updatePrincipalWhenStartFocus(principalData.getId(), principalData.getTimerAutoBreak(), dto, Stage.FOCUS, request, response);
-//
-//		model.addAttribute("setTimeAsString", setTimePretty);
-//		model.addAttribute("remainingTimeAsString", setTimePretty);
-//		model.addAttribute("remainingTime", remainingTime);
-//
-//		loadBasicModelAttributes(model, dto);
-//
-//		return "timer/timerBoxStageFocus";
+
+	public void loadHome(PrincipalBasicDataDto dto, Model model) {
+		model.addAttribute("timerAutoBreakPretty", timerAutoBreakToPretty(dto.timerAutoBreak()));
+		model.addAttribute("timerAutoBreak", dto.timerAutoBreak());
+
+		model.addAttribute("timerSetHours", dto.timerSetHours());
+		model.addAttribute("timerSetMinutes", dto.timerSetMinutes());
+		model.addAttribute("timerSetSeconds", dto.timerSetSeconds());
+
+		model.addAttribute("shortBreak", dto.timerShortBreak());
+		model.addAttribute("longBreak", dto.timerLongBreak());
+		model.addAttribute("interval", dto.timerInterval());
+
+		List<MainTopic> topics = dto.mainTopics();
+
+		MainTopic firstTopic = topics.getFirst();
+		model.addAttribute("firstTopic", firstTopic);
+
+		topics.removeFirst();
+		model.addAttribute("topics", topics);
+	}
+
+	public void loadTimerFocusAfterHome(TimerFocusAferHome focusAferHome, long principalId, HttpServletRequest request, HttpServletResponse response, Model model) {
+		personService.updatePrincipalWhenStartFocus(principalId, focusAferHome.timerAutoBreak(), focusAferHome, Stage.FOCUS, request, response);
+
+		String setTimePretty = focusAferHome.timerSetHours() + "h " + focusAferHome.timerSetMinutes() + "m " + focusAferHome.timerSetSeconds() + "s";
+		model.addAttribute("setTimeAsString", setTimePretty);
+		model.addAttribute("remainingTimeAsString", setTimePretty);
+
+		int remainingTime = (focusAferHome.timerSetHours() * 60 * 60) + (focusAferHome.timerSetMinutes() * 60) + focusAferHome.timerSetSeconds();
+		model.addAttribute("remainingTime", remainingTime);
+
+		loadBasicModelAttributes(model, focusAferHome);
 	}
 
 	public void loadBasicModelAttributes(Model model, @NotNull TimerBasicFields dto) {
 		model.addAttribute("selectedTopic", dto.timerSelectedTopic());
-		model.addAttribute("shortBreak", dto.timerSelectedTopic());
+		model.addAttribute("shortBreak", dto.timerShortBreak());
 		model.addAttribute("longBreak", dto.timerLongBreak());
 		model.addAttribute("timerAutoBreak", dto.timerAutoBreak());
 		model.addAttribute("timerAutoBreakPretty", timerAutoBreakToPretty(dto.timerAutoBreak()));

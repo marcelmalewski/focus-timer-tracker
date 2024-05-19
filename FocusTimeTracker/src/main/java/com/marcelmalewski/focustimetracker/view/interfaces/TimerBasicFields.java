@@ -1,4 +1,4 @@
-package com.marcelmalewski.focustimetracker.view.dto;
+package com.marcelmalewski.focustimetracker.view.interfaces;
 
 public interface TimerBasicFields {
 	String timerSelectedTopic();

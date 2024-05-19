@@ -1,5 +1,8 @@
 package com.marcelmalewski.focustimetracker.view.dto;
 
+import com.marcelmalewski.focustimetracker.view.interfaces.TimerBasicFields;
+import com.marcelmalewski.focustimetracker.view.interfaces.TimerFocusAferHome;
+
 // TODO walidacja nulli
 public record TimerFocusAfterHomeDto(
 	String timerSelectedTopic,
@@ -10,7 +13,7 @@ public record TimerFocusAfterHomeDto(
 	Integer longBreak,
 	Boolean timerAutoBreak,
 	Integer interval
-) implements TimerBasicFields {
+) implements TimerBasicFields, TimerFocusAferHome {
 
 	@Override
 	public Integer timerSetHours() {
@@ -44,7 +47,11 @@ public record TimerFocusAfterHomeDto(
 	}
 
 	public Integer timerLongBreak() {
-		return shortBreak;
+		return longBreak;
+	}
+
+	public Integer timerInterval() {
+		return interval;
 	}
 }
 

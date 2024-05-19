@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Timer</title>
+    <script
+      src="https://unpkg.com/htmx.org@1.9.10"
+      integrity="sha384-D1Kt99CQMDuVetoL1lrYwg5t+9QdHe7NLX/SoJYkXDFfX37iInKRy5xLSi8nO7UC"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://unpkg.com/htmx.org/dist/ext/json-enc.js"></script>
+    <link th:href="@{/output.css}" rel="stylesheet" />
+    <!--    <link href="../../static/output.css" rel="stylesheet" />-->
+  </head>
+  <body>
+    <div
+      class="bg-base-bg text-base-text flex h-screen w-screen flex-col items-center justify-start"
+    >
+      <div
+        th:replace="timer/fragments/timerBoxStageFocus.html :: #timerBox"
+      ></div>
+
+      <div class="absolute bottom-0 left-0 m-3">
+        <a href="/logout" class="dash-animation text-xl"> Log out </a>
+
+        <div class="flex items-center justify-center gap-2 text-xl">
+          <label for="timerAutoBreakInput">Timer auto brak:</label>
+
+          <input
+            type="checkbox"
+            id="timerAutoBreakInput"
+            name="timerAutoBreakInput"
+            class="focus:outline-none"
+            th:checked="${timerAutoBreak}"
+          />
+
+          <button
+            hx-patch="/person/timerAutoBreak"
+            hx-target="#timerAutoBreakSettings"
+            hx-swap="outerHTML"
+            hx-ext="json-enc"
+            hx-include="[name='timerAutoBreakInput'], [name='interval']"
+            type="submit"
+            class="bg-base-button hover:bg-base-button-hov mt-6 rounded-md px-4 py-2 text-xl duration-200"
+          >
+            Save
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      let remainingTime;
+      let breakRemainingTime;
+      let intervalId;
+      let breakIntervalId;
+      let currentBreakType;
+    </script>
+  </body>
+</html>
