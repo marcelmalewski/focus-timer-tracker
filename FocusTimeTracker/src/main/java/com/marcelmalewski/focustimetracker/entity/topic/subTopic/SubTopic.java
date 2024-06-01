@@ -17,7 +17,7 @@ import lombok.Setter;
 @Table(name = "subtopic")
 public class SubTopic implements Topic {
 	@Id
-	@SequenceGenerator(name = "subtopic_sequence", sequenceName = "subtopic_sequence", allocationSize = 1)
+	@SequenceGenerator(name = "subtopic_sequence", sequenceName = "subtopic_sequence")
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "subtopic_sequence")
 	private Long id;
 	@Version

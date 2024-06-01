@@ -3,8 +3,6 @@ package com.marcelmalewski.focustimetracker.entity.person.dto;
 import com.marcelmalewski.focustimetracker.enums.Stage;
 import com.marcelmalewski.focustimetracker.view.interfaces.TimerFocusAferHome;
 
-import java.util.List;
-
 //TODO walidacja?
 public record PrincipalBasicDataDto(
 	Long id,

@@ -28,7 +28,7 @@ import java.util.List;
 @Table(name = "person")
 public class Person implements UserDetails {
 	@Id
-	@SequenceGenerator(name = "person_sequence", sequenceName = "person_sequence", allocationSize = 1)
+	@SequenceGenerator(name = "person_sequence", sequenceName = "person_sequence")
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "person_sequence")
 	private Long id;
 	@Version
@@ -74,6 +74,8 @@ public class Person implements UserDetails {
 	@NotNull
 	@Builder.Default
 	private Integer timerInterval = 1;
+	@Nullable
+	private Integer timerRemainingTime;
 
 	// Stopwatch settings
 	@NotNull

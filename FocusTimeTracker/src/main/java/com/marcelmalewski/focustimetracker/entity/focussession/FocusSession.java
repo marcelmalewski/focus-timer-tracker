@@ -16,7 +16,7 @@ import java.util.List;
 @Table(name = "focussession")
 public class FocusSession {
 	@Id
-	@SequenceGenerator(name = "focussession_sequence", sequenceName = "focussession_sequence", allocationSize = 1)
+	@SequenceGenerator(name = "focussession_sequence", sequenceName = "focussession_sequence")
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "focussession_sequence")
 	private Long id;
 	@Version

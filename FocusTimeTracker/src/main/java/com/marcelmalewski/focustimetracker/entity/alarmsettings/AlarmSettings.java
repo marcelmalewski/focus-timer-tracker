@@ -18,7 +18,7 @@ import lombok.Setter;
 @Table(name = "alarmsettings")
 public class AlarmSettings {
 	@Id
-	@SequenceGenerator(name = "alarmsettings_sequence", sequenceName = "alarmsettings_sequence", allocationSize = 1)
+	@SequenceGenerator(name = "alarmsettings_sequence", sequenceName = "alarmsettings_sequence")
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "alarmsettings_sequence")
 	private Long id;
 	@Version

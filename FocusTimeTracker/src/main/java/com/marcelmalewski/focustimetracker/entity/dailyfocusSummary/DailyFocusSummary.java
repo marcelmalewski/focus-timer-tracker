@@ -16,7 +16,7 @@ import java.util.List;
 @Table(name = "dailyfocussummary")
 public class DailyFocusSummary {
 	@Id
-	@SequenceGenerator(name = "dailyfocussummary_sequence", sequenceName = "dailyfocussummary_sequence", allocationSize = 1)
+	@SequenceGenerator(name = "dailyfocussummary_sequence", sequenceName = "dailyfocussummary_sequence")
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "dailyfocussummary_sequence")
 	private Long id;
 	@Version

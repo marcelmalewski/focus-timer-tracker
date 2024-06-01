@@ -19,7 +19,7 @@ import java.util.List;
 @Table(name = "maintopic")
 public class MainTopic implements Topic {
 	@Id
-	@SequenceGenerator(name = "maintopic_sequence", sequenceName = "maintopic_sequence", allocationSize = 1)
+	@SequenceGenerator(name = "maintopic_sequence", sequenceName = "maintopic_sequence")
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "maintopic_sequence")
 	private Long id;
 	@Version
