@@ -4,6 +4,10 @@ server:
 spring:
 #  flyway: # Uncomment when flyway is used
 #    baseline-on-migrate: true
+  threads:
+    virtual:
+      enabled: true
+  thread-executor: virtual
   datasource:
     url: jdbc:postgresql://localhost:${POSTGRES_PORT}/${POSTGRES_DB}
     username: ${POSTGRES_USER}
@@ -22,6 +26,7 @@ spring:
     hibernate:
       ddl-auto: create-drop # When flyway is used, change to "validate"
     database: postgresql
+
 
 springdoc:
   swagger-ui:
