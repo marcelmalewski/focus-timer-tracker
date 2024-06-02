@@ -69,12 +69,12 @@ public class TimerService {
 
 	public void loadBasicModelAttributesForPause(Model model, @NotNull TimerPauseDto dto) {
 		model.addAttribute("setTimeAsString", dto.setTimeAsString());
-		model.addAttribute("remainingTimeAsString", dto.remainingTimeAsString());
-		model.addAttribute("remainingTime", dto.remainingTime());
+		model.addAttribute("remainingTimeAsString", dto.timerRemainingTimeAsString());
+		model.addAttribute("remainingTime", dto.timerRemainingTime());
 
 		model.addAttribute("selectedTopic", dto.timerSelectedTopic());
 		model.addAttribute("shortBreak", dto.timerShortBreak());
-		model.addAttribute("longBreak", dto.timerShortBreak());
+		model.addAttribute("longBreak", dto.timerLongBreak());
 		model.addAttribute("timerAutoBreak", dto.timerAutoBreak());
 		model.addAttribute("timerAutoBreakPretty", timerAutoBreakToPretty(dto.timerAutoBreak()));
 	}

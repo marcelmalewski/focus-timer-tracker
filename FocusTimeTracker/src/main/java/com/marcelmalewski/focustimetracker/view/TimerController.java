@@ -4,6 +4,7 @@ import com.marcelmalewski.focustimetracker.entity.person.PersonService;
 import com.marcelmalewski.focustimetracker.entity.person.dto.PrincipalBasicDataDto;
 import com.marcelmalewski.focustimetracker.entity.person.dto.PrincipalBasicDataWithMainTopicsDto;
 import com.marcelmalewski.focustimetracker.enums.Stage;
+import com.marcelmalewski.focustimetracker.mapper.PersonDtoMapper;
 import com.marcelmalewski.focustimetracker.view.dto.TimerBreakDto;
 import com.marcelmalewski.focustimetracker.view.dto.TimerFocusAfterBreakDto;
 import com.marcelmalewski.focustimetracker.view.dto.TimerPauseDto;
@@ -18,15 +19,19 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import java.security.Principal;
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 public class TimerController {
 	private final PersonService personService;
 	private final TimerService timerService;
+	private final PersonDtoMapper personDtoMapper;
 
-	public TimerController(PersonService personService, TimerService timerService) {
+	public TimerController(PersonService personService, TimerService timerService, PersonDtoMapper personDtoMapper) {
 		this.personService = personService;
 		this.timerService = timerService;
+		this.personDtoMapper = personDtoMapper;
 	}
 
 	@Operation(summary = "Timer home view")
@@ -39,6 +44,12 @@ public class TimerController {
 			case FOCUS -> {
 				timerService.loadTimerFocusAfterHome(principalData, principalId, request, response, model);
 				yield "/timer/timerBaseWithStageFocus";
+			}
+			case PAUSE -> {
+				TimerPauseDto timerPauseDto = personDtoMapper.toTimerPauseDto(principalData);
+
+				timerService.loadBasicModelAttributesForPause(model, timerPauseDto);
+				yield "timer/timerBaseWithStagePause";
 			}
 			default -> {
 				timerService.loadHome(principalData, model);
@@ -56,7 +67,10 @@ public class TimerController {
 	}
 
 	@PutMapping("/timer/pause")
-	public String getTimerToPause(Model model, @RequestBody TimerPauseDto dto) {
+	public String getTimerToPause(Principal principal, HttpServletRequest request, HttpServletResponse response, Model model, @RequestBody TimerPauseDto dto) {
+		long principalId = Long.parseLong(principal.getName());
+		personService.updatePrincipalWhenStartPause(principalId, Stage.PAUSE, dto.timerRemainingTime(), request, response);
+
 		timerService.loadBasicModelAttributesForPause(model, dto);
 
 		return "timer/fragments/timerBoxStagePause";

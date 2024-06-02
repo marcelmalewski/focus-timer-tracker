@@ -29,26 +29,14 @@ public interface PersonRepository extends JpaRepository<Person, Long> {
 
 	@Modifying(clearAutomatically = true)
 	@Query("UPDATE Person person " +
-		"SET person.timerSelectedTopic = :timerSelectedTopic," +
-		"person.timerSetHours = :timerSetHours," +
-		"person.timerSetMinutes = :timerSetMinutes," +
-		"person.timerSetSeconds = :timerSetSeconds," +
-		"person.timerShortBreak = :timerShortBreak," +
-		"person.timerLongBreak = :timerLongBreak," +
-		"person.timerInterval = :timerInterval," +
-		"person.timerStage = :currentStage " +
+		"SET person.timerStage = :timerStage," +
+		"person.timerRemainingTime = :timerRemainingTime " +
 		"WHERE person.id = :id")
 	@Transactional
-	int startTimerRunningUpdateWithTimerAutoBreakOn(
+	int updatePrincipalStageAndRemainingTime(
 		@Param(value = "id") long id,
-		@Param(value = "timerSelectedTopic") String timerSelectedTopic,
-		@Param(value = "timerSetHours") Integer hours,
-		@Param(value = "timerSetMinutes") Integer minutes,
-		@Param(value = "timerSetSeconds") Integer seconds,
-		@Param(value = "timerShortBreak") Integer shortBreak,
-		@Param(value = "timerLongBreak") Integer longBreak,
-		@Param(value = "timerInterval") Integer interval,
-		@Param(value = "currentStage") Stage currentStage
+		@Param(value = "timerStage") Stage timerStage,
+		@Param(value = "timerRemainingTime") int timerRemainingTime
 	);
 
 	@Modifying(clearAutomatically = true)
@@ -59,10 +47,11 @@ public interface PersonRepository extends JpaRepository<Person, Long> {
 		"person.timerSetSeconds = :timerSetSeconds," +
 		"person.timerShortBreak = :timerShortBreak," +
 		"person.timerLongBreak = :timerLongBreak," +
-		"person.timerStage = :currentStage " +
+		"person.timerInterval = :timerInterval," +
+		"person.timerStage = :timerStage " +
 		"WHERE person.id = :id")
 	@Transactional
-	int startTimerRunningUpdateWithTimerAutoBreakOff(
+	int updatePrincipalWhenStartFocusWithTimerAutoBreakOn(
 		@Param(value = "id") long id,
 		@Param(value = "timerSelectedTopic") String timerSelectedTopic,
 		@Param(value = "timerSetHours") Integer hours,
@@ -70,6 +59,29 @@ public interface PersonRepository extends JpaRepository<Person, Long> {
 		@Param(value = "timerSetSeconds") Integer seconds,
 		@Param(value = "timerShortBreak") Integer shortBreak,
 		@Param(value = "timerLongBreak") Integer longBreak,
-		@Param(value = "currentStage") Stage currentStage
+		@Param(value = "timerInterval") Integer interval,
+		@Param(value = "timerStage") Stage timerStage
+	);
+
+	@Modifying(clearAutomatically = true)
+	@Query("UPDATE Person person " +
+		"SET person.timerSelectedTopic = :timerSelectedTopic," +
+		"person.timerSetHours = :timerSetHours," +
+		"person.timerSetMinutes = :timerSetMinutes," +
+		"person.timerSetSeconds = :timerSetSeconds," +
+		"person.timerShortBreak = :timerShortBreak," +
+		"person.timerLongBreak = :timerLongBreak," +
+		"person.timerStage = :timerStage " +
+		"WHERE person.id = :id")
+	@Transactional
+	int updatePrincipalWhenStartFocusWithTimerAutoBreakOff(
+		@Param(value = "id") long id,
+		@Param(value = "timerSelectedTopic") String timerSelectedTopic,
+		@Param(value = "timerSetHours") Integer hours,
+		@Param(value = "timerSetMinutes") Integer minutes,
+		@Param(value = "timerSetSeconds") Integer seconds,
+		@Param(value = "timerShortBreak") Integer shortBreak,
+		@Param(value = "timerLongBreak") Integer longBreak,
+		@Param(value = "timerStage") Stage timerStage
 	);
 }

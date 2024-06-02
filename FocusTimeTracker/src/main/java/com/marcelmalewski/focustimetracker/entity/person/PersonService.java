@@ -3,7 +3,7 @@ package com.marcelmalewski.focustimetracker.entity.person;
 import com.marcelmalewski.focustimetracker.entity.person.dto.PrincipalBasicDataDto;
 import com.marcelmalewski.focustimetracker.entity.person.dto.PrincipalBasicDataWithMainTopicsDto;
 import com.marcelmalewski.focustimetracker.entity.person.exception.AuthenticatedPersonNotFoundException;
-import com.marcelmalewski.focustimetracker.mapper.PersonPrincipleDataMapper;
+import com.marcelmalewski.focustimetracker.mapper.PersonMapper;
 import com.marcelmalewski.focustimetracker.security.util.SecurityHelper;
 import com.marcelmalewski.focustimetracker.enums.Stage;
 import com.marcelmalewski.focustimetracker.view.interfaces.TimerFocusAferHome;
@@ -21,9 +21,9 @@ import java.util.Optional;
 public class PersonService {
 	private final PersonRepository personRepository;
 	private final SecurityHelper securityHelper;
-	private final PersonPrincipleDataMapper personMapper;
+	private final PersonMapper personMapper;
 
-	public PersonService(PersonRepository personRepository, SecurityHelper securityHelper, PersonPrincipleDataMapper personMapper) {
+	public PersonService(PersonRepository personRepository, SecurityHelper securityHelper, PersonMapper personMapper) {
 		this.personRepository = personRepository;
 		this.securityHelper = securityHelper;
 		this.personMapper = personMapper;
@@ -79,19 +79,34 @@ public class PersonService {
 		}
 	}
 
+	public void updatePrincipalWhenStartPause(
+		long principalId,
+		@NotNull Stage timerStage,
+		int timerRemainingTime,
+		@NotNull HttpServletRequest request,
+		@NotNull HttpServletResponse response
+	) {
+		int numberOfAffectedRows = personRepository.updatePrincipalStageAndRemainingTime(principalId, timerStage, timerRemainingTime);
+
+		if (numberOfAffectedRows == 0) {
+			securityHelper.logoutManually(request, response);
+			throw new AuthenticatedPersonNotFoundException();
+		}
+	}
+
 	// TODO update tylko gdy faktycznie coś się zmieniło?
 	public void updatePrincipalWhenStartFocus(
 		long principalId,
 		boolean timerAutoBreak,
 		@NotNull TimerFocusAferHome timerFocusAfterHome,
-		@NotNull Stage currentStage,
+		@NotNull Stage timerStage,
 		@NotNull HttpServletRequest request,
 		@NotNull HttpServletResponse response
 	) throws AuthenticatedPersonNotFoundException {
 		int numberOfAffectedRows;
 
 		if (timerAutoBreak) {
-			numberOfAffectedRows = personRepository.startTimerRunningUpdateWithTimerAutoBreakOn(
+			numberOfAffectedRows = personRepository.updatePrincipalWhenStartFocusWithTimerAutoBreakOn(
 				principalId,
 				timerFocusAfterHome.timerSelectedTopic(),
 				timerFocusAfterHome.timerSetHours(),
@@ -100,10 +115,10 @@ public class PersonService {
 				timerFocusAfterHome.timerShortBreak(),
 				timerFocusAfterHome.timerLongBreak(),
 				timerFocusAfterHome.timerInterval(),
-				currentStage
+				timerStage
 			);
 		} else {
-			numberOfAffectedRows = personRepository.startTimerRunningUpdateWithTimerAutoBreakOff(
+			numberOfAffectedRows = personRepository.updatePrincipalWhenStartFocusWithTimerAutoBreakOff(
 				principalId,
 				timerFocusAfterHome.timerSelectedTopic(),
 				timerFocusAfterHome.timerSetHours(),
@@ -111,7 +126,7 @@ public class PersonService {
 				timerFocusAfterHome.timerSetSeconds(),
 				timerFocusAfterHome.timerShortBreak(),
 				timerFocusAfterHome.timerLongBreak(),
-				currentStage
+				timerStage
 			);
 		}
 

@@ -6,7 +6,7 @@ import com.marcelmalewski.focustimetracker.view.interfaces.TimerFocusAferHome;
 
 import java.util.List;
 
-//TODO walidacja?
+//TODO walidacja nulli?
 public record PrincipalBasicDataWithMainTopicsDto(
 	Long id,
 	String login,
@@ -21,6 +21,7 @@ public record PrincipalBasicDataWithMainTopicsDto(
 	Boolean timerAutoBreak,
 	Boolean stopWatchAutoBreak,
 	Integer timerInterval,
-	List<MainTopic> mainTopics
+	List<MainTopic> mainTopics,
+	Integer timerRemainingTime
 ) implements TimerFocusAferHome {
 }
