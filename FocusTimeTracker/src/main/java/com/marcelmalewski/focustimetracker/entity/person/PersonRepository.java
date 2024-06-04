@@ -23,6 +23,11 @@ public interface PersonRepository extends JpaRepository<Person, Long> {
 	boolean existsByEmail(String email);
 
 	@Modifying(clearAutomatically = true)
+	@Query("UPDATE Person person SET person.timerStage = :timerStage WHERE person.id = :id")
+	@Transactional
+	int updateTimerStage(@Param(value = "id") long id, @Param(value = "timerStage") Stage timerStage);
+
+	@Modifying(clearAutomatically = true)
 	@Query("UPDATE Person person SET person.timerAutoBreak = :timerAutoBreak WHERE person.id = :id")
 	@Transactional
 	int updateTimerAutoBreak(@Param(value = "id") long id, @Param(value = "timerAutoBreak") boolean timerAutoBreak);
@@ -33,7 +38,7 @@ public interface PersonRepository extends JpaRepository<Person, Long> {
 		"person.timerRemainingTime = :timerRemainingTime " +
 		"WHERE person.id = :id")
 	@Transactional
-	int updatePrincipalStageAndRemainingTime(
+	int updateTimerStageAndRemainingTime(
 		@Param(value = "id") long id,
 		@Param(value = "timerStage") Stage timerStage,
 		@Param(value = "timerRemainingTime") int timerRemainingTime
@@ -48,10 +53,11 @@ public interface PersonRepository extends JpaRepository<Person, Long> {
 		"person.timerShortBreak = :timerShortBreak," +
 		"person.timerLongBreak = :timerLongBreak," +
 		"person.timerInterval = :timerInterval," +
-		"person.timerStage = :timerStage " +
+		"person.timerStage = :timerStage," +
+		"person.timerRemainingTime = :timerRemainingTime " +
 		"WHERE person.id = :id")
 	@Transactional
-	int updatePrincipalWhenStartFocusWithTimerAutoBreakOn(
+	int updatePrincipalFocusAfterHomeWithAutoBreakOn(
 		@Param(value = "id") long id,
 		@Param(value = "timerSelectedTopic") String timerSelectedTopic,
 		@Param(value = "timerSetHours") Integer hours,
@@ -60,7 +66,8 @@ public interface PersonRepository extends JpaRepository<Person, Long> {
 		@Param(value = "timerShortBreak") Integer shortBreak,
 		@Param(value = "timerLongBreak") Integer longBreak,
 		@Param(value = "timerInterval") Integer interval,
-		@Param(value = "timerStage") Stage timerStage
+		@Param(value = "timerStage") Stage timerStage,
+		@Param(value = "timerRemainingTime") Integer remainingTime
 	);
 
 	@Modifying(clearAutomatically = true)
@@ -71,10 +78,11 @@ public interface PersonRepository extends JpaRepository<Person, Long> {
 		"person.timerSetSeconds = :timerSetSeconds," +
 		"person.timerShortBreak = :timerShortBreak," +
 		"person.timerLongBreak = :timerLongBreak," +
-		"person.timerStage = :timerStage " +
+		"person.timerStage = :timerStage," +
+		"person.timerRemainingTime = :timerRemainingTime " +
 		"WHERE person.id = :id")
 	@Transactional
-	int updatePrincipalWhenStartFocusWithTimerAutoBreakOff(
+	int updatePrincipalFocusAfterHomeWithAutoBreakOff(
 		@Param(value = "id") long id,
 		@Param(value = "timerSelectedTopic") String timerSelectedTopic,
 		@Param(value = "timerSetHours") Integer hours,
@@ -82,6 +90,7 @@ public interface PersonRepository extends JpaRepository<Person, Long> {
 		@Param(value = "timerSetSeconds") Integer seconds,
 		@Param(value = "timerShortBreak") Integer shortBreak,
 		@Param(value = "timerLongBreak") Integer longBreak,
-		@Param(value = "timerStage") Stage timerStage
+		@Param(value = "timerStage") Stage timerStage,
+		@Param(value = "timerRemainingTime") Integer remainingTime
 	);
 }

@@ -2,7 +2,7 @@ package com.marcelmalewski.focustimetracker.entity.person.dto;
 
 import com.marcelmalewski.focustimetracker.entity.topic.mainTopic.MainTopic;
 import com.marcelmalewski.focustimetracker.enums.Stage;
-import com.marcelmalewski.focustimetracker.view.interfaces.TimerFocusAferHome;
+import com.marcelmalewski.focustimetracker.view.interfaces.TimerFocusFields;
 
 import java.util.List;
 
@@ -20,8 +20,8 @@ public record PrincipalBasicDataWithMainTopicsDto(
 	Integer timerLongBreak,
 	Boolean timerAutoBreak,
 	Boolean stopWatchAutoBreak,
+	Integer timerRemainingTime,
 	Integer timerInterval,
-	List<MainTopic> mainTopics,
-	Integer timerRemainingTime
-) implements TimerFocusAferHome {
+	List<MainTopic> mainTopics
+) implements TimerFocusFields {
 }

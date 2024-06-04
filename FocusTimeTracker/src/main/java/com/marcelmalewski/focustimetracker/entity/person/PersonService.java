@@ -6,7 +6,7 @@ import com.marcelmalewski.focustimetracker.entity.person.exception.Authenticated
 import com.marcelmalewski.focustimetracker.mapper.PersonMapper;
 import com.marcelmalewski.focustimetracker.security.util.SecurityHelper;
 import com.marcelmalewski.focustimetracker.enums.Stage;
-import com.marcelmalewski.focustimetracker.view.interfaces.TimerFocusAferHome;
+import com.marcelmalewski.focustimetracker.view.dto.TimerFocusAfterHomeDto;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.constraints.NotNull;
@@ -65,6 +65,20 @@ public class PersonService {
 		return personRepository.save(person);
 	}
 
+	public void updatePrincipalTimerStage(
+		long principalId,
+		@NotNull Stage timerStage,
+		@NotNull HttpServletRequest request,
+		@NotNull HttpServletResponse response
+	) throws AuthenticatedPersonNotFoundException {
+		int numberOfAffectedRows = personRepository.updateTimerStage(principalId, timerStage);
+
+		if (numberOfAffectedRows == 0) {
+			securityHelper.logoutManually(request, response);
+			throw new AuthenticatedPersonNotFoundException();
+		}
+	}
+
 	public void updatePrincipalTimerAutoBreak(
 		long principalId,
 		boolean timerAutoBreak,
@@ -79,14 +93,42 @@ public class PersonService {
 		}
 	}
 
-	public void updatePrincipalWhenStartPause(
+	// TODO update tylko gdy faktycznie coś się zmieniło
+	public void updatePrincipalFocusAfterHome(
 		long principalId,
-		@NotNull Stage timerStage,
-		int timerRemainingTime,
+		@NotNull TimerFocusAfterHomeDto dto,
 		@NotNull HttpServletRequest request,
 		@NotNull HttpServletResponse response
-	) {
-		int numberOfAffectedRows = personRepository.updatePrincipalStageAndRemainingTime(principalId, timerStage, timerRemainingTime);
+	) throws AuthenticatedPersonNotFoundException {
+		int remainingTime = (dto.timerSetHours() * 60 * 60) + (dto.timerSetMinutes() * 60) + dto.timerSetSeconds();
+		int numberOfAffectedRows;
+
+		if (dto.timerAutoBreak()) {
+			numberOfAffectedRows = personRepository.updatePrincipalFocusAfterHomeWithAutoBreakOn(
+				principalId,
+				dto.timerSelectedTopic(),
+				dto.timerSetHours(),
+				dto.timerSetMinutes(),
+				dto.timerSetSeconds(),
+				dto.timerShortBreak(),
+				dto.timerLongBreak(),
+				dto.timerInterval(),
+				Stage.FOCUS,
+				remainingTime
+			);
+		} else {
+			numberOfAffectedRows = personRepository.updatePrincipalFocusAfterHomeWithAutoBreakOff(
+				principalId,
+				dto.timerSelectedTopic(),
+				dto.timerSetHours(),
+				dto.timerSetMinutes(),
+				dto.timerSetSeconds(),
+				dto.timerShortBreak(),
+				dto.timerLongBreak(),
+				Stage.FOCUS,
+				remainingTime
+			);
+		}
 
 		if (numberOfAffectedRows == 0) {
 			securityHelper.logoutManually(request, response);
@@ -94,41 +136,13 @@ public class PersonService {
 		}
 	}
 
-	// TODO update tylko gdy faktycznie coś się zmieniło?
-	public void updatePrincipalWhenStartFocus(
+	public void updatePrincipalWhenPause(
 		long principalId,
-		boolean timerAutoBreak,
-		@NotNull TimerFocusAferHome timerFocusAfterHome,
-		@NotNull Stage timerStage,
+		int timerRemainingTime,
 		@NotNull HttpServletRequest request,
 		@NotNull HttpServletResponse response
-	) throws AuthenticatedPersonNotFoundException {
-		int numberOfAffectedRows;
-
-		if (timerAutoBreak) {
-			numberOfAffectedRows = personRepository.updatePrincipalWhenStartFocusWithTimerAutoBreakOn(
-				principalId,
-				timerFocusAfterHome.timerSelectedTopic(),
-				timerFocusAfterHome.timerSetHours(),
-				timerFocusAfterHome.timerSetMinutes(),
-				timerFocusAfterHome.timerSetSeconds(),
-				timerFocusAfterHome.timerShortBreak(),
-				timerFocusAfterHome.timerLongBreak(),
-				timerFocusAfterHome.timerInterval(),
-				timerStage
-			);
-		} else {
-			numberOfAffectedRows = personRepository.updatePrincipalWhenStartFocusWithTimerAutoBreakOff(
-				principalId,
-				timerFocusAfterHome.timerSelectedTopic(),
-				timerFocusAfterHome.timerSetHours(),
-				timerFocusAfterHome.timerSetMinutes(),
-				timerFocusAfterHome.timerSetSeconds(),
-				timerFocusAfterHome.timerShortBreak(),
-				timerFocusAfterHome.timerLongBreak(),
-				timerStage
-			);
-		}
+	) {
+		int numberOfAffectedRows = personRepository.updateTimerStageAndRemainingTime(principalId, Stage.PAUSE, timerRemainingTime);
 
 		if (numberOfAffectedRows == 0) {
 			securityHelper.logoutManually(request, response);

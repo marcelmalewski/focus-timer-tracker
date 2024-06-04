@@ -1,7 +1,7 @@
 package com.marcelmalewski.focustimetracker.entity.person.dto;
 
 import com.marcelmalewski.focustimetracker.enums.Stage;
-import com.marcelmalewski.focustimetracker.view.interfaces.TimerFocusAferHome;
+import com.marcelmalewski.focustimetracker.view.interfaces.TimerFocusFields;
 
 //TODO walidacja?
 public record PrincipalBasicDataDto(
@@ -17,6 +17,7 @@ public record PrincipalBasicDataDto(
 	Integer timerLongBreak,
 	Boolean timerAutoBreak,
 	Boolean stopWatchAutoBreak,
+	Integer timerRemainingTime,
 	Integer timerInterval
-) implements TimerFocusAferHome {
+) implements TimerFocusFields {
 }

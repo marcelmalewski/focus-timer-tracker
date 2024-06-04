@@ -1,6 +1,6 @@
 package com.marcelmalewski.focustimetracker.view.interfaces;
 
-public interface TimerFocusAferHome extends TimerBasicFields {
+public interface TimerFocusFields extends TimerBasicFields {
 	String timerSelectedTopic();
 	Integer timerSetHours();
 	Integer timerSetMinutes();
@@ -8,5 +8,4 @@ public interface TimerFocusAferHome extends TimerBasicFields {
 	Integer timerShortBreak();
 	Integer timerLongBreak();
 	Boolean timerAutoBreak();
-	Integer timerInterval();
 }
