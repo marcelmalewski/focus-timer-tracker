@@ -1,9 +1,7 @@
 package com.marcelmalewski.focustimetracker.view;
 
-import com.marcelmalewski.focustimetracker.entity.person.PersonService;
 import com.marcelmalewski.focustimetracker.entity.person.dto.PrincipalBasicDataWithMainTopicsDto;
 import com.marcelmalewski.focustimetracker.entity.topic.mainTopic.MainTopic;
-import com.marcelmalewski.focustimetracker.view.dto.TimerFocusAfterHomeDto;
 import com.marcelmalewski.focustimetracker.view.interfaces.TimerBasicFields;
 import com.marcelmalewski.focustimetracker.view.interfaces.TimerFocusFields;
 import com.marcelmalewski.focustimetracker.view.dto.TimerPauseDto;

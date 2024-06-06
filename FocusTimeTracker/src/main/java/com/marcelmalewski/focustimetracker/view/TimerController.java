@@ -55,6 +55,17 @@ public class TimerController {
 		};
 	}
 
+	@PutMapping("/timer/homeAfterReset")
+	public String getHomeAfterReset(Principal principal, HttpServletRequest request, HttpServletResponse response, Model model) {
+		long principalId = Long.parseLong(principal.getName());
+		PrincipalBasicDataWithMainTopicsDto principalData = personService.getPrincipalBasicDataWithMainTopics(principalId, request, response);
+
+		personService.updatePrincipalTimerStage(principalId, Stage.HOME, request, response);
+		timerService.loadHome(principalData, model);
+
+		return "/timer/timerBaseWithStageHome";
+	}
+
 	@PutMapping("/timer/focusAfterHome")
 	public String getTimerFocusAfterHome(Principal principal, HttpServletRequest request, HttpServletResponse response, Model model, @RequestBody TimerFocusAfterHomeDto dto) {
 		long principalId = Long.parseLong(principal.getName());
@@ -73,7 +84,7 @@ public class TimerController {
 		return "timer/fragments/timerBoxStageFocus";
 	}
 
-	@PutMapping("/timer/focusAfterBreak")
+	@GetMapping("/timer/focusAfterBreak")
 	public String getTimerFocusAfterBreak(Principal principal, HttpServletRequest request, HttpServletResponse response, Model model) {
 		long principalId = Long.parseLong(principal.getName());
 		PrincipalBasicDataDto principalData = personService.getPrincipalBasicData(principalId, request, response);
