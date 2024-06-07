@@ -14,6 +14,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -55,7 +56,7 @@ public class TimerController {
 		};
 	}
 
-	@PutMapping("/timer/homeAfterReset")
+	@PatchMapping("/timer/homeAfterReset")
 	public String getHomeAfterReset(Principal principal, HttpServletRequest request, HttpServletResponse response, Model model) {
 		long principalId = Long.parseLong(principal.getName());
 		PrincipalBasicDataWithMainTopicsDto principalData = personService.getPrincipalBasicDataWithMainTopics(principalId, request, response);
@@ -63,7 +64,7 @@ public class TimerController {
 		personService.updatePrincipalTimerStage(principalId, Stage.HOME, request, response);
 		timerService.loadHome(principalData, model);
 
-		return "/timer/timerBaseWithStageHome";
+		return "/timer/fragments/timerBoxStageHome";
 	}
 
 	@PutMapping("/timer/focusAfterHome")
