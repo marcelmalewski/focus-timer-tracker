@@ -45,9 +45,19 @@ public class TimerController {
 			}
 			case PAUSE -> {
 				TimerPauseDto timerPauseDto = personDtoMapper.toTimerPauseDto(principalData);
-				timerService.loadPauseBasicModelAttributes(model, timerPauseDto);
+				timerService.loadPauseModelAttributes(model, timerPauseDto);
 
 				yield "timer/timerBaseWithStagePause";
+			}
+			case SHORT_BREAK -> {
+				timerService.loadShortBreakModelAttributes(model, principalData, Stage.SHORT_BREAK);
+
+				yield "timer/timerBaseWithStageBreak";
+			}
+			case LONG_BREAK -> {
+				timerService.loadLongBreakModelAttributes(model, principalData, Stage.LONG_BREAK);
+
+				yield "timer/timerBaseWithStageBreak";
 			}
 			default -> {
 				timerService.loadHome(principalData, model);
@@ -80,7 +90,7 @@ public class TimerController {
 	public String getTimerFocusAfterPause(Principal principal, HttpServletRequest request, HttpServletResponse response, Model model, @RequestBody TimerPauseDto dto) {
 		long principalId = Long.parseLong(principal.getName());
 		personService.updatePrincipalTimerStage(principalId, Stage.FOCUS, request, response);
-		timerService.loadPauseBasicModelAttributes(model, dto);
+		timerService.loadPauseModelAttributes(model, dto);
 
 		return "timer/fragments/timerBoxStageFocus";
 	}
@@ -94,46 +104,29 @@ public class TimerController {
 		return "timer/fragments/timerBoxStageFocus";
 	}
 
-	// TODO update remainingTime
 	@PutMapping("/timer/pause")
 	public String getTimerToPause(Principal principal, HttpServletRequest request, HttpServletResponse response, Model model, @RequestBody TimerPauseDto dto) {
 		long principalId = Long.parseLong(principal.getName());
-		personService.updatePrincipalWhenPause(principalId, dto.timerRemainingTime(), request, response);
-		timerService.loadPauseBasicModelAttributes(model, dto);
+		personService.updatePrincipalTimerStageAndRemainingTime(principalId, Stage.PAUSE, dto.timerRemainingTime(), request, response);
+		timerService.loadPauseModelAttributes(model, dto);
 
 		return "timer/fragments/timerBoxStagePause";
 	}
 
-	// TODO update remainingTime
 	@PutMapping("/timer/shortBreak")
-	public String getTimerShortBreak(Model model, @RequestBody TimerBreakDto dto) {
-		model.addAttribute("breakType", "shortBreak");
-		model.addAttribute("breakTypePretty", Stage.SHORT_BREAK.getStageName());
-
-		String breakRemainigTimeAsString = dto.timerShortBreak() + "m " + "0s";
-
-		model.addAttribute("breakSetTime", dto.timerShortBreak());
-		model.addAttribute("breakRemainingTime", dto.timerShortBreak() * 60);
-		model.addAttribute("breakRemainingTimeAsString", breakRemainigTimeAsString);
-
-		timerService.loadBasicModelAttributes(model, dto);
+	public String getTimerShortBreak(Principal principal, HttpServletRequest request, HttpServletResponse response, Model model, @RequestBody TimerBreakDto dto) {
+		long principalId = Long.parseLong(principal.getName());
+		personService.updatePrincipalTimerStage(principalId, Stage.SHORT_BREAK, request, response);
+		timerService.loadShortBreakModelAttributes(model, dto, Stage.SHORT_BREAK);
 
 		return "timer/fragments/timerBoxStageBreak";
 	}
 
-	// TODO update remainingTime
 	@PutMapping("/timer/longBreak")
-	public String getTimerLongBreak(Model model, @RequestBody TimerBreakDto dto) {
-		model.addAttribute("breakType", "longBreak");
-		model.addAttribute("breakTypePretty", Stage.LONG_BREAK.getStageName());
-
-		String breakRemainigTimeAsString = dto.timerLongBreak() + "m " + "0s";
-
-		model.addAttribute("breakSetTime", dto.timerLongBreak());
-		model.addAttribute("breakRemainingTime", dto.timerLongBreak() * 60);
-		model.addAttribute("breakRemainingTimeAsString", breakRemainigTimeAsString);
-
-		timerService.loadBasicModelAttributes(model, dto);
+	public String getTimerLongBreak(Principal principal, HttpServletRequest request, HttpServletResponse response, Model model, @RequestBody TimerBreakDto dto) {
+		long principalId = Long.parseLong(principal.getName());
+		personService.updatePrincipalTimerStage(principalId, Stage.LONG_BREAK, request, response);
+		timerService.loadLongBreakModelAttributes(model, dto, Stage.LONG_BREAK);
 
 		return "timer/fragments/timerBoxStageBreak";
 	}

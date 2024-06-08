@@ -2,6 +2,7 @@ package com.marcelmalewski.focustimetracker.view;
 
 import com.marcelmalewski.focustimetracker.entity.person.dto.PrincipalBasicDataWithMainTopicsDto;
 import com.marcelmalewski.focustimetracker.entity.topic.mainTopic.MainTopic;
+import com.marcelmalewski.focustimetracker.enums.Stage;
 import com.marcelmalewski.focustimetracker.view.interfaces.TimerBasicFields;
 import com.marcelmalewski.focustimetracker.view.interfaces.TimerFocusFields;
 import com.marcelmalewski.focustimetracker.view.dto.TimerPauseDto;
@@ -63,7 +64,7 @@ public class TimerService {
 		loadBasicModelAttributes(model, timerFocusFields);
 	}
 
-	public void loadPauseBasicModelAttributes(Model model, @NotNull TimerPauseDto dto) {
+	public void loadPauseModelAttributes(Model model, @NotNull TimerPauseDto dto) {
 		model.addAttribute("setTimeAsString", dto.setTimeAsString());
 		model.addAttribute("remainingTimeAsString", dto.timerRemainingTimeAsString());
 		model.addAttribute("remainingTime", dto.timerRemainingTime());
@@ -73,6 +74,32 @@ public class TimerService {
 		model.addAttribute("longBreak", dto.timerLongBreak());
 		model.addAttribute("timerAutoBreak", dto.timerAutoBreak());
 		model.addAttribute("timerAutoBreakPretty", timerAutoBreakToPretty(dto.timerAutoBreak()));
+	}
+
+	public void loadShortBreakModelAttributes(Model model, @NotNull TimerBasicFields dto, @NotNull Stage breakType) {
+		model.addAttribute("breakType", "shortBreak");
+		model.addAttribute("breakTypePretty", breakType.getStageName());
+
+		String breakRemainingTimePretty = dto.timerShortBreak() + "m " + "0s";
+
+		model.addAttribute("breakSetTime", dto.timerShortBreak());
+		model.addAttribute("breakRemainingTime", dto.timerShortBreak() * 60);
+		model.addAttribute("breakRemainingTimeAsString", breakRemainingTimePretty);
+
+		loadBasicModelAttributes(model, dto);
+	}
+
+	public void loadLongBreakModelAttributes(Model model, @NotNull TimerBasicFields dto, @NotNull Stage breakType) {
+		model.addAttribute("breakType", "longBreak");
+		model.addAttribute("breakTypePretty", breakType.getStageName());
+
+		String breakRemainingTimePretty = dto.timerLongBreak() + "m " + "0s";
+
+		model.addAttribute("breakSetTime", dto.timerLongBreak());
+		model.addAttribute("breakRemainingTime", dto.timerLongBreak() * 60);
+		model.addAttribute("breakRemainingTimeAsString", breakRemainingTimePretty);
+
+		loadBasicModelAttributes(model, dto);
 	}
 
 	public void loadBasicModelAttributes(Model model, @NotNull TimerBasicFields dto) {

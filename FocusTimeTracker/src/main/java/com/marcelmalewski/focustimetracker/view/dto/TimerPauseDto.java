@@ -6,8 +6,8 @@ public record TimerPauseDto(
 	String timerRemainingTimeAsString,
 	Integer timerRemainingTime,
 	String timerSelectedTopic,
-	String timerShortBreak,
-	String timerLongBreak,
+	Integer timerShortBreak,
+	Integer timerLongBreak,
 	Boolean timerAutoBreak
 ) {
 }

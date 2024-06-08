@@ -30,8 +30,8 @@ public abstract class PersonDtoMapper {
 			remainingTimePretty,
 			principalBasicDataWithMainTopicsDto.timerRemainingTime(),
 			principalBasicDataWithMainTopicsDto.timerSelectedTopic(),
-			principalBasicDataWithMainTopicsDto.timerShortBreak().toString(),
-			principalBasicDataWithMainTopicsDto.timerLongBreak().toString(),
+			principalBasicDataWithMainTopicsDto.timerShortBreak(),
+			principalBasicDataWithMainTopicsDto.timerLongBreak(),
 			principalBasicDataWithMainTopicsDto.timerAutoBreak()
 		);
 	}

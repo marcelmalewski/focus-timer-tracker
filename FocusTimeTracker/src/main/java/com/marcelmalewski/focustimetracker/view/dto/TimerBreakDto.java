@@ -2,12 +2,11 @@ package com.marcelmalewski.focustimetracker.view.dto;
 
 import com.marcelmalewski.focustimetracker.view.interfaces.TimerBasicFields;
 
-// TODO walidacja nulli?
+// TODO validate nulls?
 public record TimerBreakDto(
 	String timerSelectedTopic,
 	Integer timerShortBreak,
 	Integer timerLongBreak,
-	Boolean timerAutoBreak,
-	Integer timerInterval
+	Boolean timerAutoBreak
 ) implements TimerBasicFields {
 }

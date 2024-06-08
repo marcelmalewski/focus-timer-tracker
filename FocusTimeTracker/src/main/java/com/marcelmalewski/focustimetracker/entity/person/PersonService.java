@@ -79,6 +79,21 @@ public class PersonService {
 		}
 	}
 
+	public void updatePrincipalTimerStageAndRemainingTime(
+		long principalId,
+		@NotNull Stage timerStage,
+		int timerRemainingTime,
+		@NotNull HttpServletRequest request,
+		@NotNull HttpServletResponse response
+	) throws AuthenticatedPersonNotFoundException {
+		int numberOfAffectedRows = personRepository.updateTimerStageAndRemainingTime(principalId, timerStage, timerRemainingTime);
+
+		if (numberOfAffectedRows == 0) {
+			securityHelper.logoutManually(request, response);
+			throw new AuthenticatedPersonNotFoundException();
+		}
+	}
+
 	public void updatePrincipalTimerAutoBreak(
 		long principalId,
 		boolean timerAutoBreak,
@@ -129,20 +144,6 @@ public class PersonService {
 				remainingTime
 			);
 		}
-
-		if (numberOfAffectedRows == 0) {
-			securityHelper.logoutManually(request, response);
-			throw new AuthenticatedPersonNotFoundException();
-		}
-	}
-
-	public void updatePrincipalWhenPause(
-		long principalId,
-		int timerRemainingTime,
-		@NotNull HttpServletRequest request,
-		@NotNull HttpServletResponse response
-	) {
-		int numberOfAffectedRows = personRepository.updateTimerStageAndRemainingTime(principalId, Stage.PAUSE, timerRemainingTime);
 
 		if (numberOfAffectedRows == 0) {
 			securityHelper.logoutManually(request, response);
