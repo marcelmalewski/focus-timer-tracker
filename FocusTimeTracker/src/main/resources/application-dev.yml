@@ -1,4 +1,11 @@
 spring:
+  thymeleaf:
+    cache: false
+  devtools:
+    restart:
+      enables: true
+    livereload:
+      enables: true
   jpa:
     properties:
       hibernate:
@@ -11,7 +18,6 @@ spring:
 #              action: create
 #              create-target: V1__init-db.sql
 #              create-source: metadata
-
 
 logging:
   level:
