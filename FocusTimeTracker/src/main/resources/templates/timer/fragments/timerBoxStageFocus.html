@@ -129,7 +129,7 @@
   <script>
     remainingTime = [[${remainingTime}]];
 
-    if (intervalId !== null) {
+    if (typeof intervalId !== 'undefined' && intervalId !== null) {
       clearInterval(intervalId);
       intervalId = null
     }
