@@ -129,11 +129,18 @@
   <script>
     remainingTime = [[${remainingTime}]];
 
+    if (intervalId !== null) {
+      clearInterval(intervalId);
+      intervalId = null
+    }
+
     intervalId = setInterval(function () {
         const currentStage = document.getElementById("currentStage").innerHTML;
 
         if (currentStage !== "Focus") {
             clearInterval(intervalId);
+            intervalId = null
+
             return;
         }
 
