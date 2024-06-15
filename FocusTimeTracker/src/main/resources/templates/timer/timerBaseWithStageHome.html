@@ -38,7 +38,10 @@
             hx-target="#timerAutoBreakSettings"
             hx-swap="outerHTML"
             hx-ext="json-enc"
-            hx-include="[name='timerAutoBreakInput'], [name='interval']"
+            hx-include="[name='timerAutoBreakInput']"
+            hx-vals="js:{
+              timerInterval: document.getElementById('interval').getAttribute('value'),
+            }"
             type="submit"
             class="bg-base-button hover:bg-base-button-hov mt-6 rounded-md px-4 py-2 text-xl duration-200"
           >
