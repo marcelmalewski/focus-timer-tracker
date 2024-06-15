@@ -77,7 +77,7 @@ public class TimerController {
 		return "/timer/fragments/timerBoxStageHome";
 	}
 
-	@PutMapping("/timer/focusAfterHome")
+	@PatchMapping("/timer/focusAfterHome")
 	public String getTimerFocusAfterHome(Principal principal, HttpServletRequest request, HttpServletResponse response, Model model, @RequestBody TimerFocusAfterHomeDto dto) {
 		long principalId = Long.parseLong(principal.getName());
 		personService.updatePrincipalFocusAfterHome(principalId, dto, request, response);
@@ -86,7 +86,7 @@ public class TimerController {
 		return "timer/fragments/timerBoxStageFocus";
 	}
 
-	@PutMapping("/timer/focusAfterPause")
+	@PatchMapping("/timer/focusAfterPause")
 	public String getTimerFocusAfterPause(Principal principal, HttpServletRequest request, HttpServletResponse response, Model model, @RequestBody TimerPauseDto dto) {
 		long principalId = Long.parseLong(principal.getName());
 		personService.updatePrincipalTimerStage(principalId, Stage.FOCUS, request, response);
@@ -95,16 +95,21 @@ public class TimerController {
 		return "timer/fragments/timerBoxStageFocus";
 	}
 
-	@GetMapping("/timer/focusAfterBreak")
+	// TODO czemu get?
+	@PatchMapping("/timer/focusAfterBreak")
 	public String getTimerFocusAfterBreak(Principal principal, HttpServletRequest request, HttpServletResponse response, Model model) {
 		long principalId = Long.parseLong(principal.getName());
 		PrincipalBasicDataDto principalData = personService.getPrincipalBasicData(principalId, request, response);
+
+		int remainingTime = (principalData.timerSetHours() * 60 * 60) + (principalData.timerSetMinutes() * 60) + principalData.timerSetSeconds();
+		personService.updatePrincipalTimerStageAndRemainingTime(principalId, Stage.FOCUS, remainingTime, request, response);
+
 		timerService.loadFocusWithFullTime(principalData, model);
 
 		return "timer/fragments/timerBoxStageFocus";
 	}
 
-	@PutMapping("/timer/pause")
+	@PatchMapping("/timer/pause")
 	public String getTimerToPause(Principal principal, HttpServletRequest request, HttpServletResponse response, Model model, @RequestBody TimerPauseDto dto) {
 		long principalId = Long.parseLong(principal.getName());
 		personService.updatePrincipalTimerStageAndRemainingTime(principalId, Stage.PAUSE, dto.timerRemainingTime(), request, response);
@@ -113,7 +118,7 @@ public class TimerController {
 		return "timer/fragments/timerBoxStagePause";
 	}
 
-	@PutMapping("/timer/shortBreak")
+	@PatchMapping("/timer/shortBreak")
 	public String getTimerShortBreak(Principal principal, HttpServletRequest request, HttpServletResponse response, Model model, @RequestBody TimerBreakDto dto) {
 		long principalId = Long.parseLong(principal.getName());
 		personService.updatePrincipalTimerStage(principalId, Stage.SHORT_BREAK, request, response);
@@ -122,7 +127,7 @@ public class TimerController {
 		return "timer/fragments/timerBoxStageBreak";
 	}
 
-	@PutMapping("/timer/longBreak")
+	@PatchMapping("/timer/longBreak")
 	public String getTimerLongBreak(Principal principal, HttpServletRequest request, HttpServletResponse response, Model model, @RequestBody TimerBreakDto dto) {
 		long principalId = Long.parseLong(principal.getName());
 		personService.updatePrincipalTimerStage(principalId, Stage.LONG_BREAK, request, response);

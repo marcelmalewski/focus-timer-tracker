@@ -18,7 +18,7 @@
 
     <div class="grid grid-cols-2 gap-3">
       <button
-        hx-put="/timer/pause"
+        hx-patch="/timer/pause"
         hx-ext="json-enc"
         hx-target="#timerBox"
         hx-swap="outerHTML"
@@ -49,7 +49,7 @@
 
       <button
         class="bg-base-button hover:bg-base-button-hov rounded-md px-4 py-2 text-xl duration-200"
-        hx-put="/timer/shortBreak"
+        hx-patch="/timer/shortBreak"
         hx-ext="json-enc"
         hx-target="#timerBox"
         hx-swap="outerHTML"
@@ -66,7 +66,7 @@
 
       <button
         class="bg-base-button hover:bg-base-button-hov rounded-md px-4 py-2 text-xl duration-200"
-        hx-put="/timer/longBreak"
+        hx-patch="/timer/longBreak"
         hx-ext="json-enc"
         hx-target="#timerBox"
         hx-swap="outerHTML"
@@ -130,8 +130,8 @@
     remainingTime = [[${remainingTime}]];
 
     if (typeof intervalId !== 'undefined' && intervalId !== null) {
-      clearInterval(intervalId);
-      intervalId = null
+        clearInterval(intervalId);
+        intervalId = null
     }
 
     intervalId = setInterval(function () {
