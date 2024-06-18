@@ -53,6 +53,7 @@ public class Person implements UserDetails {
 	private Stage timerStage = Stage.HOME;
 	@Nullable
 	private String timerSelectedTopic;
+
 	@NotNull
 	@Builder.Default
 	private Integer timerSetHours = 0;
@@ -62,12 +63,14 @@ public class Person implements UserDetails {
 	@NotNull
 	@Builder.Default
 	private Integer timerSetSeconds = 0;
+
 	@NotNull
 	@Builder.Default
 	private Integer timerShortBreak = 5;
 	@NotNull
 	@Builder.Default
 	private Integer timerLongBreak = 10;
+
 	@NotNull
 	@Builder.Default
 	private Boolean timerAutoBreak = false;
@@ -94,6 +97,7 @@ public class Person implements UserDetails {
 	@NotNull
 	private List<MainTopic> mainTopics = new ArrayList<>();
 
+	// TODO
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "alarmsettings_id")
 	private AlarmSettings alarmSettings;
