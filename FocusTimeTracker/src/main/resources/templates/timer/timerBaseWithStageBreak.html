@@ -21,30 +21,6 @@
 
       <div class="absolute bottom-0 left-0 m-3">
         <a href="/logout" class="dash-animation text-xl"> Log out </a>
-
-        <div class="flex items-center justify-center gap-2 text-xl">
-          <label for="timerAutoBreakInput">Timer auto brak:</label>
-
-          <input
-            type="checkbox"
-            id="timerAutoBreakInput"
-            name="timerAutoBreakInput"
-            class="focus:outline-none"
-            th:checked="${timerAutoBreak}"
-          />
-
-          <button
-            hx-patch="/person/timerAutoBreak"
-            hx-target="#timerAutoBreakSettings"
-            hx-swap="outerHTML"
-            hx-ext="json-enc"
-            hx-include="[name='timerAutoBreakInput'], [name='interval']"
-            type="submit"
-            class="bg-base-button hover:bg-base-button-hov mt-6 rounded-md px-4 py-2 text-xl duration-200"
-          >
-            Save
-          </button>
-        </div>
       </div>
     </div>
 
